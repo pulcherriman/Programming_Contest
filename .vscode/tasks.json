@@ -1,0 +1,47 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "compile",
+			"command": "g++ -O2 ${fileBasename} && ./a.exe<in.txt",
+			"type": "shell",
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"clear": true,
+				"showReuseMessage": false
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "execute",
+			"command": "./a.exe<in.txt",
+			"type": "shell",
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"clear": true,
+				"showReuseMessage": false
+			},
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "create",
+			"command": "read fname ; fname+=.cpp ; touch $fname ; code $fname",
+			"type": "shell",
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"clear": true,
+				"showReuseMessage": false
+			},
+			"group": "none",
+			"problemMatcher": []
+		}
+	]
+}
