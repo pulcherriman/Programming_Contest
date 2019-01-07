@@ -48,16 +48,55 @@ int bsf(ll x){return __builtin_ctzll(x);}
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	vector<vvi> a(182,vvi(32769,vi(4,0)));
-	range(i,1,182)a[0][i*i][0]++;
-	rep(i,181)range(j,1,32769)rep(k,3)if(a[i][j][k]){
-		rep(l,4-k)if(j+(i+1)*(i+1)*l<=32768)
-			a[i+1][j+(i+1)*(i+1)*l][k+l]+=a[i][j][k];
-	}
-	
+	string s;
 	int n;
-	while(cin>>n,n){
-		cout<<a[181][n]<<endl;
+	cin>>s>>n;
+	int mn=0,mx=0;
+	bool isRep=false;
+	rep(i,s.size()){
+		if(isalpha(s[i])){
+			mn++; mx++;
+		}else if(s[i]=='?'){
+			mn--;
+		}else{
+			mn--;
+			isRep=true;
+		}
 	}
+	//puta(mn,mx);
+	if(n<mn or (!isRep and n>mx)){
+		cout<<"Impossible"<<endl;
+		return 0;
+	}
+	int l=s.size();
+	if(n<=mx){
+		int need=n-mn;
+		rep(i,s.size()){
+			if(isalpha(s[i])){
+				if(i+1!=l){
+					if(isalpha(s[i+1])){
+						cout<<s[i];
+					}else if(need>0){
+						cout<<s[i];
+						need--;
+					}
+				}else{
+					cout<<s[i];
+				}
+			}
+		}
+	}else{
+		int need=n-mx;
+		rep(i,s.size()){
+			if(isalpha(s[i])){
+				cout<<s[i];
+			}
+			if(s[i]=='*'){
+				rep(j,need)cout<<s[i-1];
+				need=0;
+			}
+		}
+	}
+	cout<<endl;
 	return 0;
 }
