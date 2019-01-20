@@ -21,8 +21,8 @@ using vs=vector<string>;
 #define EPS (1e-9)
 #define MOD (1000000007ll)
 #define fcout(a) cout<<setprecision(a)<<fixed
-#define fs first
-#define sc second
+#define X first
+#define Y second
 #define PI 3.1415926535897932384
 
 int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
@@ -33,7 +33,7 @@ void OUT(bool b){tf(b,"YES","NO");}
 void Out(bool b){tf(b,"Yes","No");}
 void out(bool b){tf(b,"yes","no");}
 template<class T>void puta(T&&t){cout<<t<<endl;}
-template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<' ';puta(t...);}
+template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<',';puta(t...);}
 
 int popcnt(int x){return __builtin_popcount(x);}
 int popcnt(ll x){return __builtin_popcountll(x);}
@@ -49,24 +49,41 @@ template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n,k;
-	cin>>n>>k;
-	vi a(k,0);
-	vi b(k,0);
-	vi c(k,0);
-	rep(i,n){
-		int t;cin>>t;
-		if(t==1)a[i%k]++;
-		else b[i%k]++;
-		c[i%k]++;
+	//XST YST XA YA XB YB XE YE
+	//XP,XSP,XAS,XDS,YP,YSP,YAS,YDS,AS,BS,ES
+	pll st,a,b,e;
+	cin>>st.X>>st.Y;
+	cin>>a.X>>a.Y;
+	cin>>b.X>>b.Y;
+	cin>>e.X>>e.Y;
+	int t=0,p=0;
+	//605079ml
+	rep(i,13){
+		if(p==0){
+			int nx1=a.X+i*3,nx2=a.X-i*3
+			if(abs(st.X-nx1)>abs(st.X-nx2)){
+				puta(nx2,500,60,60,a.Y,500,60,60,2500,0,0);
+				st.X=nx2, st.Y=a.Y;
+			}else{
+				puta(nx1,500,60,60,a.Y,500,60,60,2500,0,0);
+				st.X=nx1, st.Y=a.Y;
+			}
+		}
+		if(p==1){
+			int ny1=a.Y+i*3,ny2=a.Y-i*3
+			if(abs(st.Y-ny1)>abs(st.Y-ny2)){
+				puta(a.X,500,60,60,ny2,500,60,60,2500,0,0);
+				st.X=nx2, st.Y=a.Y;
+			}else{
+				puta(a.X,500,60,60,ny1,500,60,60,2500,0,0);
+				st.X=nx1, st.Y=a.Y;
+			}
+		}
+		if(p==2){
+			puta(e.X,500,60,60,e.Y,500,60,60,0,0,5000);
+			st=e;
+		}
+		p++;
 	}
-	int ans=0;
-	int am=accumulate(all(a),0);
-	int bm=accumulate(all(b),0);
-	rep(i,k){
-		chmax(ans,abs(am-a[i]-(bm-b[i])));
-		
-	}
-	cout<<ans<<endl;
 	return 0;
 }

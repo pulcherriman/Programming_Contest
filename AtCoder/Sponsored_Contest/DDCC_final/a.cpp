@@ -49,24 +49,63 @@ template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n,k;
-	cin>>n>>k;
-	vi a(k,0);
-	vi b(k,0);
-	vi c(k,0);
+	int n;
+	string s;
+	cin>>n>>s;
+	double ans=0;
+	int ice=0,im=0;
+	bool ist=false;
+	vd ic(n+1,0);
 	rep(i,n){
-		int t;cin>>t;
-		if(t==1)a[i%k]++;
-		else b[i%k]++;
-		c[i%k]++;
+		ic[i+1]=ic[i]+(1.0/(i+2));
 	}
-	int ans=0;
-	int am=accumulate(all(a),0);
-	int bm=accumulate(all(b),0);
-	rep(i,k){
-		chmax(ans,abs(am-a[i]-(bm-b[i])));
-		
+	
+	vi res(1,0);
+	rep(i,n){
+		if(s[i]=='>'){
+			if(s[i-1]=='-')res.push_back(0);
+			res.back()++;
+		}else{
+			if(i==0 or s[i-1]=='>')res.push_back(1);
+			else res.back()++;
+		}
 	}
-	cout<<ans<<endl;
+
+	range(i,1,res.size()-1){
+		if(i%2==1 and res[i]==1){
+			if(chmax(im,res[i-1]+res[i+1]+1)){
+				ice=i;
+			}
+		}
+	}
+	if(ice!=0){
+		rep(i,res.size()){
+			if(i+1==ice){
+				ans+=ic[res[i]+res[i+2]+1];
+				i+=2;
+			}else if(i%2==0){
+				ans+=ic[res[i]];
+			}else{
+				ans+=res[i];
+			}
+		}
+	}else{
+		int p=0;
+		rep(i,res.size()){
+			if(i%2==0){
+				chmax(p,res[i]);
+			}
+		}
+		rep(i,res.size()){
+			if(i%2==0){
+				ans+=ic[res[i]];
+			}else{
+				ans+=res[i];
+			}
+		}
+		ans-=ic[p]+1;
+		ans+=ic[p+1];
+	}
+	fcout(10)<<ans<<endl;
 	return 0;
 }
