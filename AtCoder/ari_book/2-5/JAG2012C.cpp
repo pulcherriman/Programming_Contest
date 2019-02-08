@@ -55,39 +55,37 @@ int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
 	int n,m;
-	cin>>n>>m;
-	vi a(m,0);
-	rep(i,n){
-		int t;cin>>t;
-		a[t-1]++;
-	}
-	ll ans=0;
-	rep(i,m-2){
-		if(a[i]>4 and a[i+1]>4 and a[i+2]>4){
-			int mn=min({a[i],a[i+1],a[i+2]});
-			ans+=mn;
-			a[i]-=mn;
-			a[i+1]-=mn;
-			a[i+2]-=mn;
+	while(cin>>n>>m,n){
+		using data=tuple<ll,ll,ll>;
+		vector<vector<pll>> edge(n);
+		rep(i,m){
+			ll a,b,c;
+			cin>>a>>b>>c;
+			a--;b--;
+			edge[a].emplace_back(b,c);
+			edge[b].emplace_back(a,c);
 		}
-	}
-	rep(i,m){
-		if(a[i]>4){
-			ans+=(a[i]-4)/3;
-			a[i]-=(a[i]-4)/3*3;
+		priority_queue<data> q;
+		set<ll> s;
+		q.emplace(0,0,0);
+		vl ans;
+		while(!q.empty()){
+			ll c,from,to;
+			tie(c,from,to)=q.top();
+			q.pop();
+			if(s.find(to)!=s.end())continue;
+			s.insert(to);
+			if(c!=0)ans.push_back(-c);
+			//puta(c,from,to);
+			for(auto&e:edge[to]){
+				ll nxt,cost;
+				tie(nxt,cost)=e;
+				if(s.find(nxt)!=s.end())continue;
+				q.emplace(-cost,to,nxt);
+			}
 		}
+		sort(all(ans));
+		puta(ans[(n-1)/2]);
 	}
-	rep(i,m-2){
-		int mn=min({a[i],a[i+1],a[i+2]});
-		ans+=mn;
-		a[i]-=mn;
-		a[i+1]-=mn;
-		a[i+2]-=mn;
-	}
-	rep(i,m){
-		if(a[i]>5)while(1){cout<<a[i]<<endl;}
-		if(a[i]>2)ans++;
-	}
-	cout<<ans<<endl;
 	return 0;
 }
