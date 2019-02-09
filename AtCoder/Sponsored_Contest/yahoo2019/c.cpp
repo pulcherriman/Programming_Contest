@@ -51,8 +51,15 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,m,w;
-	cin>>n,m,w; //TODO:geta
-	puta(n);
+	ll n,a,b;
+	cin>>n>>a>>b;
+	ll ans=n+1;
+	if(n>=a-1){
+		n-=a-1;
+		//puta(n);
+		ll tmp=a+n%2+(b-a)*(n/2);
+		chmax(ans,tmp);
+	}
+	puta(ans);
 	return 0;
 }

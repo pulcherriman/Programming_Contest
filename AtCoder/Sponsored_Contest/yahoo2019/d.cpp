@@ -51,8 +51,50 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,m,w;
-	cin>>n,m,w; //TODO:geta
-	puta(n);
+	ll n;
+	cin>>n;
+	vl a(n);
+	cin>>a;
+	vl lr(n),rl(n),z(n,0),lrz(n),rlz(n);
+	rep(i,n){if(a[i]==0)z[i]=1;}
+	partial_sum(all(a),lr.begin());
+	partial_sum(rall(a),rl.rbegin());
+	partial_sum(all(z),lrz.begin());
+	partial_sum(rall(z),rlz.rbegin());
+	int l=n-1,r=0;
+	rrep(i,n){
+		if(z[i]==1 and lrz[i]>=lr[i])break;
+		l=i;
+	}
+	rep(i,n){
+		if(z[i]==1 and rlz[i]>=rl[i])break;
+		r=i;
+	}
+	//puta(pll(l,r));
+
+	//l=0,r=n-1;
+	vl b(n,0);
+	rep(i,n)if(a[i]%2==0)b[i]=1;else b[i]=-1;
+
+	vl ad(n+1,0);
+	partial_sum(all(b),ad.begin()+1);
+	//puta(ad);
+	ll und=(l>0?lr[l-1]:0)+(lr[n-1]-lr[r]);
+	ll ans=und;
+	//puta(ans);
+	range(i,l,r+1)if(a[i]%2==0)ans++;
+	ll lm=-LINF,mr=-LINF;
+	vl al(n+1,0),ar(n+1,0);
+	range(i,l,r+2){
+		chmax(al[i],ad[i]-ad[l]);
+		chmax(ar[i],ad[r+1]-ad[i]);
+	}
+	rep(i,n)chmax(al[i+1],al[i]);
+	rrep(i,n)chmax(ar[i+1],ar[i]);
+	ll x=0;
+	range(i,l,r+2){
+		chmax(x,al[i]+ar[i]);
+	}
+	puta(max(und,ans-x));
 	return 0;
 }

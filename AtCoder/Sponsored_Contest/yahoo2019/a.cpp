@@ -51,8 +51,9 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,m,w;
-	cin>>n,m,w; //TODO:geta
-	puta(n);
+	ll n,m;
+	cin>>n>>m;
+	n=(n+1)/2;
+	YN(m<=n);
 	return 0;
 }
