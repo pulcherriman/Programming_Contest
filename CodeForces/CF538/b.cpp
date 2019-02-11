@@ -26,6 +26,7 @@ using vs=vector<string>;
 #define fs first
 #define sc second
 #define PI (3.1415926535897932384)
+
 #define _cTime (chrono::system_clock::now())
 #define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
 #define reset _sTime=_cTime
@@ -50,46 +51,34 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-ll n,h;
-vl a,b;
 
-map<vl,ll> mp;
-ll solve(vl c,int p){
-	if(mp.find(c)!=mp.end())return mp[c];
-	ll ret=LINF;
-	rep(i,h){
-		vl d=c;
-		if(i>0 and d[i]==d[i-1])continue;
-		d[i]+=a[p];
-		rrep(j,i){
-			if(d[j+1]>d[j])swap(d[j+1],d[j]);
-			else break;
-		}
-		if(p+1==n or d[0]>=d[1]+b[p+1]){
-			chmin(ret,d[0]);
-		}else{
-			chmin(ret,solve(d,p+1));
-		}
-	}
-	return mp[c]=ret;
-}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-
-	cin>>n>>h;
-	a.resize(n);
-	b=a;
+	ll n,m,k;
+	cin>>n>>m>>k;
+	vl a(n);
 	cin>>a;
-	chmin(h,n);
-	sort(rall(a));
-	if(h==1){
-		puta(sum(a));
-		return 0;
+	auto b=a;
+	sort(rall(b));
+	map<ll,int> s;
+	rep(i,m*k)s[b[i]]++;
+	puta(accumulate(b.begin(),b.begin()+m*k,0ll));
+	ll ans=0,cnt=0;
+	vl p;
+	rep(i,n){
+		if(s[a[i]]>0){
+			cnt++;
+			s[a[i]]--;
+			if(cnt==m){
+				p.push_back(i+1);
+				cnt=0;
+			}
+		}
 	}
-	partial_sum(rall(a),b.rbegin());
-	puta(solve(vl(h,0),0));
-	puta(progress);
+	p.pop_back();
+	puta(p);
+
 	return 0;
 }

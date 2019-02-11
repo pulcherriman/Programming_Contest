@@ -55,46 +55,19 @@ int main(){
 	cin>>n;
 	vl a(n);
 	cin>>a;
-	vl lr(n),rl(n),z(n,0),lrz(n),rlz(n);
-	rep(i,n){if(a[i]==0)z[i]=1;}
-	partial_sum(all(a),lr.begin());
-	partial_sum(rall(a),rl.rbegin());
-	partial_sum(all(z),lrz.begin());
-	partial_sum(rall(z),rlz.rbegin());
-	int l=n-1,r=0;
-	rrep(i,n){
-		if(z[i]==1 and lrz[i]>=lr[i])break;
-		l=i;
-	}
+	vvl dp(n+1,vl(5,LINF));
+	dp[0]={0,0,0,0,0};
 	rep(i,n){
-		if(z[i]==1 and rlz[i]>=rl[i])break;
-		r=i;
+		rep(j,5){
+			ll diff=0,diff2=0;
+			if(j%4==0 and a[i]!=0)diff=a[i];
+			if(j%2==1 and a[i]%2!=0)diff=1;
+			if(j%2==1 and a[i]==0)diff=2;
+			if(j==2 and a[i]%2!=1)diff=1;
+			rep(k,j+1)chmin(dp[i+1][j],dp[i][j-k]+diff);
+		}
 	}
-	//puta(pll(l,r));
-
-	//l=0,r=n-1;
-	vl b(n,0);
-	rep(i,n)if(a[i]%2==0)b[i]=1;else b[i]=-1;
-
-	vl ad(n+1,0);
-	partial_sum(all(b),ad.begin()+1);
-	//puta(ad);
-	ll und=(l>0?lr[l-1]:0)+(lr[n-1]-lr[r]);
-	ll ans=und;
-	//puta(ans);
-	range(i,l,r+1)if(a[i]%2==0)ans++;
-	ll lm=-LINF,mr=-LINF;
-	vl al(n+1,0),ar(n+1,0);
-	range(i,l,r+2){
-		chmax(al[i],ad[i]-ad[l]);
-		chmax(ar[i],ad[r+1]-ad[i]);
-	}
-	rep(i,n)chmax(al[i+1],al[i]);
-	rrep(i,n)chmax(ar[i+1],ar[i]);
-	ll x=0;
-	range(i,l,r+2){
-		chmax(x,al[i]+ar[i]);
-	}
-	puta(max(und,ans-x));
+	//rep(i,n+1)puta(dp[i]);
+	puta(min(dp[n]));
 	return 0;
 }
