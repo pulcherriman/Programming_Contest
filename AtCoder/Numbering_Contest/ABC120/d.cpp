@@ -46,44 +46,50 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+
+struct UnionFind{
+	vl par,dist;
+	UnionFind(int x){par.assign(x,-1); dist.assign(x,0);}
+	ll find(ll x){return par[x]<0?x:find(par[x]);}
+	ll depth(ll x){return par[x]<0?0:depth(par[x])+dist[x];}
+	bool same(ll x,ll y){return find(x)==find(y);}
+	ll size(ll x){return -par[find(x)];}
+	ll diff(ll x,ll y){return same(x,y)?depth(x)-depth(y):LINF;}
+	void unite(ll x,ll y,ll k=0){
+		k+=depth(y); k-=depth(x); k=-k;
+		x=find(x); y=find(y);
+		if(x==y)return;
+		if(size(x)<size(y)){swap(x,y);k=-k;}
+		par[x]+=par[y]; par[y]=x; dist[y]=k;
+	}
+};
+ll g(ll a){
+	return (a*(a-1)/2);
+}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
-	}
+	ll n,m;
+	cin>>n>>m;
+	vl a(m),b(m);
+	rrep(i,m)cin>>a[i]>>b[i];
 
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
+	UnionFind uf(n);
+	vl ans(m+1,0);
+	rep(i,m){
+		a[i]--; b[i]--;
+		if(uf.same(a[i],b[i])){
+			ans[i+1]=ans[i];
+			continue;
 		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+ 		ll t=g(uf.size(a[i]))+g(uf.size(b[i]));
+		uf.unite(a[i],b[i]);
+		ans[i+1]=ans[i]-t+g(uf.size(a[i]));
+	}
+	rrep(i,m){
+		puta(g(n)-ans[i]);
+	}
+	//puta(ans);
 	return 0;
 }

@@ -27,6 +27,11 @@ using vs=vector<string>;
 #define sc second
 #define PI (3.1415926535897932384)
 
+#define _cTime (chrono::system_clock::now())
+#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
+#define reset _sTime=_cTime
+auto reset;
+
 int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
 template<class T>bool chmax(T&a,T b){if(a<b){a=b; return true;}return false;}
 template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
@@ -46,44 +51,35 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
+	ll n,g;
+	cin>>n>>g;
+	vl p(n),c(n);
 	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+		cin>>p[i]>>c[i];
 	}
-
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
+	ll ans=LINF;
+	rep(s,1ll<<n){
+		ll score=0,other=-1,cnt=0;
+		rep(i,n){
+			if(s&(1ll<<i)){
+				score+=100*(i+1)*p[i]+c[i];
+				cnt+=p[i];
+			}else chmax(other,i);
 		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
+		if(g-score>0 and other!=-1){
+			int need=ceil((g-score)/(100.0*(other+1)));
+			if(need<p[other]){
+				score+=100*(other+1)*need;
+				cnt+=need;
 			}
 		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+		if(score>=g)chmin(ans,cnt);
+	}
+	puta(ans);
 	return 0;
 }

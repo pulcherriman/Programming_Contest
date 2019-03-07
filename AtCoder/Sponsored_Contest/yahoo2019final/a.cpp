@@ -46,44 +46,23 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+double solve(double h,double a){
+	double ret=0,t1=h-a,t2=h-a*2;
+	if(2*a<=h){
+		ret=t1*t1+t2*t2+t1*t2;
+		ret=a*(t1*t1-ret/3);
+		ret/=t1*t1;
+	}else{
+		ret=t1*2/3-t2;
+	}
+	return ret;
+}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
-	}
-
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	ll h,w,a,b;
+	cin>>h>>w>>a>>b;
+	fcout(13)<<solve(h,a)*solve(w,b)<<endl;;
 	return 0;
 }

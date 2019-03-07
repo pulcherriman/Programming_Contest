@@ -27,6 +27,11 @@ using vs=vector<string>;
 #define sc second
 #define PI (3.1415926535897932384)
 
+#define _cTime (chrono::system_clock::now())
+#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
+#define reset _sTime=_cTime
+auto reset;
+
 int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
 template<class T>bool chmax(T&a,T b){if(a<b){a=b; return true;}return false;}
 template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
@@ -46,44 +51,63 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+template<class T=ll>struct Graph{
+	int n;
+	vector<vector<tuple<ll,T>>>edge;
+	Graph(int N=1):n(N){edge.resize(n);}
+	void add(ll f,ll t,T c,bool d=false){
+		edge[f].emplace_back(t,c);
+		if(!d)edge[t].emplace_back(f,c);
+	}
+	void view(){
+		rep(i,n)for(auto&e:edge[i])
+			puta(i,"=>",get<0>(e),", cost :",get<1>(e));
+	}
+};
+
+
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+	ll n,m;
+	cin>>n>>m;
+	Graph<ll> g(n);
+	rep(i,m){
+		int a,b;
+		cin>>a>>b;
+		g.add(a-1,b-1,1);
 	}
 
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
+	int ans=0;
+	vb searched(n,false);
+	rep(i,n)if(!searched[i]){
+		vi adj(n,0);
+		queue<ll> q;
+		q.push(i);
+		while(!q.empty()){
+			int p=q.front(); q.pop();
+			if(searched[p])continue;
+			searched[p]=true;
+			adj[p]=1;
+			for(auto&e:g.edge[p]){
+				ll to,cost;
+				tie(to,cost)=e;
+				if(!searched[to]){
+					q.push(to);
+				}
 			}
 		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
+		int cnt=0;
+		rep(i,n)for(auto&e:g.edge[i]){
+			ll to,cost;
+			tie(to,cost)=e;
+			if(adj[i] and adj[to])cnt++;
 		}
-	}while(next_permutation(all(a)));
+		if(sum(adj)-1==cnt/2){
+			ans++;
+		}
+	}
+	puta(ans);
 	return 0;
 }

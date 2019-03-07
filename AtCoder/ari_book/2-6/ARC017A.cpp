@@ -46,44 +46,30 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+bool isPrime(ll n){
+	for(ll i=2;i*i<=n;i++)if(n%i==0)return false;
+	return true;
+}
+map<ll,int> primeFactor(ll n){
+	map<ll,int> ret;
+	for(ll i=2;i*i<=n;i++)if(n%i==0){n/=i;ret[i--]++;}
+	if(n-1)ret[n]++;
+	return ret;
+}
+mint nCr(ll n,ll r){
+	static vm f;
+	if(f.size()<n+1){
+		f.assign(n+1,1);
+		range(i,2,n+1)f[i]=f[i-1]*i;
+	}
+	return f[n]/f[r]/f[n-r];
+}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
+	ll n;
 	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
-	}
-
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	YN(isPrime(n));
 	return 0;
 }

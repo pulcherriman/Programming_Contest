@@ -46,44 +46,78 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+/*
+ * 最大流問題を解く（フォードファルカーソン）
+ * MaxFlow mf(100); //100頂点のグラフを考える、以降0-indexed
+ * mf.add(0,5,10);  //頂点0から頂点5に、流量10の辺。最大流問題では、有向かつ流量が正整数の辺しか張れない。
+ * mf.calcMF(0,5);  //頂点0から頂点5の流量を求める。O(辺の数*最大流量)
+ */
+struct MaxFlow{
+    struct edge{
+        int to,cap,rev;
+        edge(int t, int c, int r):to(t),cap(c),rev(r){}
+    };
+    vector<vector<edge>> g;
+    vector<bool> used;
+    MaxFlow(int n){
+        g=vector<vector<edge>>(n);
+        used=vector<bool>(n);
+    }
+    void add(int from, int to, int cap){
+        g[from].emplace_back(to,cap,g[to].size());
+        g[to].emplace_back(from,0,g[from].size()-1);
+    }
+    int dfs(int v, int t, int f){
+        if(v==t) return f;
+        used[v]=true;
+        rep(i,g[v].size()){
+            auto &e=g[v][i];
+            if(!used[e.to] && e.cap>0){
+                int d=dfs(e.to, t, min(f,e.cap));
+                if(d>0){
+                    e.cap-=d;
+                    g[e.to][e.rev].cap+=d;
+                    return d;
+                }
+            }
+        }
+        return 0;
+    }
+    int calcMF(int s, int t){
+        int flow=0;
+        while(1){
+            fill(all(used),false);
+            int f=dfs(s,t,INF);
+            if(f==0) return flow;
+            flow+=f;
+        }
+    }
+};
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
 	int n;
 	cin>>n;
-	set<int> v;
+	vector<pll> a(n),b(n);
+	MaxFlow mf(n*2+2);
 	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+		ll x,y; cin>>x>>y;
+		a[i]={x,y};
 	}
-
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
+	rep(i,n){
+		ll x,y; cin>>x>>y;
+		b[i]={x,y};
+	}
+	rep(i,n){
+		mf.add(0,i+1,1);
+		mf.add(n+i+1,n*2+1,1);
+		rep(j,n){
+			if(a[i].fs<b[j].fs and a[i].sc<b[j].sc){
+				mf.add(i+1,n+j+1,1);
 			}
 		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	}
+	puta(mf.calcMF(0,n*2+1));
 	return 0;
 }

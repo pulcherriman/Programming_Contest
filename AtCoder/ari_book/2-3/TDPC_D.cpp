@@ -46,44 +46,40 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+	ll n,d;
+	cin>>n>>d;
+
+
+	vl need(3,0);
+	while(d%2==0){need[0]++;d/=2;}
+	while(d%3==0){need[1]++;d/=3;}
+	while(d%5==0){need[2]++;d/=5;}
+	if(d!=1){
+		fcout(10)<<0<<endl;
+		return 0;
 	}
 
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
+	vector<vector<vvd>> dp(2,vector<vvd>(need[0]+1,vvd(need[1]+1,vd(need[2]+1,0.0))));
+	dp[0][0][0][0]=1.0;
+
+	rep(i,n){
+		int f=i%2,t=1-i%2;
+		rep(j,need[0]+1)rep(k,need[1]+1)rep(l,need[2]+1){
+			dp[t][j][k][l]+=dp[f][j][k][l]/6;
+			dp[t][min(j+1,need[0])][k][l]+=dp[f][j][k][l]/6;
+			dp[t][j][min(k+1,need[1])][l]+=dp[f][j][k][l]/6;
+			dp[t][min(j+2,need[0])][k][l]+=dp[f][j][k][l]/6;
+			dp[t][j][k][min(l+1,need[2])]+=dp[f][j][k][l]/6;
+			dp[t][min(j+1,need[0])][min(k+1,need[1])][l]+=dp[f][j][k][l]/6;
+			dp[f][j][k][l]=0;
 		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	}
+	
+	fcout(10)<<dp[n%2][need[0]][need[1]][need[2]]<<endl;
 	return 0;
 }

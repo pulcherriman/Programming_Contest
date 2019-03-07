@@ -46,44 +46,35 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+int popcnt(int x){return __builtin_popcount(x);}
+int popcnt(ll x){return __builtin_popcountll(x);}
+int bitdig(int x){return 32 - __builtin_clz(x);}
+int bitdig(ll x){return 64 - __builtin_clzll(x);}
+int bitffs(int x){return __builtin_ffs(x);}
+int bitffs(ll x){return __builtin_ffsll(x);}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
+	ll n;
 	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+	vl t(3),a(n);
+	cin>>t>>a;
+
+	vvl ans(3,vl(1<<n,0));
+	rep(i,3){
+		range(s,1,1<<n){
+			ll tmp=0;
+			rep(j,n)if(s&(1<<j))tmp+=a[j];
+			ans[i][s]=abs(t[i]-tmp)+(popcnt(s)-1)*10;
+		}
 	}
 
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	ll v=LINF;
+	range(i,1,1<<n)range(j,1,1<<n)range(k,1,1<<n){
+		if((i&j) or (j&k) or (k&i))continue;
+		chmin(v,ans[0][i]+ans[1][j]+ans[2][k]);
+	}
+	puta(v);
 	return 0;
 }

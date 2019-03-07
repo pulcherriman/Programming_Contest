@@ -46,44 +46,86 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+
+struct segTree{
+	vl val,lazy;
+	vector<bool> lazyFlag;
+	int N;
+	segTree():segTree(100000){}
+	segTree(int n){
+		N=1;
+		while(N<n)N*=2;
+		val.resize(N*2,0);
+		lazy.resize(N*2,0);
+		lazyFlag.resize(N*2,false);
+	}
+	
+	void eval(int k, int l, int r){
+		if(lazyFlag[k]){
+			val[k]=lazy[k];
+			if(r-l>1){
+				lazy[2*k]=lazy[2*k+1]=lazy[k];
+				lazyFlag[2*k]=lazyFlag[2*k+1]=true;
+			}
+			lazyFlag[k]=false;
+		}
+	}
+
+	void update(int a, int b, ll x){return update(a,b,1,0,N,x);}
+	void update(int a, int b, int k, int l, int r, ll x){
+		eval(k,l,r);
+		if(r<=a or l>=b) return;
+		if(a<=l and r<=b) {
+			lazy[k]=x;
+			lazyFlag[k]=true;
+			eval(k,l,r);
+		}else{
+			int m=(l+r)/2;
+			update(a,b,2*k,l,m,x);
+			update(a,b,2*k+1,m,r,x);
+			val[k]=max(val[2*k],val[2*k+1]);
+		}
+	}
+	
+	ll query(int a, int b){return query(a,b,1,0,N);}
+	ll query(int a, int b, int k, int l, int r){
+		if(a>=b)return 0;
+		eval(k,l,r);
+		if(r<=a or l>=b) return -LINF;
+		if(a<=l and r<=b) return val[k];
+		int m=(l+r)/2;
+		return max(query(a,b,k*2,l,m),query(a,b,k*2+1,m,r));
+	}
+};
+
+
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+	ll n,m;
+	cin>>n>>m;
+	vl a(n);
+	cin>>a;
+	vector<pll> q(m);
+	rep(i,m){
+		cin>>q[i].fs>>q[i].sc;
+	}
+	sort(all(q));
+	segTree t(n);
+	rep(i,n)t.update(i,i+1,-i-1);
+	
+	rrep(i,m){
+		t.update(q[i].fs-1,q[i].sc,-(q[i].fs));
 	}
 
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	segTree s(n+1);
+	rep(i,n){
+		ll tv=-t.query(i,i+1);
+		ll v=0;
+		if(tv>0)v=s.query(0,tv-1);
+		if(s.query(i,i+1)<v+a[i])s.update(i,i+1,v+a[i]);
+	}
+	puta(s.query(0,n+1));
 	return 0;
 }

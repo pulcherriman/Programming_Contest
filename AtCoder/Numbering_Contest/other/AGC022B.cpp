@@ -27,6 +27,11 @@ using vs=vector<string>;
 #define sc second
 #define PI (3.1415926535897932384)
 
+#define _cTime (chrono::system_clock::now())
+#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
+#define reset _sTime=_cTime
+auto reset;
+
 int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
 template<class T>bool chmax(T&a,T b){if(a<b){a=b; return true;}return false;}
 template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
@@ -46,44 +51,44 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+// 2,3,4, 6, 8, 9,10,12,14,15,
+// 2,3,4, 0, 2, 3, 4,0,
+// 2,5,9,15,23,32,42,
+// 2,5,3, 3, 5, 2, 0
 
+// S==0 -> ok
+// s==1 -> 4を29997
+// s==2 -> 6を29998 (n>=4)
+// s==3 -> 6を29997 (n>=4)
+// s==4 -> 4を30000 
+// s==5 -> 8を29997 (n>=5)
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
+	ll n;
 	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+	if(n==3){
+		puta(2,5,63);
+		return 0;
+	}else if(n==4){
+		puta(2,5,20,63);
+		return 0;
 	}
 
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
+	int cnt=0;
+	vi ans;
+	range(i,1,30001){
+		if(i%6%2 and i%6%3)continue;
+		cnt++;
+		ans.push_back(i);
+		if(cnt==n) break;
+	}
+	ll s=sum(ans);
+	if(s%6==1) ans[2]=29997;
+	if(s%6==2) ans[3]=29998;
+	if(s%6==3) ans[3]=29997;
+	if(s%6==4) ans[2]=30000;
+	if(s%6==5) ans[4]=29997;
+	puta(ans);
 	return 0;
 }

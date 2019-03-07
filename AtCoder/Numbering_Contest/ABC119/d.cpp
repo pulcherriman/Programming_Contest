@@ -46,44 +46,27 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-// #define var(t,n,...) t n;scan(n,__VA_ARGS__)
-// template<class V,class H,class...T>void scan(V&a,H )
+
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	int n;
-	cin>>n;
-	set<int> v;
-	rep(i,n){
-		int a,b; cin>>a>>b;
-		v.insert(a*8+b);
+	ll a,b,q;
+	cin>>a>>b>>q;
+	vl s(a),t(b);
+	cin>>s>>t;
+	rep(i,q){
+		ll x; cin>>x;
+		int ls=upper_bound(all(s),x)-s.begin()-1;
+		int lt=upper_bound(all(t),x)-t.begin()-1;
+		int rs=lower_bound(all(s),x)-s.begin();
+		int rt=lower_bound(all(t),x)-t.begin();
+		ll ans=LINF;
+		if(ls>=0 and lt>=0)chmin(ans,x-min(s[ls],t[lt]));
+		if(rs<a  and rt<b )chmin(ans,max(s[rs],t[rt])-x);
+		if(ls>=0 and rt<b )chmin(ans,min(x-s[ls],t[rt]-x)*2+max(x-s[ls],t[rt]-x));
+		if(rs<a  and lt>=0)chmin(ans,min(x-t[lt],s[rs]-x)*2+max(x-t[lt],s[rs]-x));
+		puta(ans);
 	}
-
-	vi a(8);
-	iota(all(a),0);
-	do{
-		vi b(8);
-		auto c=v;
-		rep(i,8){
-			b[i]=a[i]+i*8;
-			if(c.find(b[i])!=c.end()) c.erase(b[i]);
-		}
-		if(c.size()!=0)continue;
-		bool ok=true;
-		rep(i,8){
-			rep(j,i){
-				ok&=(b[j]%8==0 or (b[i]-b[j])%7!=0 or (b[i]-b[j])/7!=i-j);
-				ok&=(b[j]%8==7 or (b[i]-b[j])%9!=0 or (b[i]-b[j])/9!=i-j);
-			}
-		}
-		if(!ok)continue;
-		rep(i,8){
-			rep(j,8){
-				cout<<".Q"[a[i]==j];
-			}
-			cout<<endl;
-		}
-	}while(next_permutation(all(a)));
 	return 0;
 }
