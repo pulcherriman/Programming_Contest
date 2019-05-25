@@ -46,32 +46,30 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
-	}
+	ll n;
+	cin>>n;
+	vs s(n);
+	cin>>s;
 	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
+	ll a=0,b=0,ba=0;
+	rep(i,n){
+		rep(j,s[i].size()-1)if(s[i][j]=='A' and s[i][j+1]=='B')ans++;
+		if(s[i].front()=='B' and s[i].back()=='A')ba++;
+		else if(s[i].front()=='B')b++;
+		else if(s[i].back()=='A')a++;
 	}
-	puta(ans/2);
+	if(ba>0){
+		ans+=ba-1;
+		if(a>0){a--;ans++;}
+		if(b>0){b--;ans++;}
+	}
+	ans+=min(a,b);
+	puta(ans);
+
 	return 0;
 }

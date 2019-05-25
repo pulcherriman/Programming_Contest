@@ -46,32 +46,40 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
-
+struct UnionFind{
+	vl par,dist;
+	UnionFind(int x){par.assign(x,-1); dist.assign(x,0);}
+	ll find(ll x){return par[x]<0?x:find(par[x]);}
+	ll depth(ll x){return par[x]<0?0:depth(par[x])+dist[x];}
+	bool same(ll x,ll y){return find(x)==find(y);}
+	ll size(ll x){return -par[find(x)];}
+	ll diff(ll x,ll y){return same(x,y)?depth(x)-depth(y):LINF;}
+	void unite(ll x,ll y,ll k=0){
+		k+=depth(y); k-=depth(x); k=-k;
+		x=find(x); y=find(y);
+		if(x==y)return;
+		if(size(x)<size(y)){swap(x,y);k=-k;}
+		par[x]+=par[y]; par[y]=x; dist[y]=k;
+	}
+};
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
 	ll n,k;
 	cin>>n>>k;
-	vl a(n);
-	cin>>a;
+	UnionFind uf(n);
+	rep(i,k){
+		int a,b,c;
+		cin>>a>>b>>c;
+		uf.unite(a-1,b-1);
+	}
 	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
-	}
+	rep(i,n)mp[uf.size(i)]++;
 	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
+	for(auto t : mp){
+		ans+=t.sc/t.fs;
 	}
-	puta(ans/2);
+	puta(ans);
 	return 0;
 }

@@ -47,43 +47,40 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 
 /*他のライブラリを入れる場所*/
 enum SegType{SEG_MIN,SEG_MAX,SEG_SUM};
+ 
 struct SegmentTree{
-	using Func=function<ll(ll,ll)>;
-	using Attr=tuple<ll,Func,Func>;
-	int n;
-	vl val,lazy; vb flag;
-	ll e;
-	Func f,g;
-	const vector<Attr> tmpAttr{
-		Attr(LINF,	[](ll a,ll b){return min(a,b);},	[](ll a,ll b){return b;}),
-		Attr(-LINF,	[](ll a,ll b){return max(a,b);},	[](ll a,ll b){return b;}),
-		Attr(	0,	[](ll a,ll b){return a+b;},			[](ll a,ll b){return a+b;}),
-	};
-	SegmentTree(int N,int t):SegmentTree(N){tie(e,f,g)=tmpAttr[t];init(N);}
-	SegmentTree(int N,ll E,Func F,Func G):SegmentTree(N){tie(e,f,g)=Attr(E,F,G);init(N);}
-	void init(int N){
-		n=1; while(n<=N)n*=2;
-		val.assign(n*2,e);
-		lazy.assign(n*2,/* TODO */);
-		flag
-	}
-	void update(ll k,ll a){
-		k+=n;
-		val[k]=g(val[k],a);
-		while(k){
-			k/=2;
-			val[k]=f(val[k*2],val[k*2+1]);
-		}
-	}
-	ll query(int a, int b){return query(a,b,1,0,n);}
-	ll query(int a, int b, int k, int l, int r){
-		if(r<=a or l>=b) return e;
-		if(a<=l and r<=b) return val[k];
-		int m=(l+r)/2;
-		return f(query(a,b,k*2,l,m),query(a,b,k*2+1,m,r));
-	}	
+    using Func=function<ll(ll,ll)>;
+    using Attr=tuple<ll,Func,Func>;
+    int n;
+    vl val;
+    ll e;
+    Func f,g;
+    const vector<Attr> tmpAttr{
+        Attr(LINF,[](ll a,ll b){return min(a,b);},[](ll a,ll b){return b;}),
+        Attr(-LINF,[](ll a,ll b){return max(a,b);},[](ll a,ll b){return b;}),
+        Attr(0,[](ll a,ll b){return a+b;},[](ll a,ll b){return a+b;}),
+    };
+    SegmentTree(int N){
+        n=1; while(n<=N)n*=2;
+    }
+    SegmentTree(int N,int t):SegmentTree(N){tie(e,f,g)=tmpAttr[t];val.assign(n*2,e);}
+    SegmentTree(int N,ll E,Func F,Func G):SegmentTree(N){tie(e,f,g)=Attr(E,F,G);val.assign(n*2,e);}
+    void update(ll k,ll a){
+        k+=n;
+        val[k]=g(val[k],a);
+        while(k){
+            k/=2;
+            val[k]=f(val[k*2],val[k*2+1]);
+        }
+    }
+    ll query(int a, int b){return query(a,b,1,0,n);}
+    ll query(int a, int b, int k, int l, int r){
+        if(r<=a or l>=b) return e;
+        if(a<=l and r<=b) return val[k];
+        int m=(l+r)/2;
+        return f(query(a,b,k*2,l,m),query(a,b,k*2+1,m,r));
+    }   
 };
-
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);

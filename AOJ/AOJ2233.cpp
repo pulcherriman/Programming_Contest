@@ -46,32 +46,38 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
+	ll n;
+	double r,t;
+	cin>>n>>r>>t;
+	using P=complex<double>;
+	vector<P> p(n);
 	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+		int a,b; cin>>a>>b;
+		p[i]=P(a,b);
 	}
+	int mx=10000;
+	vector<vvd> dp(mx+1,vvd(n,vd(n,LINF)));
+	vector<vvd> a(n,vvd(n,vd(n)));
+	rep(i,n)rep(j,n)rep(k,n)if(j!=k){
+		a[i][j][k]=(i==j?0:abs(arg((p[j]-p[i])/(p[k]-p[j])))*180/PI);
+	}
+	dp[0][0][0]=0;
+
 	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
+	rep(i,mx)rep(j,n)rep(k,n)if(dp[i][j][k]!=LINF)rep(l,n)if(j!=l and k!=l){
+		if(a[j][k][l]<=t+EPS){
+			double dst=dp[i][j][k]+abs(p[k]-p[l]);
+			if(dst<=r+EPS and chmin(dp[i+1][k][l],dst)){
+				ans=i+1;
 			}
 		}
 	}
-	puta(ans/2);
+	puta(ans);
+	
 	return 0;
 }

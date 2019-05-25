@@ -46,32 +46,64 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
+enum SegType{SEG_MIN,SEG_MAX,SEG_SUM};
+ 
+struct SegmentTree{
+    using Func=function<ll(ll,ll)>;
+    using Attr=tuple<ll,Func,Func>;
+    int n;
+    vl val;
+    ll e;
+    Func f,g;
+    const vector<Attr> tmpAttr{
+        Attr(LINF,[](ll a,ll b){return min(a,b);},[](ll a,ll b){return b;}),
+        Attr(-LINF,[](ll a,ll b){return max(a,b);},[](ll a,ll b){return b;}),
+        Attr(0,[](ll a,ll b){return a+b;},[](ll a,ll b){return a+b;}),
+    };
+    SegmentTree(int N){
+        n=1; while(n<=N)n*=2;
+    }
+    SegmentTree(int N,int t):SegmentTree(N){tie(e,f,g)=tmpAttr[t];val.assign(n*2,e);}
+    SegmentTree(int N,ll E,Func F,Func G):SegmentTree(N){tie(e,f,g)=Attr(E,F,G);val.assign(n*2,e);}
+    void update(ll k,ll a){
+        k+=n;
+        val[k]=g(val[k],a);
+        while(k){
+            k/=2;
+            val[k]=f(val[k*2],val[k*2+1]);
+        }
+    }
+    ll query(int a, int b){return query(a,b,1,0,n);}
+    ll query(int a, int b, int k, int l, int r){
+        if(r<=a or l>=b) return e;
+        if(a<=l and r<=b) return val[k];
+        int m=(l+r)/2;
+        return f(query(a,b,k*2,l,m),query(a,b,k*2+1,m,r));
+    }   
+};
 
+ll solve(int l, int r, SegmentTree &st, vl &pos){
+	//puta(l,r);
+	ll v=st.query(l,r);
+	ll p=pos[v];
+	ll ret=v*(p-l+1)*(r-p);
+	if(l<p) ret+=solve(l,p,st,pos);
+	if(p+1<r) ret+=solve(p+1,r,st,pos);
+	return ret;
+}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
+	ll n;
+	cin>>n;
+	SegmentTree st(n,SEG_MIN);
+	vl p(n+1);
 	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+		ll t; cin>>t;
+		st.update(i,t);
+		p[t]=i;
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
-	}
-	puta(ans/2);
+	puta(solve(0,n,st,p));
 	return 0;
 }

@@ -46,32 +46,30 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
+	ll n,p,q;
+	cin>>n>>p>>q;
+	vl c(n+1,0),v(n+1,0);
 	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+		cin>>c[i+1];
+		v[i+1]=p*i+c[i+1];
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
+	sort(v.begin()+1,v.end());
+	partial_sum(all(v),v.begin());
+	ll cval=sum(c);
+	ll ans=-LINF;
+
+	//puta(v);
+	rep(i,n+1){
+		ll val=cval+i*p*(q+i-1)-v[i];
+		//puta(i,val);
+		chmax(ans,val);
 	}
-	puta(ans/2);
+	puta(ans);
+
 	return 0;
 }

@@ -46,32 +46,21 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
+	string s;
+	cin>>s;
+	ll n=s.size();
+	ll a=0,b=0;
 	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+		if(s[i]==(i%2?'1':'0'))a++;
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
+	rep(i,n){
+		if(s[i]==(i%2?'0':'1'))b++;
 	}
-	puta(ans/2);
+	puta(min(a,b));
 	return 0;
 }

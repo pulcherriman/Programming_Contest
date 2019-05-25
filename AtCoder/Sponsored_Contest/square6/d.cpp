@@ -46,32 +46,41 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
+	ll n;
+	cin>>n;
+
+	using pdi = pair<double,double>;
+	vector<pdi> p(n);
 	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+		cin>>p[i].fs>>p[i].sc;
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
+	sort(all(p));
+
+	double ans = 0;
+	vd ltr(n,0.0), rtl(n,0.0);
+
+	double r1=0.0, r2=0.0;
+	rep(j,n){
+		ltr[j]=r1;
+		r1=pow(pow(r1,3)+pow(p[j].sc,3), 1.0/3);
+		r1=max(0.0,r1-(p[j+1].fs-p[j].fs));
 	}
-	puta(ans/2);
+	rrep(j,n){
+		rtl[j]=r2;
+		r2=pow(pow(r2,3)+pow(p[j].sc,3), 1.0/3);
+		r2=max(0.0,r2-(p[j].fs-p[j-1].fs));
+	}
+
+	rep(i,n){
+		//puta(r1,p[i].sc,r2);
+		chmax(ans, pow(pow(ltr[i],3) + pow(p[i].sc,3) + pow(rtl[i],3), 1.0/3));
+	}
+
+	fcout(10)<<ans<<endl;
 	return 0;
 }

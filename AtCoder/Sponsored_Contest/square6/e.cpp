@@ -46,32 +46,38 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
-	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
+	ll h,w;
+	cin>>h>>w;
+	vector<pll> p;
+
+	int n=0;
+	rep(i,h)rep(j,w){
+		char c; cin>>c;
+		if(c=='o'){
+			p.emplace_back(i,j);
+			n++;
 		}
 	}
-	puta(ans/2);
+	if(n>16)return 0; // Yay!
+
+	vector<vvb> ok(1<<n,vvb(n,vb(2,false)));
+	rep(i,n)rep(j,2)ok[0][i][j]=true;
+
+	rep(s,1<<n)rep(i,n)rep(j,2)if(ok[s][i][j]){
+		rep(k,n)if(!((s>>k)&1)){
+			if(j==0 and p[i].fs!=p[k].fs) continue;
+			if(j==1 and p[i].sc!=p[k].sc) continue;
+			ok[s|(1<<k)][k][1-j]=true;
+		}
+	}
+	bool ans=false;
+	rep(i,n)rep(j,2) ans|=ok[(1<<n)-1][i][j];
+
+	tf(ans,"Possible", "Impossible");
 	return 0;
 }

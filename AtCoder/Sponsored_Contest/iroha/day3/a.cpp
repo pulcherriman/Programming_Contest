@@ -46,32 +46,39 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
+	vl a(26);
 	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
-	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
+	puta(a[0]-a[1]);
+	puta(a[2]+a[3]);
+	puta(max(a[5]+1-a[4],0));
+	puta((int)ceil((a[6]+a[7]+a[8])/3+0.0001));
+
+	vs s={"","a","aa","aaa","aaai","aaaji","aabaji","agabaji","dagabaji"};
+	puta(s[a[9]]);
+
+	int f1=0,f2=0;
+	range(i,1,100000000){
+		if(i%59==a[10] and i%61==a[11])a[12]--;
+		if(a[12]==0){
+			f1=i;
+			break;
 		}
 	}
-	puta(ans/2);
+	for(auto i : {6,28,496,8128,33550336}){
+		if(abs(f1-i)>=a[13]){
+			f2=i;
+			break;
+		}
+	}
+	puta(min(f1,f2));
+	puta(max(f1,f2));
+	puta((a[14]+a[15]+a[16])*(a[17]+a[18]+a[19])%9973*(a[20]+a[21]+a[22])%9973*(a[23]+a[24]+a[25])%9973);
+
+
 	return 0;
 }

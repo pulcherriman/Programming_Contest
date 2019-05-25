@@ -46,8 +46,6 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
@@ -55,23 +53,40 @@ int main(){
 	ios::sync_with_stdio(false);
 	ll n,k;
 	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
-	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
+	vl v,r,q(n,0);
+	int c=k/n, p=k%n;
+	ll d=1000000;
+	if(k==2*n-1){
+		rep(i,n-1){
+			v.push_back(i+1);
+			v.push_back(k-i-1);
+			r.push_back(i+1);
+			r.push_back(i+1);
+		}
+		v.push_back(k);
+		r.push_back(n);
+	}else{
+		rep(i,c-1)rep(j,n){
+			v.push_back(d);
+			r.push_back(j+1);
+			q[j]+=d;
+			d+=1000;
+		}
+		ll need=q.back()+d;
+		rrep(i,n){
+			v.push_back(need-q[i]);
+			r.push_back(i+1);
+			d+=1000;
+		}
+
+		rep(i,p){
+			v[i]-=(i+1);
+			v.push_back(i+1);
+			r.push_back(i+1);
 		}
 	}
-	puta(ans/2);
+	puta(v);
+	puta("YES");
+	puta(r);
 	return 0;
 }

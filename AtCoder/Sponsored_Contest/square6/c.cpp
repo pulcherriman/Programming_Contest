@@ -46,32 +46,49 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
+pll bfs(vs&f, int sy, int sx, bool down){
+	int h=f.size();
+	int w=f[0].size();
+	int v=down?0:h;
+	vvb s(h,vb(w,false));
+	queue<pll> q;
+	q.emplace(sy,sx);
+	while(!q.empty()){
+		int y,x;
+		tie(y,x)=q.front();
+		q.pop();
+		if(s[y][x])continue;
+		s[y][x]=true;
+		if(down){
+			chmax(v,y);
+			if(x+1<w and f[y][x+1]=='.')q.emplace(y,x+1);
+			if(y+1<h and f[y+1][x]=='.')q.emplace(y+1,x);
+		}else{
+			chmin(v,y);
+			if(x-1>=0 and f[y][x-1]=='.')q.emplace(y,x-1);
+			if(y-1>=0 and f[y-1][x]=='.')q.emplace(y-1,x);
+		}
+	}
+	return down?pll(0,v):pll(v,h-1);
+}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
-	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
+	ll h,w;
+	cin>>h>>w;
+	vs f(h);
+	cin>>f;
+	pll dw=bfs(f,0,0,true);
+	pll up=bfs(f,h-1,w-1,false);
+	rep(i,h){
+		if(count(all(f[i]),'.')!=w) continue;
+		if(i<=dw.sc and up.fs<=i){
+			puta("Yay!");
+			return 0;
 		}
 	}
-	puta(ans/2);
+	puta(":(");
 	return 0;
 }

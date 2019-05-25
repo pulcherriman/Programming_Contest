@@ -161,29 +161,45 @@ mint nCr(ll n,ll r){
 	return f[n]/f[r]/f[n-r];
 }
 
-constexpr int h(int a,int b,int c,int d){
-	return a*64+b*16+c*4+d;
-}
-
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
 	ll n;
 	cin>>n;
-	vvm dp(n+1,vm(64,0));
-	dp[0][h(0,3,3,3)]=1;
-	rep(i,n)rep(j,4)rep(k,4)rep(l,4)rep(m,4){
-		bool ng=false;
-		rep(x,4){
-			ng|=(h(j,k,l,m)==h(x,0,2,1));
-			ng|=(h(j,k,l,m)==h(0,2,x,1));
-			ng|=(h(j,k,l,m)==h(0,x,2,1));
-			ng|=(h(j,k,l,m)==h(x,0,1,2));
-			ng|=(h(j,k,l,m)==h(2,0,1,x));
-			ng|=(h(j,k,l,m)==h(x,2,0,1));
-		}
-		if(!ng)dp[i+1][h(0,k,l,m)]+=dp[i][h(0,j,k,l)];
+	vl a(n);
+	cin>>a;
+	ll b=0;
+	map<ll,ll> mp;
+	rep(i,n){
+		b^=a[i];
+		mp[b]+=1;
+		cout<<b<<",";
 	}
-	puta(sum(dp[n]));
+
+	mint ans=1;
+	if(mp[0]>0){
+		rep(i,mp[0]-1)ans*=2;
+	}
+	if(b==0){
+		// 偶数個, 1,0,1,0,1,0...,0
+
+	}else{
+		//奇数個、1,0,1,0,...,1
+	}
+	puta("");
+	for(auto p:mp)puta(p);
+	puta(ans);
+	// vvl b(20,vl(n,0));
+	// rep(i,20){
+	// 	rep(j,n){
+	// 		b[i][j]=(j>0?b[i][j-1]:0)^((a[j]>>i)&1);
+	// 	}
+	// 	puta(b[i]);
+	// }
+/*
+1 2 5 3 3 6 1 1 8 8 0 3 3 4 6 6 4 0 7 2 5 4 6 2
+1,3,6,5,6,0,1,0,8,0,0,3,0,4,2,4,0,0,7,5,0,4,2,0
+
+*/
 	return 0;
 }

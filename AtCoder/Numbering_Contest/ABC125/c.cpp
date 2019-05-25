@@ -49,29 +49,26 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
 constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
-
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
+	ll n;
+	cin>>n;
 	vl a(n);
 	cin>>a;
-	map<ll,ll> mp;
+	vl l(n),r(n);
 	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+		l[i]=i>0?gcd(l[i-1],a[i]):a[i];
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
+	rrep(i,n){
+		r[i]=i+1<n?gcd(r[i+1],a[i]):a[i];
 	}
-	puta(ans/2);
+	ll ans=1;
+	rep(i,n){
+		if(i==0)chmax(ans,r[1]);
+		else if(i+1==n)chmax(ans,l[n-2]);
+		else chmax(ans,gcd(l[i-1],r[i+1]));
+	}
+	puta(ans);
 	return 0;
 }

@@ -46,32 +46,66 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
+
+#define _cTime (chrono::system_clock::now())
+#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
+#define reset _sTime=_cTime
+auto reset;
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+	ll h,w;
+	cin>>h>>w;
+	vl vv(w,0),vx(w,0),vp(w),hv(h,0),hx(h,0),hp(h);
+	vvl a(h,vl(w));
+	rep(i,h)rep(j,w){
+		ll t=0;
+		cin>>t;
+		a[i][j]=t;
+		vv[j]+=t;
+		hv[i]+=t;
+		if(chmax(vx[j],t)) vp[j]=i;
+		if(chmax(hx[i],t)) hp[i]=j;;
 	}
 	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
+	ll v=0;
+	vs f(h,string(w,'#'));
+	vs af(h,string(w,'#')), bf(h,string(w,'#'));
+	rep(i,h){
+		if(i%2)v+=hx[i];
+		else v+=hv[i];
+		rep(j,w)if(i%2 and hp[i]!=j)af[i][j]='.';
+	}
+	if(h%2==0)rep(j,w){
+		if(abs(hp[h-1]-j)>1 and abs(hp[h-1]-j)%2==0)af[h-1][j]='#';
+	}
+	if(chmax(ans,v))f=af;
+
+	bool rev=false;
+	{
+		v=0;
+		swap(h,w);
+		bf=vs(h,string(w,'#'));
+		rep(i,h){
+			if(i%2)v+=vx[i];
+			else v+=vv[i];
+			rep(j,w)if(i%2 and vp[i]!=j)bf[i][j]='.';
+		}
+		if(chmax(ans,v)){
+			f=bf;
+			rev=true;
 		}
 	}
-	puta(ans/2);
+
+
+	if(rev){
+		swap(h,w);
+		vs cf(h,string(w,'#'));
+		rep(i,h)rep(j,w)cf[i][j]=f[j][i];
+		f=cf;
+	}
+	rep(i,h)puta(f[i]);
 	return 0;
 }

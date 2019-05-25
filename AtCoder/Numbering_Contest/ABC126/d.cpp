@@ -46,32 +46,38 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+	ll n;
+	cin>>n;
+	vector<vector<pll>> edge(n+1);
+	rep(i,n-1){
+		ll u,v,w;
+		cin>>u>>v>>w;
+		edge[u].emplace_back(v,w);
+		edge[v].emplace_back(u,w);
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
+	queue<int> q;
+	q.push(1);
+	vi ed(n+1,-1);
+	ed[1]=0;
+	vb edb(n+1,false);
+	while(!q.empty()){
+		int p =q.front();
+		q.pop();
+		if(edb[p])continue;
+		edb[p]=true;
+		for(auto t:edge[p]){
+			ll v,w; tie(v,w)=t;
+			if(!edb[v]){
+				ed[v]=w%2?1-ed[p]:ed[p];
+				q.push(v);
 			}
 		}
 	}
-	puta(ans/2);
+	range(i,1,n+1)puta(ed[i]);
 	return 0;
 }
