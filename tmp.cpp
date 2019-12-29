@@ -34,6 +34,8 @@ template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
 ll max(int a,ll b){return max((ll)a,b);} ll max(ll a,int b){return max(a,(ll)b);}
+int sgn(const double&r){return (r>EPS)-(r<-EPS);} // a>0  : sgn(a)>0
+int sgn(const double&a,const double&b){return sgn(a-b);} // b<=c : sgn(b,c)<=0
 
 template<class T>void puta(T&&t){cout<<t<<"\n";}
 template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<' ';puta(t...);}
@@ -46,32 +48,24 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-constexpr ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-constexpr ll lcm(ll a,ll b){return a/gcd(a,b)*b;}
 
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,k;
-	cin>>n>>k;
-	vl a(n);
-	cin>>a;
-	map<ll,ll> mp;
-	rep(i,n){
-		a[i]=gcd(a[i],k);
-		mp[a[i]]+=1;
+	ll n;cin>>n;
+	vl a(n+1,0);
+	rep(i,n)cin>>a[i+1];
+	partial_sum(all(a),a.begin());
+
+	vl dp(n+1,0);
+	dp[1] = a[1];
+	dp[2] = a[1];
+
+	range(i,2,n+1){
+		dp[i] = a[i-2] + max(a[i-1], dp[i-2]); 
 	}
-	ll ans=0;
-	for(auto x : mp){
-		for(auto y : mp){
-			if(x.fs!=y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*y.sc;
-			}else if(x.fs==y.fs and gcd(x.fs*y.fs,k)==k){
-				ans+=x.sc*(y.sc-1);
-			}
-		}
-	}
-	puta(ans/2);
+	puta(dp[n]);
+
 	return 0;
 }
