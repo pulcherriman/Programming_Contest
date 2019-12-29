@@ -48,6 +48,7 @@ template<class S,class T>ostream&operator<<(ostream&os,pair<S,T>p){os<<"["<<p.fi
 template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){os<<(a?"":" ")<<s;a=0;}return os;}
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
+// 748317
 /*他のライブラリを入れる場所*/
 bool isPrime(ll n){
     for(ll i=2;i*i<=n;i++)if(n%i==0)return false;
