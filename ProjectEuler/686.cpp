@@ -48,20 +48,27 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-bool isPrime(ll n){
-    for(ll i=2;i*i<=n;i++)if(n%i==0)return false;
-    return true;
-}
-map<ll,int> primeFactor(ll n){
-    map<ll,int> ret;
-    for(ll i=2;i*i<=n;i++)if(n%i==0){n/=i;ret[i--]++;}
-    if(n-1)ret[n]++;
-    return ret;
-}
 
+// 193060223
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n;
+
+    ll b=1237940039285380ll, cnt=0, cur=90, prev=0;
+    while(true){
+        string s=to_string(b);
+        if(s.substr(0,min(3, (int)s.size())) == "123"){
+            cnt++;
+            // puta(cur,cnt,cur-prev, b);
+            if(cnt==678910){
+                puta(cur,cnt);
+                break;
+            }
+            prev=cur;
+        }
+        cur++;
+        b<<=1;
+        if(b>=(1ll<<62))b/=10;
+    }
     return 0;
 }
