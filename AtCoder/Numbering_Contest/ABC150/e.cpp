@@ -117,17 +117,14 @@ int main(){
     cin>>n;
     vl a(n);cin>>a;
     sort(rall(a));
-    mint p=5;
-    puta(300000000000ll*p);
-    // puta(5*2_m);
-    // if(n==1){
-    //     puta(mint(a[0])*2);
-    //     return 0;
-    // }
-    // mint ans=0;
-    // rep(i,n){
-    //     ans+=a[i] * ((2_m^(n-1))+(2_m^(n-2))*i) ;
-    // }
-    // puta(ans* (2_m^n));
+    if(n==1){
+        puta(mint(a[0])*2);
+        return 0;
+    }
+    mint ans=0;
+    rep(i,n){
+        ans+=a[i] * ((2_m^(n-1))+(2_m^(n-2))*i) ;
+    }
+    puta(ans* (2_m^n));
     return 0;
 }

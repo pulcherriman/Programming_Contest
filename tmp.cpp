@@ -53,19 +53,8 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n;cin>>n;
-	vl a(n+1,0);
-	rep(i,n)cin>>a[i+1];
-	partial_sum(all(a),a.begin());
-
-	vl dp(n+1,0);
-	dp[1] = a[1];
-	dp[2] = a[1];
-
-	range(i,2,n+1){
-		dp[i] = a[i-2] + max(a[i-1], dp[i-2]); 
-	}
-	puta(dp[n]);
-
+	ll n;
+	cin>>n;
+	puta(n);
 	return 0;
 }
