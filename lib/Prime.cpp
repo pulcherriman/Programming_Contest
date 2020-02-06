@@ -111,12 +111,11 @@ class _Prime{
         chmax(l,2ll);
         firstb.assign(r-l,true);
         primes.clear();
-        vl p=_Prime().sequence(block);
-        for(ll i=0,j;p[i]*p[i]<r;++i){
-            if(p[i]>=l)j=p[i]*p[i];
-            else if(l%p[i]==0)j=l;
-            else j=l-(l%p[i])+p[i];
-            for(;j<r;j+=p[i])firstb[j-l]=false;
+        for(ll i=0,j;pr_default[i]*pr_default[i]<r;++i){
+            if(pr_default[i]>=l)j=pr_default[i]*pr_default[i];
+            else if(l%pr_default[i]==0)j=l;
+            else j=l-(l%pr_default[i])+pr_default[i];
+            for(;j<r;j+=pr_default[i])firstb[j-l]=false;
         }
         range(i,l,r)if(firstb[i-l])add(i);
     }
@@ -157,17 +156,17 @@ int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
 
-    puta(Prime.isPrime(10123457689ll));
-    puta(Prime.sequence(10'000).size());
-    puta(Prime.sequence(100'000).size());
-    puta(Prime.sequence(1'000'000).size());
-    puta(Prime.sequence(10'000'000).size());
-    puta(Prime.sequence(100'000'000).size());
-    puta(Prime.sequence());
-    puta(Prime.segment());
-    puta(Prime.segment(100000000000,100100000000).size());
-    puta(Prime.factor(1565912117761ll));
-    puta(Prime.factor(10123457689ll));
+    puta(Prime.isPrime(10123457689ll)); // True
+    puta(Prime.sequence(10'000).size()); // 1229
+    puta(Prime.sequence(100'000).size()); // 9592
+    puta(Prime.sequence(1'000'000).size()); // 78498
+    puta(Prime.sequence(10'000'000).size()); // 664579
+    puta(Prime.sequence(100'000'000).size()); // 5761455
+    puta(Prime.sequence()); // 2 - 97
+    puta(Prime.segment()); // 1009 - 1097
+    puta(Prime.segment(100000000000,100100000000).size()); // 3948161
+    puta(Prime.factor(1565912117761ll)); // [1162193, 1] [1347377, 1]
+    puta(Prime.factor(10123457689ll)); // [10123457689, 1]
     return 0;
 
 }
