@@ -53,8 +53,35 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n;
-	cin>>n;
-	puta(n);
+	ll n,a,b,c,d;
+	string s;
+	cin>>n>>a>>b>>c>>d>>s;
+	a--; b--; c--; d--;
+
+	deque<ll> rock;
+	range(i,a,max(c,d))if(s[i]=='#')rock.push_back(i);
+
+	rep(i,rock.size()-1){
+		if(rock[i+1]-rock[i]==1){
+			puta("No");
+			return 0;
+		}
+	}
+
+	if(c<d){
+		puta("Yes");
+	}else{
+		rock.push_front(b-2);
+		rock.push_back(d+2);
+		rep(i,rock.size()-1){
+			if(rock[i]<b-2 || rock[i+1]>d+2)continue;
+			if(rock[i+1]-rock[i]>3){
+				puta("Yes");
+				return 0;
+			}
+		}
+		puta("No");
+	}
+	
 	return 0;
 }
