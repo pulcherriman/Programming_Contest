@@ -16,8 +16,8 @@ using vs=vector<string>;
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define rep(i,n) range(i,0,n)
-#define rrep(i,n) for(ll i=(n)-1;i>=0;i--)
-#define range(i,a,n) for(ll i=(a);i<(n);i++)
+#define rrep(i,n) for(ll i=((ll)n)-1;i>=0;i--)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);i++)
 #define LINF ((ll)1ll<<60)
 #define INF ((int)1<<30)
 #define EPS (1e-9)
@@ -46,130 +46,75 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-int mpow(int v, ll a) {
-	ll x = v, n = a, res = 1;
-	while ( n ) {
-		if ( n & 1 )res = res*x%MOD;
-		x = x*x%MOD;
-		n >>= 1;
-	}
-	return res;
-}
+template<int _MOD>struct modint{
+    ll val;
+    constexpr static int setModMax = 510000;
+    static modint<_MOD> fac[setModMax], finv[setModMax], inv[setModMax];
 
-class mint {
-private:
-	ll v;
-public:
-	static ll mod(ll a) { return ( a % MOD + MOD ) % MOD; }
-	mint(ll a = 0) { this->v = mod(a); };
-	mint(const mint &a) { v = a.v; }
-	mint operator+(const mint &a) { return mint(v + a.v); }
-	mint operator+(const ll a) { return mint(v + a % MOD); }
-	mint operator+(const signed a) { return mint(v + a % MOD); }
-	friend mint operator+(const ll a, const mint &b) { return mint(a % MOD + b.v); }
-	void operator+=(const mint &a) { v = ( v + a.v ) % MOD; }
-	void operator+=(const ll a) { v = mod(v + a % MOD); }
-	void operator+=(const signed a) { v = mod(v + a % MOD); }
-	friend void operator+=(ll &a, const mint &b) { a = mod(a % MOD + b.v); }
-	mint operator-(const mint &a) { return mint(v - a.v); }
-	mint operator-(const ll a) { return mint(v - a % MOD); }
-	mint operator-(const signed a) { return mint(v - a % MOD); }
-	friend mint operator-(const ll a, const mint &b) { return mint(a % MOD - b.v); }
-	void operator-=(const mint &a) { v = mod(v - a.v); }
-	void operator-=(const ll a) { v = mod(v - a % MOD); }
-	void operator-=(const signed a) { v = mod(v - a % MOD); }
-	friend void operator-=(ll &a, const mint &b) { a = mod(a % MOD - b.v); }
-	mint operator*(const mint &a) { return mint(v * a.v); }
-	mint operator*(const ll a) { return mint(v * ( a % MOD )); }
-	mint operator*(const signed a) { return mint(v * ( a % MOD )); }
-	friend mint operator*(const ll a, const mint &b) { return mint(a % MOD * b.v); }
-	void operator*=(const mint &a) { v = ( v * a.v ) % MOD; }
-	void operator*=(const ll a) { v = mod(v * ( a % MOD )); }
-	void operator*=(const signed a) { v = mod(v * ( a % MOD )); }
-	friend void operator*=(ll &a, const mint &b) { a = mod(a % MOD * b.v); }
-	mint operator/(const mint &a);
-	mint operator/(const ll a);
-	mint operator/(const signed a);
-	friend mint operator/(const ll a, const mint &b);
-	void operator/=(const mint &a);
-	void operator/=(const ll a);
-	void operator/=(const signed a);
-	friend void operator/=(ll &a, const mint &b);
-	mint operator^(const mint &a) { return mpow(v, a.v); };
-	mint operator^(const ll a) { return mpow(v, a); };
-	mint operator^(const signed a) { return mpow(v, a); };
-	friend mint operator^(const ll a, const mint &b) { return mpow(a, b.v); };
-	void operator^=(const mint &a) { v = mpow(v, a.v); }
-	void operator^=(const ll a) { v = mpow(v, a); }
-	void operator^=(const signed a) { v = mpow(v, a); }
-	mint operator+() { return *this; }
-	mint operator++() { v++; return *this; }
-	mint operator++(signed d) { mint res = *this; v++; return res;}
-	mint operator-() { return operator*(-1); }
-	mint operator--() { v--; return *this; }
-	mint operator--(signed d) { mint res = *this; v--; return res;}
-	bool operator==(mint &a) { return v == a.v; }
-	bool operator==(signed a) { return v == a; }
-	friend bool operator==(signed a, mint &b) { return a == b.v; }
-	bool operator!=(mint &a) { return v != a.v; }
-	bool operator!=(signed a) { return v != a; }
-	friend bool operator!=(signed a, mint &b) { return a != b.v; }
-	operator int() { return v; }
+    static constexpr ll mod(ll a){return(a%_MOD+_MOD)%_MOD;}
+    constexpr modint(ll v = 0)noexcept:val(v%_MOD){
+        if(val<0)v+=_MOD;
+    }
+    constexpr int getmod(){return _MOD;}
+    constexpr modint operator-()const noexcept{return val?_MOD-val:0;}
+    constexpr modint operator+(const modint&r)const noexcept{return modint(*this)+=r;}
+    constexpr modint operator-(const modint&r)const noexcept{return modint(*this)-=r;}
+    constexpr modint operator*(const modint&r)const noexcept{return modint(*this)*=r;}
+    constexpr modint operator/(const modint&r)const noexcept{return modint(*this)/=r;}
+    constexpr modint operator^(const modint&r)const noexcept{return modint(*this)^=r;}
+    constexpr modint&operator+=(const modint&r)noexcept{val=mod(val+r.val);return*this;}
+    constexpr modint&operator-=(const modint&r)noexcept{val=mod(val-r.val);return*this;}
+    constexpr modint&operator*=(const modint&r)noexcept{val=mod(val*r.val);return*this;}
+    constexpr modint&operator/=(const modint&r)noexcept{
+        ll a=r.val,b=_MOD,u=1,v=0;while(b){ll t=a/b;a-=t*b;swap(a,b);u-=t*v;swap(u,v);}
+        val=val*u%_MOD;if(val<0)val+=_MOD;return*this;}
+    constexpr modint&operator^=(const modint&r)noexcept{val=modpow(val,r.val).val;return*this;}
+    constexpr bool operator<(const modint&r)const noexcept{return this->val<r.val;}
+    constexpr bool operator>(const modint&r)const noexcept{return r<*this;}
+    constexpr bool operator!=(const modint&r)const noexcept{return *this<r||*this>r;}
+    constexpr bool operator==(const modint&r)const noexcept{return !(*this!=r);}
+    constexpr bool operator<=(const modint&r)const noexcept{return !(*this>r);}
+    constexpr bool operator>=(const modint&r)const noexcept{return !(*this<r);}
+    friend constexpr ostream&operator<<(ostream&os,const modint<_MOD>&x)noexcept{return os<<x.val;}
+    friend constexpr istream&operator>>(istream&is,modint<_MOD>&x)noexcept{return is>>x.val;}
+    constexpr modint<_MOD>modpow(const modint<_MOD>&a,ll n)noexcept{
+        if(n==0)return 1;auto t=modpow(a,n/2);t*=t;if(n&1)t*=a;return t;}
+    friend modint<_MOD>operator+(const ll a,const modint&b){return modint(a)+=b;}
+    friend void operator+=(ll&a,const modint&b){a=modint(a)+b;}
+    friend modint<_MOD>operator-(const ll a,const modint&b){return modint(a)-=b;}
+    friend void operator-=(ll&a,const modint&b){a=modint(a)-b;}
+    friend modint<_MOD>operator*(const ll a,const modint&b){return modint(a)*=b;}
+    friend void operator*=(ll&a,const modint&b){a=modint(a)*b;}
+    friend modint<_MOD>operator/(const ll a,const modint&b){return modint(a)/=b;}
+    friend void operator/=(ll&a,const modint&b){a=modint(a)/b;}
+    friend modint<_MOD>operator^(const ll a,const modint&b){return modint(a)^=b;}
+    friend void operator^=(ll&a,const modint&b){a=modint(a)^b;}
+    explicit operator ll(){return val;}
 };
-const int setModMax = 510000;
-mint fac[setModMax], finv[setModMax], inv[setModMax];
-void setMod() {
-	fac[0] = fac[1] = finv[0] = finv[1] = inv[1] = 1;
-	for ( int i = 2; i < setModMax; i++ ) {
-		fac[i] = fac[i - 1] * i % MOD;
-		inv[i] = MOD - inv[MOD % i] * ( MOD / i ) % MOD;
-		finv[i] = finv[i - 1] * inv[i] % MOD;
-	}
-}
-mint minv(ll a) {
-	if ( fac[0] == 0 )setMod();
-	if ( a < setModMax ) return inv[a];
-	a %= MOD;
-	ll b = MOD, x = 1, y = 0;
-	while ( b ) {
-		ll t = a / b;
-		a -= t*b; swap(a, b);
-		x -= t*y; swap(x, y);
-	}
-	return ( x % MOD + MOD ) % MOD;
-}
-
-mint mint::operator/(const mint &a) { return mint(v * minv(a.v)); }
-mint mint::operator/(const ll a) { return mint(v * minv(a)); }
-mint mint::operator/(const signed a) { return mint(v * minv(a)); }
-mint operator/(const ll a, const mint &b) { return mint(a % MOD * minv(b.v)); }
-void mint::operator/=(const mint &a) { v = ( v * minv(a.v) ) % MOD; }
-void mint::operator/=(const ll a) { v = mod(v * minv(a)); }
-void mint::operator/=(const signed a) { v = mod(v * minv(a)); }
-void operator/=(ll &a, const mint &b) { a = mint::mod(a % MOD * minv(b.v)); }
-auto&operator>>(istream&is,mint&t){ll a; cin>>a; t=a; return is;};
-auto&operator<<(ostream&os,mint&t){cout<<((int)t); return os;};
-mint operator"" _m(unsigned long long a){return mint(a);}
-using vm=vector<mint>;
-using vvm=vector<vm>;
+using mint = modint<MOD>;
+using vm = vector<mint>;
+using vvm = vector<vm>;
+mint operator""_m(unsigned long long a){return mint(a);}
 mint nCr(ll n,ll r){
-	static vm f;
-	if(f.size()<n+1){
-		f.assign(n+1,1);
-		range(i,2,n+1)f[i]=f[i-1]*i;
-	}
-	return f[n]/f[r]/f[n-r];
+    const static int setModMax = 200001;
+    static mint fac[setModMax],finv[setModMax],inv[setModMax];
+    if(fac[0]==0){
+        fac[0]=fac[1]=finv[0]=finv[1]=inv[1]=1;
+        for(int i=2;i<setModMax;i++) {
+            fac[i]=fac[i-1]*i;
+            inv[i]=-inv[MOD%i]*(MOD/i);
+            finv[i]=finv[i-1]*inv[i];
+        }
+    }
+    return fac[n]*finv[r]*finv[n-r];
 }
+mint nCr(mint a,mint b){return nCr(a.val,b.val);}
 
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,m,k;
+	mint n,m,k;
 	cin>>n>>m>>k;
-	mint ans=0;
-
-	
-
-	puta(n);
+	puta((m*m*n-n+n*n*m-m)*nCr(n*m-2,k-2)*n*m/6);
 	return 0;
 }
