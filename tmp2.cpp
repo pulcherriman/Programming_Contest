@@ -53,23 +53,9 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
-	ll n,a,b,c,d;
-	string s;
-	cin>>n>>a>>b>>c>>d>>s;
-	a--; b--; c--; d--;
-
-	bool ok=true;
-	range(i,a,max(c,d))if(s[i]=='#' and s[i+1]=='#')ok=false;
-
-	if(c<d){
-		Yn(ok);
-	}else{
-		bool ok2=false;
-		range(i,b,d+1){
-			ok2 |= (s[i-1]=='.' and s[i]=='.' and s[i+1]=='.');
-		}
-		Yn(ok and ok2);
-	}
-	
+	ll n; cin>>n;
+    vvl a(n,vl(n));
+    cin>>a;
+    
 	return 0;
 }
