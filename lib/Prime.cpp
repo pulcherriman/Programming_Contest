@@ -52,102 +52,102 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 
 /*他のライブラリを入れる場所*/
 class _Prime{
-    public:
-    ll target,c,block=2*3*5*7*11*13*17*2;
-    vb firstb;
-    vector<short> al;
-    vi pr,li;
-    vl primes,pr_default;
-    void calc(){
-        firstb.assign(block,false);
-        al.assign(block,0);
-        primes.clear();
-        li.clear();
-        c=0;
-        firstcalc();
-        for(ll i=block;i<target;i+=block)calc(i);
-    }
-    void firstcalc(){
-        for(int&p:vi{2,3,5,7,11,13,17}){
-            if(p>target)break;
-            add(p);
-            if((ll)p*p<target){
-                pr.push_back(p);
-                for(ll j=p*2;j<block;j+=p)firstb[j]=true;
-            }
-        }
-        c++;
-        li.push_back(1);
-        range(i,19,block){
-            if(firstb[i])continue;
-            li.push_back(i);
-            if(al[i]==c)continue;
-            if(i>target)break;
-            add(i);
-            if((ll)i*i<=target){
-                pr.push_back(i);
-                for(ll j=i*2;j<block;j+=i)al[j]=c;
-            }
+public:
+ll target,c,block=2*3*5*7*11*13*17*2;
+vb firstb;
+vector<short> al;
+vi pr,li;
+vl primes,pr_default;
+void calc(){
+    firstb.assign(block,false);
+    al.assign(block,0);
+    primes.clear();
+    li.clear();
+    c=0;
+    firstcalc();
+    for(ll i=block;i<target;i+=block)calc(i);
+}
+void firstcalc(){
+    for(int&p:vi{2,3,5,7,11,13,17}){
+        if(p>target)break;
+        add(p);
+        if((ll)p*p<target){
+            pr.push_back(p);
+            for(ll j=p*2;j<block;j+=p)firstb[j]=true;
         }
     }
+    c++;
+    li.push_back(1);
+    range(i,19,block){
+        if(firstb[i])continue;
+        li.push_back(i);
+        if(al[i]==c)continue;
+        if(i>target)break;
+        add(i);
+        if((ll)i*i<=target){
+            pr.push_back(i);
+            for(ll j=i*2;j<block;j+=i)al[j]=c;
+        }
+    }
+}
 
-    void calc(ll b){
-        c++;
-        ll mv=b+block;
-        for(int&p:pr){
-            if((ll)p*p>mv)break;
-            ll f=b%p;
-            if(f)f=p-f;
-            if((f&1)==0)f+=p;
-            for(ll j=f;j<block;j+=p*2)al[j]=c;
-        }
-        for(int&i:li){
-            if(al[i]==c)continue;
-            if(b+i>target)break;
-            add(b+i);
-        }
+void calc(ll b){
+    c++;
+    ll mv=b+block;
+    for(int&p:pr){
+        if((ll)p*p>mv)break;
+        ll f=b%p;
+        if(f)f=p-f;
+        if((f&1)==0)f+=p;
+        for(ll j=f;j<block;j+=p*2)al[j]=c;
     }
-    void seg(ll l, ll r){
-        chmax(l,2ll);
-        firstb.assign(r-l,true);
-        primes.clear();
-        for(ll i=0,j;pr_default[i]*pr_default[i]<r;++i){
-            if(pr_default[i]>=l)j=pr_default[i]*pr_default[i];
-            else if(l%pr_default[i]==0)j=l;
-            else j=l-(l%pr_default[i])+pr_default[i];
-            for(;j<r;j+=pr_default[i])firstb[j-l]=false;
-        }
-        range(i,l,r)if(firstb[i-l])add(i);
+    for(int&i:li){
+        if(al[i]==c)continue;
+        if(b+i>target)break;
+        add(b+i);
     }
+}
+void seg(ll l, ll r){
+    chmax(l,2ll);
+    firstb.assign(r-l,true);
+    primes.clear();
+    for(ll i=0,j;pr_default[i]*pr_default[i]<r;++i){
+        if(pr_default[i]>=l)j=pr_default[i]*pr_default[i];
+        else if(l%pr_default[i]==0)j=l;
+        else j=l-(l%pr_default[i])+pr_default[i];
+        for(;j<r;j+=pr_default[i])firstb[j-l]=false;
+    }
+    range(i,l,r)if(firstb[i-l])add(i);
+}
 
 
-    void add(ll a){primes.push_back(a);}
+void add(ll a){primes.push_back(a);}
 
-    public:
-    _Prime(){target=block;calc();pr_default=primes;}
-    vl sequence(ll n=100){
-        assert(n<=100'000'000);
-        target=n;
-        if(n<=block)primes.assign(pr_default.begin(),find_if_not(all(pr_default),[&](ll x){return x<=n;}));
-        else calc();return primes;
-    }
-    vl segment(ll l=1000, ll r=1100){
-        assert(r<=block*block); //1'0424'8184'0400ll ~= 10^12
-        assert(r-l<=100'000'000);
-        seg(l,r);return primes;
-    }
-    bool isPrime(ll n){
-        assert(n<=block*block); //1'0424'8184'0400ll ~= 10^12
-        for(ll&p:pr_default){if(n%p==0)return false;if(p*p>n)break;}
-        return true;
-    }
-    map<ll,ll> factor(ll n){
-        map<ll,ll> ret;
-        if(n<=block)for(ll&p:pr_default)while(n%p==0){ret[p]++;n/=p;}
-        else for(ll p=2;p*p<=n;p++)while(n%p==0){ret[p]++;n/=p;}
-        if(n!=1)ret[n]++;
-        return ret;
-    }
+public:
+_Prime(){target=block;calc();pr_default=primes;}
+vl sequence(ll n=100){
+    assert(n<=100'000'000);
+    target=n;
+    if(n<=block)primes.assign(pr_default.begin(),find_if_not(all(pr_default),[&](ll x){return x<=n;}));
+    else calc();return primes;
+}
+vl segment(ll l=1000, ll r=1100){
+    assert(r<=block*block); //1'0424'8184'0400ll ~= 10^12
+    assert(r-l<=100'000'000);
+    seg(l,r);return primes;
+}
+bool isPrime(ll n){
+    assert(n<=block*block); //1'0424'8184'0400ll ~= 10^12
+    for(ll&p:pr_default){if(n%p==0)return false;if(p*p>n)break;}
+    return true;
+}
+map<ll,ll> factor(ll n){
+    map<ll,ll> ret;
+    if(n<=block)for(ll&p:pr_default)while(n%p==0){ret[p]++;n/=p;}
+    else for(ll p=2;p*p<=n;p++)while(n%p==0){ret[p]++;n/=p;}
+    if(n!=1)ret[n]++;
+    return ret;
+}
 };
 _Prime Prime;
 
