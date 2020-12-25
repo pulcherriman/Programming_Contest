@@ -1,5 +1,6 @@
 /.vscode/
 /*.exe
 /in.txt
+/out.txt
 /ws.code-workspace
 /self
