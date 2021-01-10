@@ -48,35 +48,82 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
+enum SegType{SEG_MIN,SEG_MAX,SEG_SUM};
+ 
+struct SegmentTree{
+    using Func=function<ll(ll,ll)>;
+    using Attr=tuple<ll,Func,Func>;
+    int n;
+    vl val;
+    ll e;
+    Func f,g;
+    const vector<Attr> tmpAttr{
+        Attr(LINF,[](ll a,ll b){return min(a,b);},[](ll a,ll b){return b;}),
+        Attr(-LINF,[](ll a,ll b){return max(a,b);},[](ll a,ll b){return b;}),
+        Attr(0,[](ll a,ll b){return a+b;},[](ll a,ll b){return a+b;}),
+    };
+    SegmentTree(int N){
+        n=1; while(n<=N)n*=2;
+    }
+    SegmentTree(int N,int t):SegmentTree(N){tie(e,f,g)=tmpAttr[t];val.assign(n*2,e);}
+    SegmentTree(int N,ll E,Func F,Func G):SegmentTree(N){tie(e,f,g)=Attr(E,F,G);val.assign(n*2,e);}
+    void update(ll k,ll a){
+        k+=n;
+        val[k]=g(val[k],a);
+        while(k){
+            k/=2;
+            val[k]=f(val[k*2],val[k*2+1]);
+        }
+    }
+    ll query(int a, int b){return query(a,b,1,0,n);}
+    ll query(int a, int b, int k, int l, int r){
+        if(r<=a or l>=b) return e;
+        if(a<=l and r<=b) return val[k];
+        int m=(l+r)/2;
+        return f(query(a,b,k*2,l,m),query(a,b,k*2+1,m,r));
+    }   
+};
 
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=1000000;
-    ll ans=0;
-    range(i,1,n+1){
-        string s=to_string(i*i);
-        int digit=s.size();
-        range(st,1,1<<(digit-1)){
-            ll val=0,v=0;
-            rep(j,digit){
-                v=v*10+(s[j]-'0');
-                if(j+1==digit or (st&(1<<j))){
-                    // cout<<v<<",";
-                    val+=v;
-                    v=0;
-                }
-                if(val>i)break;
-            }
-            // cout<<val<<endl;
-            if(val==i){
-                ans+=i*i;
-                puta(i*i);
-                break;
-            }
+    ll n,k;
+    cin>>n>>k;
+    SegmentTree stmin(n,SEG_MIN);
+    SegmentTree stmax(n,SEG_MAX);
+    vl a(n);
+    rep(i,n){
+        ll t;cin>>t;
+        a[i]=t;
+        stmin.update(i,t);
+        stmax.update(i,t);
+    }
+
+    vb ok(n,true);
+    rep(i,n-k){
+        // puta(i,a[i],stmin.query(i+1,i+k),stmax.query(i+1,i+k),a[i+k]);
+        if(a[i]<stmin.query(i+1,i+k) && stmax.query(i+1,i+k)<a[i+k]){
+            ok[i+1]=false;
         }
     }
+
+    bool keep=false;
+    ll cnt=0;
+    rep(i,n-1){
+        if(a[i+1]>a[i]){
+            cnt++;
+            if(cnt>=k-1){
+                if(keep)ok[i-k+2]=false;
+                keep=true;
+            }
+        }else cnt=0;
+        // cout<<cnt<<",";
+    }
+    // puta(ok);
+
+    ll ans=0;
+    rep(i,n-k+1)if(ok[i])ans++;
     puta(ans);
     return 0;
 }

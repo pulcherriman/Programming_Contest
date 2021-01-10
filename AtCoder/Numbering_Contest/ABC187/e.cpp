@@ -53,30 +53,44 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=1000000;
-    ll ans=0;
-    range(i,1,n+1){
-        string s=to_string(i*i);
-        int digit=s.size();
-        range(st,1,1<<(digit-1)){
-            ll val=0,v=0;
-            rep(j,digit){
-                v=v*10+(s[j]-'0');
-                if(j+1==digit or (st&(1<<j))){
-                    // cout<<v<<",";
-                    val+=v;
-                    v=0;
-                }
-                if(val>i)break;
-            }
-            // cout<<val<<endl;
-            if(val==i){
-                ans+=i*i;
-                puta(i*i);
-                break;
-            }
+    ll h,w;
+    cin>>h>>w;
+    vs s(h); cin>>s;
+    map<char,vector<pll>> tel;
+
+    range(c,'a', 'z'+1){
+        tel[c]=vector<pll>();
+        rep(i,h)rep(j,w)if(s[i][j]==c){
+            tel[c].emplace_back(i,j);
         }
     }
-    puta(ans);
+    queue<tlll> q;
+    rep(i,h)rep(j,w)if(s[i][j]=='S')q.emplace(i,j,0);
+    vvl ans(h,vl(w,-1));
+    while(!q.empty()){
+        auto [y,x,c]=q.front();
+        q.pop();
+        if(ans[y][x]!=-1)continue;
+        ans[y][x]=c;
+        if(s[y][x]=='G'){
+            puta(c);
+            return 0;
+        }
+        rep(v,4){
+            int ny=y+dy[v];
+            int nx=x+dx[v];
+            if(ny<0 or nx<0 or ny>=h or nx>=w)continue;
+            if(s[ny][nx]=='#' or ans[ny][nx]!=-1)continue;
+            q.emplace(ny,nx,c+1);
+        }
+        if('a'<=s[y][x] && s[y][x]<='z'){
+            for(auto [ny,nx] : tel[s[y][x]]){
+                if(ans[ny][nx]==-1)q.emplace(ny,nx,c+1);
+            }
+            tel[s[y][x]].clear();
+        }
+    }
+    puta(-1);
+
     return 0;
 }

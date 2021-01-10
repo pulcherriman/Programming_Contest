@@ -50,33 +50,41 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 /*他のライブラリを入れる場所*/
 
 
+/*
+s(3)=42
+s(5)=126
+s(123)=167178
+s(12345)=3185041956
+s(123456789)=???
+*/
+
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=1000000;
-    ll ans=0;
-    range(i,1,n+1){
-        string s=to_string(i*i);
-        int digit=s.size();
-        range(st,1,1<<(digit-1)){
-            ll val=0,v=0;
-            rep(j,digit){
-                v=v*10+(s[j]-'0');
-                if(j+1==digit or (st&(1<<j))){
-                    // cout<<v<<",";
-                    val+=v;
-                    v=0;
-                }
-                if(val>i)break;
+    ll n=123456789;
+    // n=123456789;
+
+    int pmax=0;
+    rep(i,32)if((1<<i)>2*n){pmax=i; break;}
+    puta(pmax);
+
+    vi need(n*2,pmax);
+    {
+        ll index = 0;
+        cout<<"1: ";
+        range(i,1,1<<pmax){
+            cout<<pmax-__builtin_ctz(i)<<",";
+            chmin(need[index], pmax-__builtin_ctz(i));
+            if(index*(1<<pmax) < i*(2*n)){
+                index++;
+                cout<<endl<<index<<": ";
             }
-            // cout<<val<<endl;
-            if(val==i){
-                ans+=i*i;
-                puta(i*i);
-                break;
-            }
+            // need[i] = (i/2n, (i+1)/2n)への操作回数
+            // need[i] = 
         }
     }
-    puta(ans);
+    cout<<endl;
+
+    puta(need);
     return 0;
 }

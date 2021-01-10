@@ -165,8 +165,25 @@ int main(){
 	ios::sync_with_stdio(false);
 	ll n;
 	cin>>n;
+	n<<=1;
 	string s;
 	cin>>s;
+	vi imos(n,1),imos2(n,1);
+	range(i,1,n){
+		imos[i]=(s[i]==s[i-1] ? -1 : 1) * imos[i-1];
+	}
+	partial_sum(all(imos), imos2.begin());
+
+	if(imos2[n-1]!=0 or s[0]=='W' or s[n-1]=='W'){
+		puta(0);
+		return 0;
+	}
+
+	mint ans=1;
+	rep(i,n)if(imos[i]==-1)ans*=imos2[i-1];
+
+	setMod();
+	puta(ans*fac[n/2]);
 
 	return 0;
 }

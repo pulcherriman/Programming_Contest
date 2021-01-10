@@ -49,33 +49,24 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 
 /*他のライブラリを入れる場所*/
 
-
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=1000000;
+    ll n,m,t;
+    cin>>n>>m>>t;
+    vl a(n+1,0),b(m+1,0);
+    rep(i,n)cin>>a[i+1];
+    rep(i,m)cin>>b[i+1];
+    partial_sum(all(a),a.begin());
+    partial_sum(all(b),b.begin());
     ll ans=0;
-    range(i,1,n+1){
-        string s=to_string(i*i);
-        int digit=s.size();
-        range(st,1,1<<(digit-1)){
-            ll val=0,v=0;
-            rep(j,digit){
-                v=v*10+(s[j]-'0');
-                if(j+1==digit or (st&(1<<j))){
-                    // cout<<v<<",";
-                    val+=v;
-                    v=0;
-                }
-                if(val>i)break;
-            }
-            // cout<<val<<endl;
-            if(val==i){
-                ans+=i*i;
-                puta(i*i);
-                break;
-            }
-        }
+    rep(i,n+1){
+        ll r=t-a[i];
+        if(r<0)continue;
+        int bind=upper_bound(all(b), r)-b.begin();
+        bind--;
+        chmax(ans, i+bind);
+        // puta(i,bind);
     }
     puta(ans);
     return 0;

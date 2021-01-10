@@ -53,30 +53,26 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=1000000;
-    ll ans=0;
-    range(i,1,n+1){
-        string s=to_string(i*i);
-        int digit=s.size();
-        range(st,1,1<<(digit-1)){
-            ll val=0,v=0;
-            rep(j,digit){
-                v=v*10+(s[j]-'0');
-                if(j+1==digit or (st&(1<<j))){
-                    // cout<<v<<",";
-                    val+=v;
-                    v=0;
-                }
-                if(val>i)break;
-            }
-            // cout<<val<<endl;
-            if(val==i){
-                ans+=i*i;
-                puta(i*i);
-                break;
-            }
+    vl a(3);cin>>a;
+    double ans=0;
+    vector<vvd> dp(101,vvd(101, vd(101,0)));
+    dp[a[0]][a[1]][a[2]]=1;
+    rep(d,301){
+        rep(i,d+1)if(a[0]+i<=100)rep(j,(d+1-i))if(a[1]+j<=100){
+            ll k=d-i-j;
+            if(i+j+k==0 or k<0 or a[2]+k>100)continue;
+            if(a[0]+i-1 >= 0 && a[1]+j<100&&a[2]+k<100)dp[a[0]+i][a[1]+j][a[2]+k] += dp[a[0]+i-1][a[1]+j][a[2]+k] *(a[0]+i-1) / (a[0]+a[1]+a[2]+i+j+k-1);
+            if(a[1]+j-1>=0 && a[2]+k<100&&a[0]+i<100)dp[a[0]+i][a[1]+j][a[2]+k] += dp[a[0]+i][a[1]+j-1][a[2]+k] *(a[1]+j-1) / (a[0]+a[1]+a[2]+i+j+k-1);
+            if(a[2]+k-1>=0 && a[1]+j<100&&a[0]+i<100)dp[a[0]+i][a[1]+j][a[2]+k] += dp[a[0]+i][a[1]+j][a[2]+k-1] *(a[2]+k-1) / (a[0]+a[1]+a[2]+i+j+k-1);
         }
     }
-    puta(ans);
+    
+    rep(i,100)rep(j,100){
+        ans += dp[100][i][j] * (100-a[0] + i-a[1] + j-a[2]);
+        ans += dp[i][100][j] * (i-a[0] + 100-a[1] + j-a[2]);
+        ans += dp[i][j][100] * (i-a[0] + j-a[1] + 100-a[2]);
+    }
+    fcout(15)<<ans<<endl;
+
     return 0;
 }

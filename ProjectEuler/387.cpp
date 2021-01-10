@@ -16,8 +16,8 @@ using vs=vector<string>;
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define rep(i,n) range(i,0,n)
-#define rrep(i,n) for(ll i=(n)-1;i>=0;i--)
-#define range(i,a,n) for(ll i=(a);i<(n);i++)
+#define rrep(i,n) for(ll i=((ll)n)-1;i>=0;i--)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);i++)
 #define LINF ((ll)1ll<<60)
 #define INF ((int)1<<30)
 #define EPS (1e-9)
@@ -54,7 +54,7 @@ ll target,c,block=2*3*5*7*11*13*17*2;
 vb firstb;
 vector<short> al;
 vi pr,li;
-vl primes,pr_default;
+vl primes,pr_default,pr_strong=vl();
 void calc(){
     firstb.assign(block,false);
     al.assign(block,0);
@@ -134,8 +134,16 @@ vl segment(ll l=1000, ll r=1100){
     seg(l,r);return primes;
 }
 bool isPrime(ll n){
-    assert(n<=block*block); //1'0424'8184'0400ll ~= 10^12
+    if(n>block*block) return isPrime_Strong(n);
     for(ll&p:pr_default){if(n==p)return true;if(n%p==0)return false;if(p*p>n)break;}
+    return n>1;
+}
+bool isPrime_Strong(ll n){
+    assert(n<=10'000'000'000'000'000ll); //1'0424'8184'0400ll ~= 10^12
+    if(pr_strong.empty())pr_strong=sequence(100'000'000);
+    for(int p:pr_strong){
+        if(n%p==0)return false;
+    }
     return true;
 }
 map<ll,ll> factor(ll n){
@@ -148,34 +156,33 @@ map<ll,ll> factor(ll n){
 };
 _Prime Prime;
 
+ll MAX=100'000'000'000'000;
+ll ans=0;
+void check(ll n){
+    rep(i,10){
+        ll p=n*10+i;
+        if(p <= MAX && Prime.isPrime(p)){
+            puta(p);
+            ans+=p;
+        }
+    }
+}
 
+void solve(ll n, ll d){
+    if(n>MAX/10)return;
+    if(n && Prime.isPrime(n/d)) check(n);
+    rep(i,10){
+        ll p=n*10+i;
+        if(p==0)continue;
+        if(p%(d+i)==0)solve(p,d+i);
+    }
+}
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
 
-    ll ans=0;
-
-    auto seq=Prime.sequence(100000000);
-    for(int p : seq){
-        p--;
-
-        bool ok=true;
-        for(int i=1;i*i<=p;i++){
-            if(p%i==0){
-                ok&=Prime.isPrime(i+p/i);
-                if(!ok)break;
-            }
-        }
-        if(ok){
-            puta(p);
-            ans+=p;
-        }
-    }
+    solve(0, 0);
     puta(ans);
-    
     return 0;
-    
-    
-
 }

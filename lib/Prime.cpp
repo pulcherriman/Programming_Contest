@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll=long long;
+using ull=unsigned long long;
 using vb=vector<bool>;
 using vvb=vector<vb>;
 using vd=vector<double>;
@@ -16,8 +17,8 @@ using vs=vector<string>;
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define rep(i,n) range(i,0,n)
-#define rrep(i,n) for(ll i=(n)-1;i>=0;i--)
-#define range(i,a,n) for(ll i=(a);i<(n);i++)
+#define rrep(i,n) for(ll i=((ll)n)-1;i>=0;i--)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);i++)
 #define LINF ((ll)1ll<<60)
 #define INF ((int)1<<30)
 #define EPS (1e-9)
@@ -37,136 +38,105 @@ ll max(int a,ll b){return max((ll)a,b);} ll max(ll a,int b){return max(a,(ll)b);
 int sgn(const double&r){return (r>EPS)-(r<-EPS);} // a>0  : sgn(a)>0
 int sgn(const double&a,const double&b){return sgn(a-b);} // b<=c : sgn(b,c)<=0
 
+template<class S,class T>ostream&operator<<(ostream&os,pair<S,T>p){os<<"["<<p.first<<", "<<p.second<<"]";return os;};
+template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){os<<(a?"":" ")<<s;a=0;}return os;}
+template<class S,class T>auto&operator<<(ostream&os,map<S,T>mp){bool a=1;for(auto p:mp){os<<(a?"":", ")<<p;a=0;}return os;}
+template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 template<class T>void puta(T&&t){cout<<t<<"\n";}
 template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<' ';puta(t...);}
-
 template<class S,class T>void tf(bool b,S t,T f){if(b)puta(t);else puta(f);}
 void YN(bool b){tf(b,"YES","NO");}
 void Yn(bool b){tf(b,"Yes","No");}
 void yn(bool b){tf(b,"yes","no");}
-template<class S,class T>ostream&operator<<(ostream&os,pair<S,T>p){os<<"["<<p.first<<", "<<p.second<<"]";return os;};
-template<class S,class T>ostream&operator<<(ostream&os,map<S,T>d){bool a=1;for(auto v:d){os<<(a?"":" ")<<v;a=0;}return os;};
-template<class S>ostream&operator<<(ostream&os,set<S>d){bool a=1;for(auto v:d){os<<(a?"":" ")<<v;a=0;}return os;};
-template<class S>auto&operator<<(ostream&os,vector<S>d){bool a=1;for(auto v:d){os<<(a?"":" ")<<v;a=0;}return os;}
-template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-class _Prime{
-public:
-ll target,c,block=2*3*5*7*11*13*17*2;
-vb firstb;
-vector<short> al;
-vi pr,li;
-vl primes,pr_default;
-void calc(){
-    firstb.assign(block,false);
-    al.assign(block,0);
-    primes.clear();
-    li.clear();
-    c=0;
-    firstcalc();
-    for(ll i=block;i<target;i+=block)calc(i);
-}
-void firstcalc(){
-    for(int&p:vi{2,3,5,7,11,13,17}){
-        if(p>target)break;
-        add(p);
-        if((ll)p*p<target){
-            pr.push_back(p);
-            for(ll j=p*2;j<block;j+=p)firstb[j]=true;
-        }
-    }
-    c++;
-    li.push_back(1);
-    range(i,19,block){
-        if(firstb[i])continue;
-        li.push_back(i);
-        if(al[i]==c)continue;
-        if(i>target)break;
-        add(i);
-        if((ll)i*i<=target){
-            pr.push_back(i);
-            for(ll j=i*2;j<block;j+=i)al[j]=c;
-        }
-    }
-}
-
-void calc(ll b){
-    c++;
-    ll mv=b+block;
-    for(int&p:pr){
-        if((ll)p*p>mv)break;
-        ll f=b%p;
-        if(f)f=p-f;
-        if((f&1)==0)f+=p;
-        for(ll j=f;j<block;j+=p*2)al[j]=c;
-    }
-    for(int&i:li){
-        if(al[i]==c)continue;
-        if(b+i>target)break;
-        add(b+i);
-    }
-}
-void seg(ll l, ll r){
-    chmax(l,2ll);
-    firstb.assign(r-l,true);
-    primes.clear();
-    for(ll i=0,j;pr_default[i]*pr_default[i]<r;++i){
-        if(pr_default[i]>=l)j=pr_default[i]*pr_default[i];
-        else if(l%pr_default[i]==0)j=l;
-        else j=l-(l%pr_default[i])+pr_default[i];
-        for(;j<r;j+=pr_default[i])firstb[j-l]=false;
-    }
-    range(i,l,r)if(firstb[i-l])add(i);
-}
-
-
-void add(ll a){primes.push_back(a);}
-
-public:
-_Prime(){target=block;calc();pr_default=primes;}
-vl sequence(ll n=100){
-    assert(n<=100'000'000);
-    target=n;
-    if(n<=block)primes.assign(pr_default.begin(),find_if_not(all(pr_default),[&](ll x){return x<=n;}));
-    else calc();return primes;
-}
-vl segment(ll l=1000, ll r=1100){
-    assert(r<=block*block); //1'0424'8184'0400ll ~= 10^12
-    assert(r-l<=100'000'000);
-    seg(l,r);return primes;
-}
-bool isPrime(ll n){
-    assert(n<=block*block); //1'0424'8184'0400ll ~= 10^12
-    for(ll&p:pr_default){if(n%p==0)return false;if(p*p>n)break;}
-    return true;
-}
-map<ll,ll> factor(ll n){
-    map<ll,ll> ret;
-    if(n<=block)for(ll&p:pr_default)while(n%p==0){ret[p]++;n/=p;}
-    else for(ll p=2;p*p<=n;p++)while(n%p==0){ret[p]++;n/=p;}
-    if(n!=1)ret[n]++;
-    return ret;
-}
+struct _Prime{
+	const int arr32[3]={2,7,61};
+	const int arr64[12]={2,3,5,7,11,13,17,19,23,29,31,37};
+	
+	bool IsPrime(ll n){
+		if(n<2)return false;
+		if(n==2)return true;
+		if((n&1)==0)return false;
+		if(n<=INT_MAX)return IsPrime32(n);
+		return IsPrime64(n);
+	}
+	map<ll,int> Factorize(ll n){
+		map<ll,int> r;
+		if(n!=1){
+			ll x=pollard_single(n);
+			if(x==n)r[x]=1;
+			else{
+				r=Factorize(x);
+				auto ri=Factorize(n/x);
+				for(auto&v:ri)r[v.first]+=v.second;
+			}
+		}
+		return r;
+	}
+	private:
+	template<class T,class U>
+	T pmod(T x,U n,T md) {
+		T r=1%md;
+		while(x%=md,n){if(n&1)r=r*x%md;x*=x;n>>=1;}
+		return r;
+	}
+	bool IsPrime32(int n){
+		for(ll a:arr32){
+			bool c=true;
+			ll m=n-1;
+			while((m&1)==0)c&=pmod<ll>(a,m>>=1,n)!=n-1;
+			c&=pmod<ll>(a,m?:1,n)!=1;
+			if(c)return n<=a;
+		}
+		return true;
+	}
+	bool IsPrime64(ll n){
+		for(int a:arr64){
+			bool c=true;
+			ll m=n-1;
+			while((m&1)==0)c&=pmod<__int128_t>(a,m>>=1,n)!=n-1;
+			c&=pmod<__int128_t>(a,m?:1,n)!=1;
+			if(c)return n<=a;
+		}
+		return true;
+	}
+	ll fast_gcd(ll _a,ll _b) {
+		static auto bsf=[](ull x){return __builtin_ctzll(x);};
+		ull a=abs(_a),b=abs(_b);
+		if(a==0)return b;
+		if(b==0)return a;
+		int s=bsf(a|b);
+		a>>=bsf(a);
+		do{if(a>(b>>=bsf(b)))swap(a,b);}while(b-=a);
+		return a<<s;
+	}
+	ll pollard_single(ll n){
+		static auto f=[&](ll x){return(__int128_t(x)*x+1)%n;};
+		if((n&1)==0)return 2;
+		if(IsPrime(n))return n;
+		ll st=0;
+		while(true){
+			ll x=++st,y=f(x);
+			while(true){
+				ll p=fast_gcd(y-x+n,n);
+				if(p==0||p==n)break;
+				if(p!=1)return p;
+				x=f(x);
+				y=f(f(y));
+			}
+		}
+	}
 };
 _Prime Prime;
 
-
 int main(){
-    cin.tie(0);
-    ios::sync_with_stdio(false);
+	cin.tie(0);
+	ios::sync_with_stdio(false);
 
-    puta(Prime.isPrime(10123457689ll)); // True
-    puta(Prime.sequence(10'000).size()); // 1229
-    puta(Prime.sequence(100'000).size()); // 9592
-    puta(Prime.sequence(1'000'000).size()); // 78498
-    puta(Prime.sequence(10'000'000).size()); // 664579
-    puta(Prime.sequence(100'000'000).size()); // 5761455
-    puta(Prime.sequence()); // 2 - 97
-    puta(Prime.segment()); // 1009 - 1097
-    puta(Prime.segment(100000000000,100100000000).size()); // 3948161
-    puta(Prime.factor(1565912117761ll)); // [1162193, 1] [1347377, 1]
-    puta(Prime.factor(10123457689ll)); // [10123457689, 1]
-    return 0;
-
+	puta(Prime.IsPrime(10123457689ll)); // True
+	puta(Prime.Factorize(1565912117761ll)); // [1162193, 1] [1347377, 1]
+	puta(Prime.Factorize(10123457689ll)); // [10123457689, 1]
+	puta(Prime.Factorize(999381247093216751ll)); // [999665081, 1], [999716071, 1]
+	return 0;
 }

@@ -53,28 +53,12 @@ template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=1000000;
     ll ans=0;
-    range(i,1,n+1){
-        string s=to_string(i*i);
-        int digit=s.size();
-        range(st,1,1<<(digit-1)){
-            ll val=0,v=0;
-            rep(j,digit){
-                v=v*10+(s[j]-'0');
-                if(j+1==digit or (st&(1<<j))){
-                    // cout<<v<<",";
-                    val+=v;
-                    v=0;
-                }
-                if(val>i)break;
-            }
-            // cout<<val<<endl;
-            if(val==i){
-                ans+=i*i;
-                puta(i*i);
-                break;
-            }
+    range(i,3,10000000){
+        if(i==2)continue;
+        if((i*i+960*i+97)%(2*(i-2))==0){
+            puta(i, (i*i+960*i+97)/(2*(i-2)));
+            ans+=(i*i+960*i+97)/(2*(i-2));
         }
     }
     puta(ans);
