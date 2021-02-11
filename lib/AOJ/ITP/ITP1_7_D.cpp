@@ -1,3 +1,4 @@
+// 行列
 #include <bits/stdc++.h>
 #ifdef ONLINE_JUDGE
 #include <atcoder/all>
@@ -91,95 +92,81 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
 /*他のライブラリを入れる場所*/
-struct _Prime{
-    bool IsPrime(ll n){
-        if(n<2)return false;
-        if(~n&1)return n==2;
-        if(n<=INT_MAX)return IsPrime<int,ll>(n);
-        return IsPrime<ll,__int128_t>(n);
-    }
-    map<ll,int> Factorize(ll n){
-        map<ll,int> r;
-        if(n!=1){
-            ll x=pollard_single(n);
-            if(x==n)r[x]=1;
-            else{
-                r=Factorize(x);
-                for(auto&v:Factorize(n/x))r[v.first]+=v.second;
+template<class T=ll>struct Matrix{
+    ll h,w;
+	vector<vector<T>> A;
+	Matrix(ll h,ll w):h(h),w(w),A(h,vector<T>(w,0)){};
+    void get(){rep(i,h)rep(j,w)cin>>A[i][j];}
+
+    using iterator=typename decltype(A)::iterator;
+    using const_iterator=typename decltype(A)::const_iterator;
+    iterator begin(){ return A.begin(); }
+    const_iterator begin() const { return A.begin(); }
+    iterator end(){ return A.end(); }
+    const_iterator end() const { return A.end(); }
+
+	vector<T> operator[](const int i) const {return A[i];}
+	vector<T>& operator[](const int i){return A[i];}
+	// Matrix op Matrix
+	Matrix& operator=(const Matrix& B){assert(w==B.w&&h==B.h);rep(i,h)rep(j,w)A[i][j]=B[i][j];return *this;}
+	Matrix& operator+=(const Matrix& B){assert(w==B.w&&h==B.h);rep(i,h)rep(j,w)A[i][j]+=B[i][j];return *this;}
+	Matrix& operator-=(const Matrix& B){assert(w==B.w&&h==B.h);rep(i,h)rep(j,w)A[i][j]-=B[i][j];return *this;}
+	Matrix& operator*=(const Matrix& B){assert(w==B.h);Matrix<T> tmp(h,B.w);rep(i,h)rep(j,B.w)rep(k,w){tmp[i][j]=(tmp[i][j]+A[i][k]*B[k][j]%MOD)%MOD;w=B.w;A=tmp.A;return *this;}
+	Matrix operator+(const Matrix& B)const{return Matrix(*this)+=B;}
+	Matrix operator-(const Matrix& B)const{return Matrix(*this)-=B;}
+	Matrix operator*(const Matrix& B)const{return Matrix(*this)*=B;}
+	bool operator==(const Matrix& B){assert(w==B.w&&h==B.h);bool ret=true;rep(i,h)rep(j,w)if(B[i][j]!=A[i][j])ret=false;return ret;}
+	// Matrix op Scalr
+	Matrix& operator+=(const T& K){rep(i,h)rep(j,w)A[i][j]+=K;return *this;}
+	Matrix& operator-=(const T& K){rep(i,h)rep(j,w)A[i][j]-=K;return *this;}
+	Matrix& operator*=(const T& K){rep(i,h)rep(j,w)A[i][j]*=K;return *this;}
+	Matrix& operator/=(const T& K){rep(i,h)rep(j,w)A[i][j]/=K;return *this;}
+	Matrix& operator%=(const T& K){rep(i,h)rep(j,w)A[i][j]%=K;return *this;}
+	Matrix operator+(const T& K)const{return Matrix(*this)+=K;}
+	Matrix operator-(const T& K)const{return Matrix(*this)-=K;}
+	Matrix operator*(const T& K)const{return Matrix(*this)*=K;}
+	Matrix operator/(const T& K)const{return Matrix(*this)/=K;}
+	Matrix operator%(const T& K)const{return Matrix(*this)%=K;}
+
+	static Matrix I(ll n){Matrix ret(n,n);rep(i,n)ret[i][i]=1; return ret;}
+	Matrix<T> pow(ll K){
+		assert(h==w);
+		Matrix<T> C(h,w),ret(h,w);
+		rep(i,h){rep(j,w)C[i][j]=A[i][j];ret[i][i]=1;}
+		while(K>0){if(K&1){ret=ret*C%MOD;}C=C*C%MOD;K=K>>1;}
+		return ret;
+	}
+    T determinant() {
+        assert(w==h);
+        Matrix B(*this);
+        T ret = 1;
+        rep(i,w){
+            int idx=-1; T vv;
+            range(j,i,w)if(B[j][i])idx=j;
+            if(idx==-1)return 0;
+            if(i!=idx){ret*=-1;swap(B[i],B[idx]);}
+            ret*=vv=B[i][i];
+            rep(j,w)B[i][j]/=vv;
+            range(j,i+1,w){
+                T a=B[j][i];
+                rep(k,w)B[j][k]-=B[i][k]*a;
             }
         }
-        return r;
-    }
-    vl Divisor(ll n){
-        vl r(1,1);
-        for(auto[v,c]:Factorize(n)){
-            ll l=r.size();
-            rep(i,l)rep(j,c)r.push_back(r[i]*pmod(v,j+1,LLONG_MAX));
-        }
-        return r;
-    }
-
-    private:
-    template<class T>static constexpr int arr[]={2,7,61};
-
-    template<class T,class U>
-    static T pmod(T x,U n,T p) {
-        T r=1%p;
-        while(x%=p,n){if(n&1)r=r*x%p;x*=x;n>>=1;}
-        return r;
-    }
-    template<class T,class U>static bool IsPrime(T n){
-        for(int a:arr<T>){
-            bool c=true;
-            ll m=n-1;
-            while(~m&1)c&=pmod<U>(a,m>>=1,n)!=n-1;
-            c&=pmod<U>(a,m?:1,n)!=1;
-            if(c)return n<=a;
-        }
-        return true;
-    }
-
-    ll fast_gcd(ll _a, ll _b) {
-        ll a=abs(_a),b=abs(_b);
-        if(a==0||b==0)return a+b;
-        int n=__builtin_ctzll(a),m=__builtin_ctzll(b);
-        a>>=n;b>>=m;
-        while(a!=b){
-            int x=__builtin_ctzll(a-b);
-            ll c=a>b?a:b;
-            a=(c-=b=a>b?b:a)>>x;
-        }
-        return a<<min(n,m);
-    }
-    ll pollard_single(ll n){
-        const static auto f=[&](ll x){return(__int128_t(x)*x+1)%n;};
-        if(~n&1)return 2;
-        if(IsPrime(n))return n;
-        ll st=0;
-        while(true){
-            ll x=++st,y=f(x);
-            while(true){
-                ll p=fast_gcd(y-x+n,n);
-                if(p==0||p==n)break;
-                if(p!=1)return p;
-                x=f(x);
-                y=f(f(y));
-            }
-        }
+        return ret;
     }
 };
-template<>constexpr int _Prime::arr<ll>[]={2,325,9375,28178,450775,9780504,1795265022};
-_Prime Prime;
-
-#define _cTime (chrono::system_clock::now())
-#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
-#define reset _sTime=_cTime
-auto reset;
+template<class T>void puta(Matrix<T>t){puta(t.A);}
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    puta(Prime.Factorize(897612484786617600ll));
-    puta(progress);
+    
+    geta(ll,n,m,l);
+    Matrix a(n,m), b(m,l);
+    a.get();
+    b.get();
+    
+    puta(a*b);
+
     return 0;
 }

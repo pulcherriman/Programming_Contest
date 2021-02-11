@@ -94,7 +94,7 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 struct _Prime{
     bool IsPrime(ll n){
         if(n<2)return false;
-        if(~n&1)return n==2;
+        if((n&1)==0)return n==2;
         if(n<=INT_MAX)return IsPrime<int,ll>(n);
         return IsPrime<ll,__int128_t>(n);
     }
@@ -123,9 +123,9 @@ struct _Prime{
     template<class T>static constexpr int arr[]={2,7,61};
 
     template<class T,class U>
-    static T pmod(T x,U n,T p) {
-        T r=1%p;
-        while(x%=p,n){if(n&1)r=r*x%p;x*=x;n>>=1;}
+    static T pmod(T x,U n,T md) {
+        T r=1%md;
+        while(x%=md,n){if(n&1)r=r*x%md;x*=x;n>>=1;}
         return r;
     }
     template<class T,class U>static bool IsPrime(T n){
@@ -145,9 +145,9 @@ struct _Prime{
         int n=__builtin_ctzll(a),m=__builtin_ctzll(b);
         a>>=n;b>>=m;
         while(a!=b){
-            int x=__builtin_ctzll(a-b);
+            int m=__builtin_ctzll(a-b);
             ll c=a>b?a:b;
-            a=(c-=b=a>b?b:a)>>x;
+            a=(c-(b=a>b?b:a))>>m;
         }
         return a<<min(n,m);
     }
@@ -171,15 +171,23 @@ struct _Prime{
 template<>constexpr int _Prime::arr<ll>[]={2,325,9375,28178,450775,9780504,1795265022};
 _Prime Prime;
 
-#define _cTime (chrono::system_clock::now())
-#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
-#define reset _sTime=_cTime
-auto reset;
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    puta(Prime.Factorize(897612484786617600ll));
-    puta(progress);
+    geta(ll, n);
+    vl a(n);cin>>a;
+    ll v=min(a);
+    map<ll,ll> mp;
+    
+    for(auto&t:a){
+        for(auto p:Prime.Divisor(t))mp[p]=gcd(mp[p],t);
+    }
+    ll ans=0;
+    for(auto[k,val]:mp)if(k==val and k<=v){
+        ans++;
+    }
+    puta(ans);
+
     return 0;
 }

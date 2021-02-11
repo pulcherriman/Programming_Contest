@@ -74,7 +74,16 @@ struct _Prime{
 		}
 		return r;
 	}
+	vl Divisor(ll n){
+		vl r(1,1);
+		for(auto[v,c]:Factorize(n)){
+			ll l=r.size();
+			rep(i,l)rep(j,c)r.push_back(r[i]*pmod(v,j+1,LLONG_MAX));
+		}
+		return r;
+	}
 	private:
+
 	template<class T,class U>
 	T pmod(T x,U n,T md) {
 		T r=1%md;
@@ -127,6 +136,7 @@ struct _Prime{
 			}
 		}
 	}
+	
 };
 _Prime Prime;
 
@@ -138,5 +148,6 @@ int main(){
 	puta(Prime.Factorize(1565912117761ll)); // [1162193, 1] [1347377, 1]
 	puta(Prime.Factorize(10123457689ll)); // [10123457689, 1]
 	puta(Prime.Factorize(999381247093216751ll)); // [999665081, 1], [999716071, 1]
+	puta(Prime.Divisor(105));
 	return 0;
 }

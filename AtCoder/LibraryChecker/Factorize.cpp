@@ -49,34 +49,12 @@ template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){o
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 
 /*他のライブラリを入れる場所*/
-template<class T,class U>
-T pmod(T x,U n,T md) {
-    T r=1%md;
-    while(x%=md,n){if(n&1)r=r*x%md;x*=x;n>>=1;}
-    return r;
-}
-
-ll fast_gcd(ll _a,ll _b) {
-    static auto bsf=[](ull x){return __builtin_ctzll(x);};
-    ull a=abs(_a),b=abs(_b);
-    if(a==0)return b;
-    if(b==0)return a;
-    int s=bsf(a|b);
-    a>>=bsf(a);
-    do{if(a>(b>>=bsf(b)))swap(a,b);}while(b-=a);
-    return a<<s;
-}
-
 struct _Prime{
-    const int arr32[3]={2,7,61};
-    const int arr64[7]={2,3,5,7,11,13,17};
-    
     bool IsPrime(ll n){
         if(n<2)return false;
-        if(n==2)return true;
-        if((n&1)==0)return false;
-        if(n<=INT_MAX)return IsPrime32(n);
-        return IsPrime64(n);
+        if(~n&1)return n==2;
+        if(n<=INT_MAX)return IsPrime<int,ll>(n);
+        return IsPrime<ll,__int128_t>(n);
     }
     map<ll,int> Factorize(ll n){
         map<ll,int> r;
@@ -85,36 +63,55 @@ struct _Prime{
             if(x==n)r[x]=1;
             else{
                 r=Factorize(x);
-                auto ri=Factorize(n/x);
-                for(auto&v:ri)r[v.first]+=v.second;
+                for(auto&v:Factorize(n/x))r[v.first]+=v.second;
             }
         }
         return r;
     }
+    vl Divisor(ll n){
+        vl r(1,1);
+        for(auto[v,c]:Factorize(n)){
+            ll l=r.size();
+            rep(i,l)rep(j,c)r.push_back(r[i]*pmod(v,j+1,LLONG_MAX));
+        }
+        return r;
+    }
+
     private:
-    bool IsPrime32(int n){
-        for(ll a:arr32){
+    template<class T>static constexpr int arr[]={2,7,61};
+
+    template<class T,class U>
+    static T pmod(T x,U n,T p) {
+        T r=1%p;
+        while(x%=p,n){if(n&1)r=r*x%p;x*=x;n>>=1;}
+        return r;
+    }
+    template<class T,class U>static bool IsPrime(T n){
+        for(int a:arr<T>){
             bool c=true;
             ll m=n-1;
-            while((m&1)==0)c&=pmod<ll>(a,m>>=1,n)!=n-1;
-            c&=pmod<ll>(a,m?:1,n)!=1;
+            while(~m&1)c&=pmod<U>(a,m>>=1,n)!=n-1;
+            c&=pmod<U>(a,m?:1,n)!=1;
             if(c)return n<=a;
         }
         return true;
     }
-    bool IsPrime64(ll n){
-        for(int a:arr64){
-            bool c=true;
-            ll m=n-1;
-            while((m&1)==0)c&=pmod<__int128_t>(a,m>>=1,n)!=n-1;
-            c&=pmod<__int128_t>(a,m?:1,n)!=1;
-            if(c)return n<=a;
+
+    ll fast_gcd(ll _a, ll _b) {
+        ll a=abs(_a),b=abs(_b);
+        if(a==0||b==0)return a+b;
+        int n=__builtin_ctzll(a),m=__builtin_ctzll(b);
+        a>>=n;b>>=m;
+        while(a!=b){
+            int x=__builtin_ctzll(a-b);
+            ll c=a>b?a:b;
+            a=(c-=b=a>b?b:a)>>x;
         }
-        return true;
+        return a<<min(n,m);
     }
     ll pollard_single(ll n){
-        static auto f=[&](ll x){return(__int128_t(x)*x+1)%n;};
-        if((n&1)==0)return 2;
+        const static auto f=[&](ll x){return(__int128_t(x)*x+1)%n;};
+        if(~n&1)return 2;
         if(IsPrime(n))return n;
         ll st=0;
         while(true){
@@ -129,7 +126,9 @@ struct _Prime{
         }
     }
 };
+template<>constexpr int _Prime::arr<ll>[]={2,325,9375,28178,450775,9780504,1795265022};
 _Prime Prime;
+
 
 int main(){
     cin.tie(0);
