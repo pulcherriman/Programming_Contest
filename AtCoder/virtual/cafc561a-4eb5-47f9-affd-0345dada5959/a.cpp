@@ -110,6 +110,11 @@ struct _Prime{
         }
         return r;
     }
+    ll DivisorCount(ll n){
+        ll r=1;
+        for(auto[v,c]:Factorize(n)) r*=c+1;
+        return r;
+    }
     vl Divisor(ll n){
         vl r(1,1);
         for(auto[v,c]:Factorize(n)){
@@ -171,19 +176,16 @@ struct _Prime{
 template<>constexpr int _Prime::arr<ll>[]={2,325,9375,28178,450775,9780504,1795265022};
 _Prime Prime;
 
-#define _cTime (chrono::system_clock::now())
-#define progress (chrono::duration_cast<chrono::milliseconds>(_cTime-_sTime).count())
-#define reset _sTime=_cTime
-auto reset;
-
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    ll n=200000;
-    vl a(n,1),b;
-    rep(i,n)b.push_back(i*2+1);
-    puta(n);
-    puta(a);
-    puta(b);
+    geta(ll, n);
+    vl p(n+1,0);
+    range(i,1,n+1){
+        for(ll j=1;j*i<=n;j++){
+            p[j]+=i*j;
+        }
+    }
+    puta(sum(p));
     return 0;
 }
