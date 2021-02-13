@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#ifdef ONLINE_JUDGE
+#if defined(ONLINE_JUDGE) || defined(_DEBUG)
 #include <atcoder/all>
 #endif
 
@@ -82,6 +82,11 @@ template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){
 
 void YN(bool b){puta(b?"YES":"NO");}
 void Yn(bool b){puta(b?"Yes":"No");}
+
+#ifndef _DEBUG
+#define dump(...) 
+#endif
+
 //input
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 // #define geta(t,n,...) t n;cin>>n;geta(t,__VA_ARGS__)
@@ -90,13 +95,37 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
-/*他のライブラリを入れる場所*/
+ll n,a,b,c,d;
+ll d2(ll v){ return v%2?LINF:(v>a?a:min(a, d*v/2));}
+ll d3(ll v){ return v%3?LINF:(v>b?b:min({b, d*v/3*2, d2(v)+d*v/6}));}
+ll d5(ll v){ return v%5?LINF:(v>c?c:min({c, d*v/5*4, d3(v)+d*v*2/15, d2(v)+d*v*3/10, d2(v)+d2(v/2)+d*v/20}));}
+
+map<ll,ll> memo;
+ll solve(ll v){
+    if(memo.find(v)!=memo.end())return memo[v];
+    memo[v]=LLONG_MAX/d<v ? LLONG_MAX : d*v;
+    ll p=v%2;
+    chmin(memo[v], d*p + d2(v-p) + solve((v-p)/2));
+    chmin(memo[v], d*(2-p) + d2(v+2-p) + solve((v+2-p)/2));
+    p=v%3;
+    chmin(memo[v], d*p + d3(v-p) + solve((v-p)/3));
+    chmin(memo[v], d*(3-p) + d3(v+3-p) + solve((v+3-p)/3));
+    p=v%5;
+    chmin(memo[v], d*p + d5(v-p) + solve((v-p)/5));
+    chmin(memo[v], d*(5-p) + d5(v+5-p) + solve((v+5-p)/5));
+    return memo[v];
+}
 
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    geta(ll, n);
-    puta(n);
+    geta(ll, t);
+    rep(_,t){
+        cin>>n>>a>>b>>c>>d;
+        memo.clear();
+        memo[1]=d;
+        puta(solve(n));
+    }
     return 0;
 }

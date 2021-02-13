@@ -91,12 +91,29 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
 /*他のライブラリを入れる場所*/
-
+vvl solve(int n, vl a){
+    vvl r;
+    if(a.size()==n){
+        r.push_back(a);
+    }else{
+        ll mx=max(a)+1;
+        a.push_back(0);
+        range(i,1,mx+1){
+            a.back()++;
+            for(auto&d:solve(n, a))r.push_back(d);
+        }
+    }
+    return r;
+}
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
     geta(ll, n);
-    puta(n);
+    for(auto a:solve(n,vl{1})){
+        string s;
+        for(auto&c:a)s+='a'+c-1;
+        puta(s);
+    }
     return 0;
 }

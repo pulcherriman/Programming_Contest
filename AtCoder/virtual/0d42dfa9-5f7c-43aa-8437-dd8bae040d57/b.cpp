@@ -91,12 +91,76 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
 /*他のライブラリを入れる場所*/
+template<class T=ll>struct Graph{
+    int size;
+    T INF_VAL;
+    vector<vector<tuple<ll,T>>>edge;
+    Graph(int n=1,T inf=LINF):size(n),INF_VAL(inf){edge.resize(size);}
+    void add(ll from, ll to, T cost, bool directed=false){
+        edge[from].emplace_back(to,cost);
+        if(!directed) edge[to].emplace_back(from,cost);
+    }
+    void dump(){
+        rep(i,size)for(auto&[from,val]:edge[i])
+            puta(i,"=>",from,", cost :",val);
+    }
+};
 
+template<class T=ll>struct WarshallFloyd{
+    Graph<T> g;
+    WarshallFloyd(Graph<T> g):g(g){}
+    pair<bool, vector<vector<T>>>dist(){
+        bool isNegativeCycle=false;
+        vector<vector<T>> ret(g.size,vector<T>(g.size,g.INF_VAL));
+        rep(f,g.size){
+            ret[f][f]=0;
+            for(auto&[t,c]:g.edge[f])ret[f][t]=c;
+        }
+        rep(k,g.size)rep(i,g.size)if(ret[i][k]!=g.INF_VAL)
+            rep(j,g.size)if(ret[k][j]!=g.INF_VAL)
+                chmin(ret[i][j],ret[i][k]+ret[k][j]);
+        rep(i,g.size)isNegativeCycle|=ret[i][i]<0;
+        return {isNegativeCycle,ret};
+    }
+};
 
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
     geta(ll, n);
-    puta(n);
+    vs s(n);cin>>s;
+
+    Graph g(n);
+    rep(i,n)rep(j,n){
+        if(s[i][j]=='1')g.add(i,j,1,true);
+    }
+
+    vl color(n,-1);
+    queue<pll> q;
+    q.emplace(0,0);
+    while(!q.empty()){
+        auto[p,c]=q.front();
+        q.pop();
+        if(color[p]!=-1){
+            if(color[p]%2 != c%2){
+                puta(-1);
+                return 0;
+            }
+            continue;
+        }
+        color[p]=c;
+        for(auto&[to,cost]:g.edge[p]){
+            if(color[to]==-1)q.emplace(to,c+1);
+            else if(color[to]%2!=(c+1)%2){
+                puta(-1);
+                return 0;
+            }
+        }
+    }
+    ll ans=0;
+    for(auto&l:WarshallFloyd(g).dist().second)chmax(ans, max(l));
+    puta(ans+1);
+
+
     return 0;
 }

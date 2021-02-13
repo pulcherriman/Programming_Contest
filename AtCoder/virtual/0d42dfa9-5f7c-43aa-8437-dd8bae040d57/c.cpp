@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#ifdef ONLINE_JUDGE
+#if defined(ONLINE_JUDGE) || defined(_DEBUG)
 #include <atcoder/all>
 #endif
 
@@ -82,6 +82,11 @@ template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){
 
 void YN(bool b){puta(b?"YES":"NO");}
 void Yn(bool b){puta(b?"Yes":"No");}
+
+#ifndef _DEBUG
+#define dump(...) 
+#endif
+
 //input
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 // #define geta(t,n,...) t n;cin>>n;geta(t,__VA_ARGS__)
@@ -90,13 +95,24 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
-/*他のライブラリを入れる場所*/
-
-
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-    geta(ll, n);
-    puta(n);
+    geta(ll, t);
+    rep(_,t){
+        geta(ll,n,s,k);
+        s=n-s;
+        dump(n,s,k);
+        // 0から初めて最初にsに到達する
+        // i*k%n==sになる最小のi
+
+        if(s%gcd(n,k)!=0){
+            puta(-1);
+            continue;
+        }
+        // i*k==s mod n    i=s/k mod n
+        ll g=gcd(s,gcd(k,n));
+        puta(atcoder::inv_mod(k/g,n/g) * s/g % (n/g));
+    }
     return 0;
 }
