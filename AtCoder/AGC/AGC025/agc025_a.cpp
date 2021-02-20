@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll=long long;
+using vi=vector<int>;
+using vvi=vector<vi>;
+using pii=pair<int,int>;
+#define rep(i,n) for(int i=0;i<n;i++)
+#define range(i,a,n) for(int i=a;i<n;i++)
+#define all(a) a.begin(),a.end()
+#define rall(a) a.rbegin(),a.rend()
+#define INF 1e9
+#define EPS 1e-9
+#define MOD (1e9+7)
+void put(string d){}template<class H,class...T>void put(string d,H&h,T&...t){cout<<h;if(sizeof...(t))cout<<d;put(d,t...);}
+template<class T>void puti(T&a,string d=" "){bool f=1;for(auto&_:a)cout<<(exchange(f,0)?"":d)<<_;cout<<endl;}
+template<class T>void putii(T&a,string d=" "){for(auto&_:a)puti(_,d);}
+
+int ds(int n){
+    int r=0;
+    while(n){
+        r=r+n%10;
+        n/=10;
+    }
+    return r;
+}
+
+int main(){
+    int n;
+    cin>>n;
+    int ans=100000000;
+    range(i,1,n){
+        ans=min(ans,ds(i)+ds(n-i));
+    }
+    cout<<ans<<endl;
+	return 0;
+}
