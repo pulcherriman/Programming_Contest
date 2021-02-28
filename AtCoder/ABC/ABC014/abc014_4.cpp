@@ -98,43 +98,65 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
+template<class T=ll>struct Graph{
+	int size;
+	T INF_VAL;
+	vector<vector<tuple<ll,T>>>edge;
+	Graph(int n=1,T inf=LINF):size(n),INF_VAL(inf){edge.resize(size);}
+	void add(ll from, ll to, T cost, bool directed=false){
+		edge[from].emplace_back(to,cost);
+		if(!directed) edge[to].emplace_back(from,cost);
+	}
+	void show(){
+		rep(i,size)for(auto&[from,val]:edge[i])
+			puta(i,"=>",from,", cost :",val);
+	}
+};
+
+template<class T=ll>struct LCA{
+	Graph<T> g;
+	vvi parent;
+    vi dist;
+	LCA(Graph<T> g, int root=0):g(g){
+        int K=1;
+        while((1<<K)<g.size)K++;
+        parent.assign(K, vi(g.size,-1));
+        dist.assign(g.size, -1);
+        dfs(root,-1,0);
+		rep(k,K-1)rep(v,g.size){
+			parent[k + 1][v]=parent[k][v]<0 ? -1 : parent[k][parent[k][v]];
+		}
+	}
+	void dfs(int v, int p, int d) {
+        parent[0][v]=p, dist[v]=d;
+        for(auto&[to,_]:g.edge[v])if(to!=p)dfs(to,v,d+1);
+    }
+	ll get(ll u, ll v){
+        if(dist[u]<dist[v])swap(u,v);
+        int K = parent.size();
+        rep(k,K)if((dist[u]-dist[v])>>k&1)u=parent[k][u];
+        if(u==v)return u;
+		rrep(k,K)if(parent[k][u]!=parent[k][v])u=parent[k][u],v=parent[k][v];
+        return parent[0][u];
+	}
+};
+
 int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
 	geta(ll, n);
-	vl a(n);cin>>a;
-	geta(ll,k,q);
-	ll d=ceil(log2(n));
-	vvl dp(n,vl(d+1,0));
-	rep(i,n){
-		dp[i][0]=upper_bound(all(a),a[i]+k)-a.begin()-1;
+	Graph g(n);
+	rep(i,n-1){
+		geta(ll,a,b); a--,b--;
+		g.add(a,b,1);
 	}
-	range(j,1,d+1){
-		rep(i,n){
-			dp[i][j]=dp[dp[i][j-1]][j-1];
-		}
-	}
+	LCA lca(g);
 
-	// puta(dp);+
-
+	geta(ll,q);
 	rep(_,q){
-		geta(ll,u,v);
-		u--,v--;
-		if(u>v)swap(u,v);
-
-		// if(v-u==1)
-		ll ans=1;
-		rrep(i,d+1){
-			if(dp[u][i]<v){
-				// puta(u,"=>",(1<<i),"=>",dp[u][i]);
-				ans+=1<<i;
-				u=dp[u][i];
-			}
-		}
-		puta(ans);
-
+		geta(ll,a,b); a--,b--;
+		ll p=lca.get(a,b);
+		puta(lca.dist[a]+lca.dist[b]-lca.dist[p]*2+1);
 	}
-	
-	
 	return 0;
 }
