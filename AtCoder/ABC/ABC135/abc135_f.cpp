@@ -43,44 +43,44 @@ template<class S>S min(vector<S>&a){return *min_element(all(a));}
 
 //output
 template<class T>struct hasItr{
-	template<class U>static constexpr true_type check(class U::iterator*);
-	template<class U>static constexpr false_type check(...);
-	static constexpr bool v=decltype(check<T>(nullptr))::value;
+    template<class U>static constexpr true_type check(class U::iterator*);
+    template<class U>static constexpr false_type check(...);
+    static constexpr bool v=decltype(check<T>(nullptr))::value;
 };
 template<>struct hasItr<string>{static constexpr bool v=false;};
 
-template<class T>void puta(T&t,false_type,ostream&os,char el){os<<t;}
+template<class T>void puta(T&t,false_type,ostream&os,[[maybe_unused]]char el){os<<t;}
 template<class T>void puta(T&t,true_type,ostream&os,char el){
-	constexpr bool h=hasItr<typename T::value_type>::v;
-	bool F=true,I;
-	for(auto&i:t){
-		if(!F)os<<' ';
-		puta(i,bool_constant<h>(),os,el);
-		F=I=h;
-	}
-	if(!I)os<<el;
+    constexpr bool h=hasItr<typename T::value_type>::v;
+    bool F=true,I;
+    for(auto&i:t){
+        if(!F)os<<' ';
+        puta(i,bool_constant<h>(),os,el);
+        F=I=h;
+    }
+    if(!I)os<<el;
 }
 template<class T>void puta(const T&t, ostream&os=cout, char el='\n'){
-	puta(t,bool_constant<hasItr<T>::v>(),os,el);
-	if(!hasItr<T>::v)os<<el;
+    puta(t,bool_constant<hasItr<T>::v>(),os,el);
+    if(!hasItr<T>::v)os<<el;
 }
 template<class H,class...T>void puta(const H&h,const T&...t){cout<<h<<' ';puta(t...);}
 template<size_t i,class...T>void puta(tuple<T...>const&t, ostream&os){
-	if constexpr(i==sizeof...(T)-1)puta(get<i>(t),os);
-	else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
+    if constexpr(i==sizeof...(T)-1)puta(get<i>(t),os);
+    else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
 }
 template<class...T>void puta(tuple<T...>const&t, ostream&os=cout){puta<0>(t,os);}
 template<class T>void dump(const T&t){puta(t,cerr);}
 template<class H,class...T>void dump(const H&h,const T&...t){cerr<<h<<' ';dump(t...);}
 template<class...T>void dump(tuple<T...>const&t){puta(t,cerr);}
 template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){
-	os<<'['<<p.first<<", ";
-	if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
-	else os<<p.second<<']';
-	return os;
+    os<<'['<<p.first<<", ";
+    if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
+    else os<<p.second<<']';
+    return os;
 };
 template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){
-	puta(t,os); return os;
+    puta(t,os); return os;
 }
 
 void YN(bool b){puta(b?"YES":"NO");}
@@ -103,44 +103,68 @@ class RollingHash{
 using u64=uint_fast64_t;
 using i128=__int128_t;
 public:
-	string str;
-	RollingHash(const string&str):str(str){
-		h.resize(str.size()+1,0);
-		p.resize(str.size()+1,1);
-		rep(i,str.size()){
-			p[i+1]=mul(p[i],base);
-			h[i+1]=mul(h[i],base)+xorshift(str[i]+1);
-			if(h[i+1]>=mod)h[i+1]-=mod;
-		}
-	}
-	u64 get()const{return h.back();}
-	u64 get(int l,int r)const{u64 v=mod+h[r]-mul(h[l],p[r-l]);return v<mod?v:v-mod;}
+    string str;
+    RollingHash(const string&str):str(str){
+        h.resize(str.size()+1,0);
+        p.resize(str.size()+1,1);
+        rep(i,str.size()){
+            p[i+1]=mul(p[i],base);
+            h[i+1]=mul(h[i],base)+xorshift(str[i]+1);
+            if(h[i+1]>=mod)h[i+1]-=mod;
+        }
+    }
+    u64 get()const{return h.back();}
+    u64 get(int l,int r)const{u64 v=mod+h[r]-mul(h[l],p[r-l]);return v<mod?v:v-mod;}
 private:
-	vector<u64> h,p;
-	static constexpr u64 mod=(1ull<<61)-1;
-	static constexpr u64 base=36000*__TIME__[0]+3600*__TIME__[1]+600*__TIME__[3]+60*__TIME__[4]+10*__TIME__[6]+__TIME__[7];
-	static constexpr u64 mul(i128 a,i128 b){i128 t=a*b;t=(t>>61)+(t&mod);return t<mod?t:t-mod;}
-	static constexpr int xorshift(int x){x^=x<<13;x^=x>>17;return x^=x<<5;}
+    vector<u64> h,p;
+    static constexpr u64 mod=(1ull<<61)-1;
+    static constexpr u64 base=36000*__TIME__[0]+3600*__TIME__[1]+600*__TIME__[3]+60*__TIME__[4]+10*__TIME__[6]+__TIME__[7];
+    static constexpr u64 mul(i128 a,i128 b){i128 t=a*b;t=(t>>61)+(t&mod);return t<mod?t:t-mod;}
+    static constexpr int xorshift(int x){x^=x<<13;x^=x>>17;return x^=x<<5;}
 };
 
+struct UnionFind{
+    vl par,dist;
+    UnionFind(int x){par.assign(x,-1); dist.assign(x,0);}
+    ll find(ll x){return par[x]<0?x:find(par[x]);}
+    ll depth(ll x){return par[x]<0?0:depth(par[x])+dist[x];}
+    bool same(ll x,ll y){return find(x)==find(y);}
+    ll size(ll x){return -par[find(x)];}
+    ll diff(ll x,ll y){return same(x,y)?depth(x)-depth(y):LINF;}
+    bool unite(ll x,ll y,ll k=0){
+        k+=depth(y); k-=depth(x); k=-k;
+        x=find(x); y=find(y);
+        if(x==y)return false;
+        if(size(x)<size(y)){swap(x,y);k=-k;}
+        par[x]+=par[y]; par[y]=x; dist[y]=k;
+        return true;
+    }
+};
 
 int main(){
-	cin.tie(0);
-	ios::sync_with_stdio(false);
-	geta(ll, n);
-	geta(string,s);
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    geta(string, s,t);
 
-	ll ans=0;
-	RollingHash hash(s);
-	rep(i,s.size()){
-		range(j,i,s.size()){
-			while(i + ans < j and j + ans < n) {
-				if(hash.get(i, i + ans + 1) != hash.get(j, j + ans + 1)) break;
-				ans++;
-			}
-		}
-	}
-	puta(ans);
-	
-	return 0;
+    ll c=max(3, (int)(t.size()*3/s.size()));
+    string s2="";
+    rep(i,c)s2+=s;
+    RollingHash sh(s2),th(t);
+
+    UnionFind uf(s.size());
+
+    ll ans=0;
+    rep(i,s.size()){
+        if(sh.get(i,i+t.size()) == th.get()){
+            if(!uf.unite(i,(i+t.size())%s.size())){
+                puta(-1);
+                return 0;
+            }
+            chmax(ans, uf.size(i)-1);
+        }
+    }
+    puta(ans);
+
+    
+    return 0;
 }
