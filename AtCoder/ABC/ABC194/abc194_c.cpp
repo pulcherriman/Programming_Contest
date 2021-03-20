@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
+#if defined(ONLINE_JUDGE) || defined(_DEBUG)
 #include <atcoder/all>
+using namespace atcoder;
+#endif
 
 using namespace std;
 using ll=long long;
@@ -20,12 +23,14 @@ using vs=vector<string>;
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define rep(i,n) range(i,0,n)
-#define rrep(i,n) for(ll i=((ll)n)-1;i>=0;i--)
-#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);i++)
+#define rrep(i,n) rrange(i,0,n)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define rrange(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define repsq(i,n) for(ll i=0;i*i<=n;++i)
 #define LINF ((ll)1ll<<60)
 #define INF ((int)1<<30)
 #define EPS (1e-9)
-#define MOD (998244353ll)
+#define MOD (1000000007ll)
 #define fcout(a) cout<<setprecision(a)<<fixed
 #define PI (3.1415926535897932384)
 
@@ -44,7 +49,7 @@ template<class T>struct hasItr{
 };
 template<>struct hasItr<string>{static constexpr bool v=false;};
 
-template<class T>void puta(T&t,false_type,ostream&os,char el){os<<t;}
+template<class T>void puta(T&t,false_type,ostream&os,[[maybe_unused]]char el){os<<t;}
 template<class T>void puta(T&t,true_type,ostream&os,char el){
     constexpr bool h=hasItr<typename T::value_type>::v;
     bool F=true,I;
@@ -80,6 +85,11 @@ template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){
 
 void YN(bool b){puta(b?"YES":"NO");}
 void Yn(bool b){puta(b?"Yes":"No");}
+
+#ifndef _DEBUG
+#define dump(...) 
+#endif
+
 //input
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 // #define geta(t,n,...) t n;cin>>n;geta(t,__VA_ARGS__)
@@ -88,45 +98,23 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
-/*他のライブラリを入れる場所*/
-using namespace atcoder;
-
-struct S{
-    ll min, max;
-    static S create(ll v){ return S{v,v}; }
-    static S op(S a, S b){
-        return S{
-            std::min(a.min, b.min),
-            std::max(a.max,b.max)
-        };
-    }
-    static S e(){ return S{LINF,0}; }
-};
-
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);
-
-    geta(ll,n);
+    geta(ll, n);
     vl a(n);cin>>a;
-    segtree<S, S::op, S::e> st(n);
-
-    rep(i,n) st.set(i, S::create(a[i]));
-    
-    geta(ll,q);
-    rep(_,q){
-        geta(ll,tp,l,r);
-        l--; r--;
-
-        if(tp==1){
-            auto v=st.prod(l,r+1);
-            puta(v.max-v.min);
-        }else{
-            auto lv=st.get(l);
-            st.set(l,st.get(r));
-            st.set(r,lv);
-        }
+    ll s=0,s2=0;
+    rep(i,n){
+        s+=a[i];
+        s2+=a[i]*a[i];
     }
 
+    ll ans=0;
+    rep(i,n){
+        ans+=a[i]*a[i]*(n-2) + s2 - 2*a[i]*(s-a[i]);
+    }
+    puta(ans/2);
+
+    
     return 0;
 }
