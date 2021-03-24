@@ -59,27 +59,22 @@ struct _Prime{
     map<ll,int> Factorize(ll n){
         map<ll,int> r;
         if(n!=1){
-            ll x=pollard_single(n);
-            if(x==n)r[x]=1;
+            if(ll x=pollard_single(n);x==n)r[x]=1;
             else{
                 r=Factorize(x);
-                for(auto&v:Factorize(n/x))r[v.first]+=v.second;
+                for(const auto&v:Factorize(n/x))r[v.first]+=v.second;
             }
         }
         return r;
     }
     vl Divisor(ll n){
         vl r(1,1);
-        for(auto[v,c]:Factorize(n)){
-            ll l=r.size();
-            rep(i,l)rep(j,c)r.push_back(r[i]*pmod(v,j+1,LLONG_MAX));
-        }
+        for(const auto&[v,c]:Factorize(n))for(int i=0,l=r.size();i<l;++i)rep(j,c)r.push_back(r[i]*pmod(v,j+1,LLONG_MAX));
         return r;
     }
 
     private:
     template<class T>static constexpr int arr[]={2,7,61};
-
     template<class T,class U>
     static T pmod(T x,U n,T p) {
         T r=1%p;
@@ -87,7 +82,7 @@ struct _Prime{
         return r;
     }
     template<class T,class U>static bool IsPrime(T n){
-        for(int a:arr<T>){
+        for(const int&a:arr<T>){
             bool c=true;
             ll m=n-1;
             while(~m&1)c&=pmod<U>(a,m>>=1,n)!=n-1;
@@ -110,7 +105,7 @@ struct _Prime{
         return a<<min(n,m);
     }
     ll pollard_single(ll n){
-        const static auto f=[&](ll x){return(__int128_t(x)*x+1)%n;};
+        const static auto f=[&n](ll x){return(__int128_t(x)*x+1)%n;};
         if(~n&1)return 2;
         if(IsPrime(n))return n;
         ll st=0;

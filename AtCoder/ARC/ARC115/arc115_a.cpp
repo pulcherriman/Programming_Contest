@@ -1,10 +1,23 @@
-#include <bits/stdc++.h>
+// #pragma GCC target("avx")
+// #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
+// #pragma GCC optimize("unroll-loops")
+
+#define _USE_MATH_DEFINES
+#ifndef _DEBUG
+#define NDEBUG
+#endif
 #if defined(ONLINE_JUDGE) || defined(_DEBUG)
 #include <atcoder/all>
+using namespace atcoder;
 #endif
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/priority_queue.hpp>
+#include <ext/pb_ds/tag_and_trait.hpp>
 
 using namespace std;
 using ll=long long;
+using ld=long double;
 using ull=unsigned long long;
 using vb=vector<bool>;
 using vvb=vector<vb>;
@@ -18,22 +31,29 @@ using pll=pair<ll,ll>;
 using tll=tuple<ll,ll>;
 using tlll=tuple<ll,ll,ll>;
 using vs=vector<string>;
+template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type>;
+template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define rep(i,n) range(i,0,n)
-#define rrep(i,n) for(ll i=((ll)n)-1;i>=0;i--)
-#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);i++)
-#define LINF ((ll)1ll<<60)
-#define INF ((int)1<<30)
-#define EPS (1e-9)
-#define MOD (1000000007ll)
+#define rrep(i,n) rrange(i,0,n)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define rrange(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define repsq(i,n) for(ll i=0;i*i<=n;++i)
 #define fcout(a) cout<<setprecision(a)<<fixed
-#define PI (3.1415926535897932384)
+constexpr ll LINF=1ll<<60;
+constexpr int INF=1<<30;
+constexpr double EPS=(1e-9);
+constexpr ll MOD=1000000007ll;
+constexpr double PI=3.1415926535897932384;
 
-int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
-template<class T>bool chmax(T&a,T b){if(a<b){a=b; return true;}return false;}
-template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
+void Main();
+int main(){cin.tie(nullptr);ios::sync_with_stdio(false);Main();return 0;}
+template<class T>constexpr bool chmax(T&a,T b){return a<b?a=b,1:0;}
+template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
@@ -46,7 +66,7 @@ template<class T>struct hasItr{
 };
 template<>struct hasItr<string>{static constexpr bool v=false;};
 
-template<class T>void puta(T&t,false_type,ostream&os,char el){os<<t;}
+template<class T>void puta(T&t,false_type,ostream&os,[[maybe_unused]]char el){os<<t;}
 template<class T>void puta(T&t,true_type,ostream&os,char el){
     constexpr bool h=hasItr<typename T::value_type>::v;
     bool F=true,I;
@@ -67,73 +87,43 @@ template<size_t i,class...T>void puta(tuple<T...>const&t, ostream&os){
     else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
 }
 template<class...T>void puta(tuple<T...>const&t, ostream&os=cout){puta<0>(t,os);}
-template<class T>void dump(const T&t){puta(t,cerr);}
-template<class H,class...T>void dump(const H&h,const T&...t){cerr<<h<<' ';dump(t...);}
-template<class...T>void dump(tuple<T...>const&t){puta(t,cerr);}
 template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){
     os<<'['<<p.first<<", ";
     if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
     else os<<p.second<<']';
     return os;
 };
-template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){
-    puta(t,os); return os;
-}
-
+template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){puta(t,os); return os;}
 void YN(bool b){puta(b?"YES":"NO");}
 void Yn(bool b){puta(b?"Yes":"No");}
 
-#ifndef _DEBUG
-#define dump(...) 
+#ifdef _DEBUG
+template<class T>void dump_f(const T&t){puta(t,cerr);}
+template<class H,class...T>void dump_f(const H&h,const T&...t){cerr<<h<<' ';dump_f(t...);}
+template<class...T>void dump_f(tuple<T...>const&t){puta(t,cerr);}
+#define dump(...)cerr<<"  "<<string(#__VA_ARGS__)<<": ["<<to_string(__LINE__)<<":"<<__FUNCTION__<<"]\n    ",dump_f(__VA_ARGS__)
+#else
+#define dump(...)                                                              
 #endif
 
 //input
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
-// #define geta(t,n,...) t n;cin>>n;geta(t,__VA_ARGS__)
-// #define vec(t,a,h,...) vector<t>a(h);rep(i,n)a[i]=t(__VA_ARGS__);rep(i,n)cin>>a[i]
 template<typename...S>void geta_(S&...s){((cin>>s),...);}
-
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
-template<class T>
-class BinarySearch{
-    function<bool(T)> judge;
-    T threshold;
-public:
-    BinarySearch(function<bool(T)> judge, T threshold):judge(judge),threshold(threshold){}
-    T solve(T ok, T ng){T mid=0;while(ng-ok>threshold)(judge(mid=(ok+ng)/2)?ok:ng)=mid;return ok;}
-};
+// ライブラリ貼るスペース
 
-int main(){
-    cin.tie(0);
-    ios::sync_with_stdio(false);
-    geta(string, s);
-    geta(ll,m);
 
-    int mx=0;
-    rep(i,s.size())chmax(mx,s[i]-'0');
-
-    if(s.size()==1){
-        puta(mx<=m?1:0);
-        return 0;
+void Main(){
+    geta(ll, n,m);
+    ll odd=0,even=0;
+    rep(i,n){
+        geta(string,s);
+        if(count(all(s),'1')%2 == 0)even++;
+        else odd++;
     }
-    
-    auto check=[&](ll mid){
-        ll val=0;
-        rep(i,s.size()){
-            if(val>m/mid) return false;
-            val=val*mid+(s[i]-'0');
-            if(val>m)return false;
-        }
-        return true;
-    };
-    if(!check(mx+1)){
-        puta(0);
-        return 0;
-    }
-
-    BinarySearch<ll> bs(check, 1);
-    puta(bs.solve(mx+1, LINF) - mx);
-
-    return 0;
+    ll ans=n*(n-1)/2;
+    if(even>1)ans-=even*(even-1)/2;
+    if(odd>1)ans-=odd*(odd-1)/2;
+    puta(ans);
 }

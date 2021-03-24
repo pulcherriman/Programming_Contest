@@ -60,38 +60,38 @@ template<class S>S min(vector<S>&a){return *min_element(all(a));}
 
 //output
 template<class T>struct hasItr{
-	template<class U>static constexpr true_type check(class U::iterator*);
-	template<class U>static constexpr false_type check(...);
-	static constexpr bool v=decltype(check<T>(nullptr))::value;
+    template<class U>static constexpr true_type check(class U::iterator*);
+    template<class U>static constexpr false_type check(...);
+    static constexpr bool v=decltype(check<T>(nullptr))::value;
 };
 template<>struct hasItr<string>{static constexpr bool v=false;};
 
 template<class T>void puta(T&t,false_type,ostream&os,[[maybe_unused]]char el){os<<t;}
 template<class T>void puta(T&t,true_type,ostream&os,char el){
-	constexpr bool h=hasItr<typename T::value_type>::v;
-	bool F=true,I;
-	for(auto&i:t){
-		if(!F)os<<' ';
-		puta(i,bool_constant<h>(),os,el);
-		F=I=h;
-	}
-	if(!I)os<<el;
+    constexpr bool h=hasItr<typename T::value_type>::v;
+    bool F=true,I;
+    for(auto&i:t){
+        if(!F)os<<' ';
+        puta(i,bool_constant<h>(),os,el);
+        F=I=h;
+    }
+    if(!I)os<<el;
 }
 template<class T>void puta(const T&t, ostream&os=cout, char el='\n'){
-	puta(t,bool_constant<hasItr<T>::v>(),os,el);
-	if(!hasItr<T>::v)os<<el;
+    puta(t,bool_constant<hasItr<T>::v>(),os,el);
+    if(!hasItr<T>::v)os<<el;
 }
 template<class H,class...T>void puta(const H&h,const T&...t){cout<<h<<' ';puta(t...);}
 template<size_t i,class...T>void puta(tuple<T...>const&t, ostream&os){
-	if constexpr(i==sizeof...(T)-1)puta(get<i>(t),os);
-	else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
+    if constexpr(i==sizeof...(T)-1)puta(get<i>(t),os);
+    else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
 }
 template<class...T>void puta(tuple<T...>const&t, ostream&os=cout){puta<0>(t,os);}
 template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){
-	os<<'['<<p.first<<", ";
-	if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
-	else os<<p.second<<']';
-	return os;
+    os<<'['<<p.first<<", ";
+    if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
+    else os<<p.second<<']';
+    return os;
 };
 template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){puta(t,os); return os;}
 void YN(bool b){puta(b?"YES":"NO");}
@@ -112,74 +112,89 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
 // ライブラリ貼るスペース
-template<class T=ll>struct Graph{
-    int size;
-    T INF_VAL;
-    vector<vector<tuple<ll,T>>>edge;
-    Graph(int n=1,T inf=LINF):size(n),INF_VAL(inf){edge.resize(size);}
-    void add(ll from, ll to, T cost, bool directed=false){
-        edge[from].emplace_back(to,cost);
-        if(!directed) edge[to].emplace_back(from,cost);
-    }
-    void show(){
-        rep(i,size)for(auto&[from,val]:edge[i])
-            puta(i,"=>",from,", cost :",val);
-    }
-};
 
-template<class T=ll>struct Dijkstra{
-    Graph<T> g;
-    Dijkstra(Graph<T> g):g(g){}
-    vector<T>dist(ll s){
-		using pq_t=typename __gnu_pbds::priority_queue<tuple<T,ll>, greater<tuple<T,ll>>, __gnu_pbds::binomial_heap_tag>;
-		vi isPushed(g.size,0);
-        vector<T> ret(g.size, g.INF_VAL);
-		pq_t q;
-		typename pq_t::point_iterator node[g.size];
-        node[s]=q.push({ret[s]=T(), s});
-		isPushed[s]=1;
-
-        while(!q.empty()){
-            auto[c,p]=q.top(); q.pop();
-			isPushed[p]=0;
-            if(ret[p]<c && p==s){
-                ret[p]=c;
-                return ret;
-            }
-            if(ret[p]<c)continue;
-            for(auto&[nxt,cost]:g.edge[p]){
-				if(nxt==s){
-					if(ret[nxt]==0 or ret[p]+cost<ret[nxt]){
-						q.push({ret[p]+cost,nxt});
-						isPushed[nxt]=1;
-					}
-					continue;
-				}
-                if(ret[nxt]>ret[p]+cost){
-					tuple<T,ll> np={ret[nxt]=ret[p]+cost, nxt};
-					if(isPushed[nxt]==0) node[nxt]=q.push(np);
-					else q.modify(node[nxt], np);
-					isPushed[nxt]=1;
-				}
+struct _Prime{
+    bool IsPrime(ll n){
+        if(n<2)return false;
+        if(~n&1)return n==2;
+        if(n<=INT_MAX)return IsPrime<int,ll>(n);
+        return IsPrime<ll,__int128_t>(n);
+    }
+    map<ll,int> Factorize(ll n){
+        map<ll,int> r;
+        if(n!=1){
+            if(ll x=pollard_single(n);x==n)r[x]=1;
+            else{
+                r=Factorize(x);
+                for(const auto&v:Factorize(n/x))r[v.first]+=v.second;
             }
         }
-        return ret;
+        return r;
     }
-    T dist(ll s,ll t){return dist(s)[t];}
+    vl Divisor(ll n){
+        vl r(1,1);
+        for(const auto&[v,c]:Factorize(n))for(int i=0,l=r.size();i<l;++i)rep(j,c)r.push_back(r[i]*pmod(v,j+1,LLONG_MAX));
+        return r;
+    }
+
+    private:
+    template<class T>static constexpr int arr[]={2,7,61};
+    template<class T,class U>
+    static T pmod(T x,U n,T p) {
+        T r=1%p;
+        while(x%=p,n){if(n&1)r=r*x%p;x*=x;n>>=1;}
+        return r;
+    }
+    template<class T,class U>static bool IsPrime(T n){
+        for(const int&a:arr<T>){
+            bool c=true;
+            ll m=n-1;
+            while(~m&1)c&=pmod<U>(a,m>>=1,n)!=n-1;
+            c&=pmod<U>(a,m?:1,n)!=1;
+            if(c)return n<=a;
+        }
+        return true;
+    }
+
+    ll fast_gcd(ll _a, ll _b) {
+        ll a=abs(_a),b=abs(_b);
+        if(a==0||b==0)return a+b;
+        int n=__builtin_ctzll(a),m=__builtin_ctzll(b);
+        a>>=n;b>>=m;
+        while(a!=b){
+            int x=__builtin_ctzll(a-b);
+            ll c=a>b?a:b;
+            a=(c-=b=a>b?b:a)>>x;
+        }
+        return a<<min(n,m);
+    }
+    ll pollard_single(ll n){
+        const static auto f=[&n](ll x){return(__int128_t(x)*x+1)%n;};
+        if(~n&1)return 2;
+        if(IsPrime(n))return n;
+        ll st=0;
+        while(true){
+            ll x=++st,y=f(x);
+            while(true){
+                ll p=fast_gcd(y-x+n,n);
+                if(p==0||p==n)break;
+                if(p!=1)return p;
+                x=f(x);
+                y=f(f(y));
+            }
+        }
+    }
 };
+template<>constexpr int _Prime::arr<ll>[]={2,325,9375,28178,450775,9780504,1795265022};
+_Prime Prime;
 
 void Main(){
-    geta(ll, n,m);
-    Graph g(n);
-    vl x(n,LINF);
-    rep(i,m){
-        geta(ll, a,b,c);
-        g.add(a-1,b-1,c,true);
-    }
-
+    geta(ll, n);
+    vl ans(n,1);
     rep(i,n){
-        ll d=Dijkstra(g).dist(i)[i];
-        if(d==0)puta(-1);
-        else puta(d);
+        for(auto&[p,c]:Prime.Factorize(i+1)){
+            ans[i]+=c;
+        }
     }
+    puta(ans);
 }
