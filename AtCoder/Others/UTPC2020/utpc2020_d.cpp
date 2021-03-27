@@ -112,16 +112,6 @@ template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 
 // ライブラリ貼るスペース
-class Random{
-    unsigned y;
-    constexpr unsigned next(){return y^=(y^=(y^=y<<13)>>17)<<5;}
-public:
-    constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242:chrono::system_clock::now().time_since_epoch().count()){}
-    constexpr int operator()(int a,int b){return next()%(b-a)+a;}
-    constexpr ll operator()(ll a,ll b){return (((ull)next())<<32|next())%(b-a)+a;}
-    constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
-} Random(0);
-
 int mpow(int v, ll a) {
     ll x = v, n = a, res = 1;
     while ( n ) {
@@ -190,7 +180,7 @@ public:
     bool operator!=(mymint &a) { return v != a.v; }
     bool operator!=(signed a) { return v != a; }
     friend bool operator!=(signed a, mymint &b) { return a != b.v; }
-    constexpr operator int() { return v; }
+    operator int() { return v; }
 };
 const int setModMax = 510000;
 mymint fac[setModMax], finv[setModMax], inv[setModMax];
@@ -224,7 +214,7 @@ void mymint::operator/=(const ll a) { v = mod(v * minv(a)); }
 void mymint::operator/=(const signed a) { v = mod(v * minv(a)); }
 void operator/=(ll &a, const mymint &b) { a = mymint::mod(a % MOD * minv(b.v)); }
 auto&operator>>(istream&is,mymint&t){ll a; cin>>a; t=a; return is;};
-auto&operator<<(ostream&os,mymint&t){os<<((int)t); return os;};
+auto&operator<<(ostream&os,mymint&t){cout<<((int)t); return os;};
 mymint operator"" _m(unsigned long long a){return mymint(a);}
 using vm=vector<mymint>;
 using vvm=vector<vm>;
@@ -234,41 +224,34 @@ mymint nCr(ll n,ll r){
 }
 
 void Main(){
-    geta(ll, n);
-    vl a(n);cin>>a;
+    geta(ll, n, k);
+    vm a(n); cin>>a;
 
-    ll ans=a[0];
-    vl val(1,0);
-    vl cnt(1,a[0]);
-    mymint currentbottom=1,sign=-1;
-    mymint d=0;
-    range(i,1,n){
-        sign*=-1;
-        currentbottom=ans-currentbottom;
-        // dump(i);
-        if(a[i-1]<a[i]){
-            val.emplace_back((ans-currentbottom)*sign);
-            cnt.emplace_back(a[i]-a[i-1]);
-            d+=val.back()*cnt.back();
-        }else{
-            ll cnttop=a[i-1];
-            while(!cnt.empty() and a[i]<=cnttop-cnt.back()){
-                cnttop-=cnt.back();
-                d-=val.back()*cnt.back();
-                val.pop_back();
-                cnt.pop_back();
-            }
-            cnt.back()-=(cnttop-a[i]);
-            d-=val.back()*(cnttop-a[i]);
-        }
-        // dump(currentbottom,sign);
-        // dump(val);
-        // dump(cnt);
-
-        ans=currentbottom*a[i]+d*sign;
-
-        // puta(i,"ans",ans);
+    if(k==1){
+        puta(1);
+        return;
     }
 
-    puta(ans);
+    sort(all(a));
+
+    vvm dp(n+1,vm(n+1,0));
+    dp[0]=vm(n+1,1);
+    range(i,1,n+1){
+        range(j,i,n+1){
+            dp[i][j]=dp[i-1][j-1]/a[n-j];
+            puta(i,j,(ll)dp[i][j-1]);
+            // if(i>1)range(l,0,j-1)dp[i][j]+=dp[i-1][l];
+        }
+    }
+    rep(i,n+1){
+        rep(j,n+1)cout<<(ll)dp[i][j]<<",";
+        puta("");
+    }
+
+    mymint ans=0;
+    range(i,1,n-k+2){
+        ans+=i/a[i]*dp[k-2][n-i-1];
+    }
+
+    puta((ll)(ans/nCr(n,k)));
 }
