@@ -113,23 +113,22 @@ template<class...T>void dump_f(tuple<T...>const&t){puta(t,cerr);}
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
-
 template<class T,class...Args>auto vec(T x,int arg,Args...args){if constexpr(sizeof...(args)==0)return vector(arg,x);else return vector(arg,vec(x,args...));}
 #define getv(a,...) auto a=vec(__VA_ARGS__);cin>>a
 
 // ライブラリ貼るスペース
 
+
 void Main(){
-	geta(ll, n);
-	getv(a,0,n);
+	geta(ll, n,k);
 
-	wait(2000);
+	ll ans=0;
+	range(ab,2,n*2+1){
+		ll f=min(ab, 2*n+2-ab)-1;
+		ll v=ab-k;
+		ll s=min(v, 2*n+2-v)-1;
+		ans+=max(f,0ll)*max(s,0ll);
+	}
 
-	SegTree st(10, S(100));
-	st.set(0,1000);
-	st.set(1,10);
-	puta(st.all_prod().sum); //1810
-	puta(st.all_prod().min); //10
-	puta(st.all_prod().max); //1000
-
+	puta(ans);
 }
