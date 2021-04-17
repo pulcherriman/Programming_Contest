@@ -1,0 +1,221 @@
+// #pragma GCC target("avx")
+// #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
+// #pragma GCC optimize("unroll-loops")
+
+#define _USE_MATH_DEFINES
+#ifndef _DEBUG
+#define NDEBUG
+#endif
+#if defined(ONLINE_JUDGE) || defined(_DEBUG)
+#include <atcoder/all>
+using namespace atcoder;
+#endif
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+
+using namespace std;
+using ll=long long;
+using ld=long double;
+using ull=unsigned long long;
+using vb=vector<bool>;
+using vvb=vector<vb>;
+using vd=vector<double>;
+using vvd=vector<vd>;
+using vi=vector<int>;
+using vvi=vector<vi>;
+using vl=vector<ll>;
+using vvl=vector<vl>;
+using pll=pair<ll,ll>;
+using tll=tuple<ll,ll>;
+using tlll=tuple<ll,ll,ll>;
+using vs=vector<string>;
+template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type>;
+template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
+
+#define all(a) a.begin(),a.end()
+#define rall(a) a.rbegin(),a.rend()
+#define loop(q) __loop(q, __LINE__)
+#define __loop(q,l) __loop2(q,l)
+#define __loop2(q,l) rep(_lp ## l,q)
+#define rep(i,n) range(i,0,n)
+#define rrep(i,n) rrange(i,0,n)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define rrange(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define repsq(i,n) for(ll i=0;i*i<=n;++i)
+#define each(v,a) for(auto v:a)
+#define eachref(v,a) for(auto&v:a)
+#define fcout(a) cout<<setprecision(a)<<fixed
+constexpr ll LINF=1ll<<60;
+constexpr int INF=1<<30;
+constexpr double EPS=(1e-9);
+constexpr ll MOD=1000000007ll;
+constexpr double PI=3.1415926535897932384;
+
+void Main();
+int main(){cin.tie(nullptr);ios::sync_with_stdio(false);Main();return 0;}
+template<class T>constexpr bool chmax(T&a,T b){return a<b?a=b,1:0;}
+template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
+template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
+template<class S>S max(vector<S>&a){return *max_element(all(a));}
+template<class S>S min(vector<S>&a){return *min_element(all(a));}
+
+//output
+template<class T>struct hasItr{
+	template<class U>static constexpr true_type check(class U::iterator*);
+	template<class U>static constexpr false_type check(...);
+	static constexpr bool v=decltype(check<T>(nullptr))::value;
+};
+template<>struct hasItr<string>{static constexpr bool v=false;};
+
+template<class T>void puta(T&t,false_type,ostream&os,[[maybe_unused]]char el){os<<t;}
+template<class T>void puta(T&t,true_type,ostream&os,char el){
+	constexpr bool h=hasItr<typename T::value_type>::v;
+	bool F=true,I;
+	for(auto&i:t){
+		if(!F)os<<' ';
+		puta(i,bool_constant<h>(),os,el);
+		F=I=h;
+	}
+	if(!I)os<<el;
+}
+template<class T>void puta(const T&t, ostream&os=cout, char el='\n'){
+	puta(t,bool_constant<hasItr<T>::v>(),os,el);
+	if(!hasItr<T>::v)os<<el;
+}
+template<class H,class...T>void puta(const H&h,const T&...t){cout<<h<<' ';puta(t...);}
+template<size_t i,class...T>void puta(tuple<T...>const&t, ostream&os){
+	if constexpr(i==sizeof...(T)-1)puta(get<i>(t),os);
+	else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
+}
+template<class...T>void puta(tuple<T...>const&t, ostream&os=cout){puta<0>(t,os);}
+template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){
+	os<<'['<<p.first<<", ";
+	if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
+	else os<<p.second<<']';
+	return os;
+};
+template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){puta(t,os); return os;}
+void YN(bool b){puta(b?"YES":"NO");}
+void Yn(bool b){puta(b?"Yes":"No");}
+
+#ifdef _DEBUG
+template<class T>void dump_f(const T&t){puta(t,cerr);}
+template<class H,class...T>void dump_f(const H&h,const T&...t){cerr<<h<<' ';dump_f(t...);}
+template<class...T>void dump_f(tuple<T...>const&t){puta(t,cerr);}
+#define dump(...)cerr<<"  "<<string(#__VA_ARGS__)<<": ["<<to_string(__LINE__)<<":"<<__FUNCTION__<<"]\n    ",dump_f(__VA_ARGS__)
+#else
+#define dump(...)                                                              
+#endif
+
+//input
+template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
+template<typename...S>void geta_(S&...s){((cin>>s),...);}
+#define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
+template<class T,class...Args>auto vec(T x,int arg,Args...args){if constexpr(sizeof...(args)==0)return vector(arg,x);else return vector(arg,vec(x,args...));}
+#define getv(a,...) auto a=vec(__VA_ARGS__);cin>>a
+
+// ライブラリ貼るスペース
+
+
+template<class TClass>
+struct Monoid{
+	static TClass Operator(TClass a, TClass b){ return TClass::op(a,b); }
+	static TClass Unit(){ return TClass(); }
+};
+
+template<class TClass>
+struct SegTree : public segtree<TClass, TClass::Operator, TClass::Unit>{
+	using segtree<TClass, TClass::Operator, TClass::Unit>::segtree;
+	explicit SegTree(int n, TClass val) : SegTree(vector<TClass>(n, TClass(val))) {}
+};
+
+class S : public Monoid<S>{
+public:
+	ll sum, min, max;
+	S(){ sum=0, min=LINF, max=0; };
+	S(ll v){ sum=min=max=v; }
+	static S op(S a, S b){
+		S s;
+		s.sum=a.sum+b.sum;
+		s.min=std::min(a.min, b.min);
+		s.max=std::max(a.max,b.max);
+		return s;
+	}
+};
+
+
+template<class T>class Compress{
+	int _size;
+	HashMap<T,int> _zip;
+	vector<int> _unzip;
+public:
+	Compress(vector<T> in){
+		sort(all(in));
+		in.erase(unique(all(in)),in.end());
+		_unzip.resize(_size=in.size());
+		rep(i,_size){_unzip[_zip[in[i]] = i] = in[i];}
+	}
+	int size(){return _size;}
+	int zip(T v){return _zip[v];}
+	T unzip(int v){return _unzip[v];}
+};
+
+void Main(){
+	geta(ll, h,w,q);
+	auto a=vec(0ll,h);
+	auto b=vec(0ll,w);
+	ll asum=0,bsum=0;
+	ll d=0;
+
+	vl pp(1,0);
+	vector<tlll> query;
+	loop(q){
+		geta(ll,t,x,y);
+		query.emplace_back(t,x,y);
+		pp.push_back(y);
+	}
+	Compress cp(pp);
+
+	SegTree st(cp.size(),S()),st2(cp.size(),S());
+	SegTree stc(cp.size(),S()),stc2(cp.size(),S());
+	rep(i,q){
+		auto[t,x,y]=query[i];
+		x--;
+		if(t==1){
+			int cpa=cp.zip(a[x]);
+			asum-=a[x]*w;
+			ll p=stc.prod(cpa+1,cp.size()).sum;
+			d-=a[x]*p+st.prod(0,cpa+1).sum;
+			if(a[x]!=0)st2.set(cpa, st2.prod(cpa,cpa+1).sum-a[x]);
+			if(a[x]!=0)stc2.set(cpa, stc2.prod(cpa,cpa+1).sum-1);
+
+			a[x]=y;
+			
+			cpa=cp.zip(a[x]);
+			asum+=a[x]*w;
+			p=stc.prod(cpa+1,cp.size()).sum;
+			d+=a[x]*p+st.prod(0,cpa+1).sum;
+			st2.set(cpa, st2.prod(cpa,cpa+1).sum+a[x]);
+			stc2.set(cpa, stc2.prod(cpa,cpa+1).sum+1);
+		}else{
+			int cpa=cp.zip(b[x]);
+			bsum-=b[x]*h;
+			ll p=stc2.prod(cpa+1,cp.size()).sum;
+			d-=b[x]*p+st2.prod(0,cpa+1).sum;
+			if(b[x]!=0)st.set(cpa, st.prod(cpa,cpa+1).sum-b[x]);
+			if(b[x]!=0)stc.set(cpa, stc.prod(cpa,cpa+1).sum-1);
+
+			b[x]=y;
+
+			cpa=cp.zip(b[x]);
+			bsum+=b[x]*h;
+			p=stc2.prod(cpa+1,cp.size()).sum;
+			st.set(cpa, st.prod(cpa,cpa+1).sum+b[x]);
+			stc.set(cpa, stc.prod(cpa,cpa+1).sum+1);
+			d+=b[x]*p+st2.prod(0,cpa+1).sum;
+		}
+		puta(asum+bsum-d);
+	}
+}
