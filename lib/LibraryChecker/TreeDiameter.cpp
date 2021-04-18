@@ -1,11 +1,11 @@
-#pragma region Perfect Template
-#pragma region Unsecured Optimization
 // #pragma GCC target("avx")
 // #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
 // #pragma GCC optimize("unroll-loops")
-#pragma endregion
 
-#pragma region Include Headers
+#define _USE_MATH_DEFINES
+#ifndef _DEBUG
+#define NDEBUG
+#endif
 #if defined(ONLINE_JUDGE) || defined(_DEBUG)
 #include <atcoder/all>
 using namespace atcoder;
@@ -14,12 +14,6 @@ using namespace atcoder;
 #include <ext/pb_ds/assoc_container.hpp>
 
 using namespace std;
-
-void Main();
-int main(){cin.tie(nullptr);ios::sync_with_stdio(false);Main();return 0;}
-#pragma endregion
-
-#pragma region Additional Type Definition
 using ll=long long;
 using ld=long double;
 using ull=unsigned long long;
@@ -39,9 +33,7 @@ template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less
 template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type>;
 template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
 template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
-#pragma endregion
 
-#pragma region Macros
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define loop(q) __loop(q, __LINE__)
@@ -55,17 +47,21 @@ template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 #define each(v,a) for(auto v:a)
 #define eachref(v,a) for(auto&v:a)
 #define fcout(a) cout<<setprecision(a)<<fixed
-#pragma endregion
-
-#pragma region Constants
 constexpr ll LINF=1ll<<60;
 constexpr int INF=1<<30;
 constexpr double EPS=(1e-9);
 constexpr ll MOD=1000000007ll;
-constexpr long double PI=3.14159265358979323846;
-#pragma endregion
+constexpr double PI=3.1415926535897932384;
 
-#pragma region Output Assist
+void Main();
+int main(){cin.tie(nullptr);ios::sync_with_stdio(false);Main();return 0;}
+template<class T>constexpr bool chmax(T&a,T b){return a<b?a=b,1:0;}
+template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
+template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
+template<class S>S max(vector<S>&a){return *max_element(all(a));}
+template<class S>S min(vector<S>&a){return *min_element(all(a));}
+
+//output
 template<class T>struct hasItr{
 	template<class U>static constexpr true_type check(class U::iterator*);
 	template<class U>static constexpr false_type check(...);
@@ -112,41 +108,140 @@ template<class...T>void dump_f(tuple<T...>const&t){puta(t,cerr);}
 #else
 #define dump(...)                                                              
 #endif
-#pragma endregion
 
-#pragma region Input Assist
+//input
 template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
 template<typename...S>void geta_(S&...s){((cin>>s),...);}
 #define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
 template<class T,class...Args>auto vec(T x,int arg,Args...args){if constexpr(sizeof...(args)==0)return vector(arg,x);else return vector(arg,vec(x,args...));}
 #define getv(a,...) auto a=vec(__VA_ARGS__);cin>>a
-#pragma endregion
 
-#pragma region Utilities
-template<class T>constexpr bool chmax(T&a,T b){return a<b?a=b,1:0;}
-template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
-template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
-template<class S>S max(vector<S>&a){return *max_element(all(a));}
-template<class S>S min(vector<S>&a){return *min_element(all(a));}
+// util
 template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 	int p=-1; T v=numeric_limits<T>::min();
 	rep(i,a.size())if(chmax(v,a[i]))p=i;
 	return {p,v};
 }
-#pragma endregion
-#pragma endregion
 
-// ここにライブラリを貼る
-// regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
-#pragma region Additional Libraries
+// ライブラリ貼るスペース
 
+template<class T=ll>struct Graph{
+	int size;
+	T INF_VAL;
+	vector<vector<tuple<ll,T>>>edge;
+	Graph(int n=1,T inf=LINF):size(n),INF_VAL(inf){edge.resize(size);}
+	void add(ll from, ll to, T cost, bool directed=false){
+		edge[from].emplace_back(to,cost);
+		if(!directed) edge[to].emplace_back(from,cost);
+	}
+	virtual void show(){
+		rep(i,size)for(auto&[from,val]:edge[i])
+			puta(i,"=>",from,", cost :",val);
+	}
+};
 
-#pragma endregion
+template<class T=ll>struct GraphSearchBase{
+	Graph<T> g;
+	GraphSearchBase(Graph<T> g):g(g){}
+	vector<T>calc(int s){
+		vector<T> ret(g.size,g.INF_VAL);
+		ret[push(s)]=0;
+		while(!q.empty()){
+			int p=pop();
+			for(auto&[to,cost]:g.edge[p])if(ret[to]==g.INF_VAL)ret[push(to)]=ret[p]+cost;
+		}
+		return ret;
+	}
+	pair<T, vi> calc(int s, int t){
+		auto result=calc(s);
+		if(result[t]==g.INF_VAL)return {g.INF_VAL,vi()};
+		vi path(1,t);
+		while(t!=s)for(auto&[to,_]:g.edge[t])if(result[t]>result[to]){path.push_back(t=to); break;}
+		reverse(all(path));
+		return {result[path.back()],path};
+	}
+protected:
+	deque<int> q;
+	virtual int push(int s) = 0;
+	virtual int pop() = 0;
+};
+
+template<class T=ll>struct BFS : public GraphSearchBase<T>{
+	BFS(Graph<T> g):GraphSearchBase<T>(g){}
+protected:
+	int push(int s){ return this->q.emplace_back(s);}
+	int pop(){
+		int v=this->q.front();
+		this->q.pop_front();
+		return v;
+	}
+};
+
+template<class T=ll>struct DFS : public GraphSearchBase<T>{
+	DFS(Graph<T> g):GraphSearchBase<T>(g){}
+protected:
+	int push(int s){ return this->q.emplace_front(s); }
+	int pop(){
+		int v=this->q.back();
+		this->q.pop_back();
+		return v;
+	}
+};
+
+struct GridGraph : public Graph<int>{
+	int h,w;
+	vs field;
+	GridGraph(int h, int w):Graph(1,0),h(h),w(w){field.resize(h);}
+	void input(bool needOutline=true){
+		rep(i,h)cin>>field[i];
+		if(needOutline){
+			field.resize(h+2);
+			rrep(i,h)field[i+1]='#'+field[i]+'#';
+			field[0]=field[h+1]=string(w+2,'#');
+			h+=2; w+=2;
+		}
+		create();
+	}
+	void create(){
+		edge.clear();
+		edge.resize(size=h*w);
+		range(i,1,h-1)range(j,1,w-1)if(field[i][j]=='.'){
+			if(field[i+1][j]=='.')add(pos2index(i,j,w), pos2index(i+1,j,w), 1);
+			if(field[i][j+1]=='.')add(pos2index(i,j,w), pos2index(i,j+1,w), 1);
+		}
+	}
+	void show() override{ each(s,field)puta(s); }
+private:
+	static constexpr int pos2index(int y, int x, int w){ return y*w+x; }
+};
+
+template<class T=ll>struct Tree : public Graph<T>{
+	Tree(int n, T inf=LINF):Graph<T>(n,inf){}
+
+	pair<T,vi> diameter(){
+		if(_diameter.first==this->INF_VAL){
+			BFS bfs(*this);
+			auto [s,_]=getMaxAndIndex(bfs.calc(0));
+			auto [t,w]=getMaxAndIndex(bfs.calc(s));
+			_diameter=bfs.calc(s,t);
+		}
+		return _diameter;
+	}
+private:
+	pair<T,vi> _diameter = {this->INF_VAL, vi()};
+};
 
 
 void Main(){
 	geta(ll, n);
+	Tree tree(n);
+	rep(i,n-1){
+		geta(ll,a,b,c);
+		tree.add(a,b,c);
+	}
 
-	ll ans=0;
-	puta(ans);
+	auto[w,p]=tree.diameter();
+
+	puta(w, p.size());
+	puta(p);
 }
