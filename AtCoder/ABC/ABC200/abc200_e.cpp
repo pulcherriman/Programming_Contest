@@ -1,7 +1,7 @@
 #pragma region Perfect Template
 #pragma region Unsecured Optimization
 // #pragma GCC target("avx")
-// #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
+#pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
 // #pragma GCC optimize("unroll-loops")
 #pragma endregion
 
@@ -245,32 +245,52 @@ private:
 	pair<T,vi> _diameter = {this->INF_VAL, vi()};
 };
 
+template<class T=ll>struct Dijkstra{
+	Graph<T> g;
+	Dijkstra(Graph<T> g):g(g){}
+	vector<T>dist(int s){
+		vb visit(g.size,false);
+		vector<T> ret(g.size, g.INF_VAL);
+		priority_queue<pair<T,int>> q;
+		q.emplace(T(),s);
+		ret[s]=0;
+		while(!q.empty()){
+			auto[c,p]=q.top(); q.pop();
+			if(visit[p])continue;
+			ret[p]=-c;
+			visit[p]=true;
+			for(auto&[nxt,cost]:g.edge[p]){
+				if(visit[nxt] && ret[nxt]<=ret[p]+cost)continue;
+				q.emplace(-ret[p]-cost,nxt);
+			}
+		}
+		return ret;
+	}
+	T dist(ll s,ll t){return dist(s)[t];}
+};
+
 #pragma endregion
 
 
 void Main(){
-	geta(ll, n,m,s);
-	Graph g(n);
-	loop(m){
-		geta(ll,a,b,c);
-		g.add(a,b,c);
+	geta(ll, h,w);
+	auto a=vec(0ll,h,w-1);
+	auto b=vec(0ll,h-1,w);
+	cin>>a>>b;
+
+	Graph g(h*w);
+	rep(i,h)rep(j,w-1){
+		g.add(i*w+j, i*w+j+1,a[i][j]);
+	}
+	rep(i,h-1)rep(j,w){
+		g.add(i*w+j, (i+1)*w+j,b[i][j],true);
+	}
+	rep(j,w)rep(i,h)rep(k,i){//iからkまで
+		g.add(i*w+j,k*w+j,1+i-k,true);
 	}
 	
-	
-	
-	auto dfs=[](auto&&g, int s){
-		vb visit(g.size,false);
-		vl ans(g.size,-1);
-		ans[s]=0;
-		function<void(int)> dfsrec=[&dfsrec,&g,&visit,&ans](int p){
-			visit[p]=true;
-			for(auto[to,cost]:g.edge[p])if(!visit[to]){
-				dfsrec(to);
-				ans[to]=ans[p]+cost;
-			}
-		};
-		dfsrec(s);
-		return ans;
-	};
-	puta(dfs(g,s));
+	Dijkstra dijk(g);
+	puta(dijk.dist(0,h*w-1));
+	// puta(dijk.dist(0));
+	// g.show();
 }

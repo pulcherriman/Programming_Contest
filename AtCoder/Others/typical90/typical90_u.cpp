@@ -23,7 +23,7 @@ int main(){cin.tie(nullptr);ios::sync_with_stdio(false);Main();return 0;}
 using ll=long long;
 using ld=long double;
 using ull=unsigned long long;
-using vb=vector<bool>;
+using vb=vector<char>;
 using vvb=vector<vb>;
 using vd=vector<double>;
 using vvd=vector<vd>;
@@ -152,53 +152,33 @@ template<class T=ll>struct Graph{
 		rep(i,size)for(auto&[from,val]:edge[i])
 			puta(i,"=>",from,", cost :",val);
 	}
-};
-
-template<class T=ll>struct GraphSearchBase{
-	Graph<T> g;
-	GraphSearchBase(Graph<T> g):g(g){}
-	vector<T>calc(int s){
-		vector<T> ret(g.size,g.INF_VAL);
-		ret[push(s)]=0;
-		while(!q.empty()){
-			int p=pop();
-			for(auto&[to,cost]:g.edge[p])if(ret[to]==g.INF_VAL)ret[push(to)]=ret[p]+cost;
+	// 強連結成分分解
+	// return: {縮約後のDAG, 元々i番目の頂点がDAG上で何番目に縮約されたか？}
+	pair<Graph<T>, vi> scc(){
+		vi visit(size,0),backward,group(size);
+		function<void(int)> dfs=[&](int p){
+			visit[p]=1;
+			for(auto&[to,_]:edge[p])if(!visit[to])dfs(to);
+			backward.emplace_back(p);
+		};
+		Graph ginv(size);
+		rep(i,size){
+			if(!visit[i])dfs(i);
+			for(auto&[to,_]:edge[i])ginv.add(to,i,1,true);
 		}
-		return ret;
-	}
-	pair<T, vi> calc(int s, int t){
-		auto result=calc(s);
-		if(result[t]==g.INF_VAL)return {g.INF_VAL,vi()};
-		vi path(1,t);
-		while(t!=s)for(auto&[to,_]:g.edge[t])if(result[t]>result[to]){path.push_back(t=to); break;}
-		reverse(all(path));
-		return {result[path.back()],path};
-	}
-protected:
-	deque<int> q;
-	virtual int push(int s) = 0;
-	virtual int pop() = 0;
-};
-
-template<class T=ll>struct BFS : public GraphSearchBase<T>{
-	BFS(Graph<T> g):GraphSearchBase<T>(g){}
-protected:
-	int push(int s){ return this->q.emplace_back(s);}
-	int pop(){
-		int v=this->q.front();
-		this->q.pop_front();
-		return v;
-	}
-};
-
-template<class T=ll>struct DFS : public GraphSearchBase<T>{
-	DFS(Graph<T> g):GraphSearchBase<T>(g){}
-protected:
-	int push(int s){ return this->q.emplace_front(s); }
-	int pop(){
-		int v=this->q.back();
-		this->q.pop_back();
-		return v;
+		fill(all(visit),0);
+		ll pcnt=0;
+		function<void(int)> dfs2=[&](int p){
+			visit[p]=1, group[p]=pcnt;
+			for(auto&[to,_]:ginv.edge[p])if(!visit[to])dfs2(to);
+		};
+		rrep(i,size)if(!visit[backward[i]]){
+			dfs2(backward[i]);
+			pcnt++;
+		}
+		Graph r(pcnt);
+		rep(i,size)for(auto&[to,_]:edge[i])if(group[i]!=group[to])r.add(group[i],group[to],1,true);
+		return {r,group};
 	}
 };
 
@@ -233,12 +213,12 @@ template<class T=ll>struct Tree : public Graph<T>{
 	Tree(int n, T inf=LINF):Graph<T>(n,inf){}
 
 	pair<T,vi> diameter(){
-		if(_diameter.first==this->INF_VAL){
-			BFS bfs(*this);
-			auto [s,_]=getMaxAndIndex(bfs.calc(0));
-			auto [t,w]=getMaxAndIndex(bfs.calc(s));
-			_diameter=bfs.calc(s,t);
-		}
+		// if(_diameter.first==this->INF_VAL){
+		// 	BFS bfs(*this);
+		// 	auto [s,_]=getMaxAndIndex(bfs.calc(0));
+		// 	auto [t,w]=getMaxAndIndex(bfs.calc(s));
+		// 	_diameter=bfs.calc(s,t);
+		// }
 		return _diameter;
 	}
 private:
@@ -249,28 +229,19 @@ private:
 
 
 void Main(){
-	geta(ll, n,m,s);
+	geta(ll, n,m);
 	Graph g(n);
 	loop(m){
-		geta(ll,a,b,c);
-		g.add(a,b,c);
+		geta(ll,a,b);
+		a--;b--;
+		g.add(a,b,1,true);
 	}
-	
-	
-	
-	auto dfs=[](auto&&g, int s){
-		vb visit(g.size,false);
-		vl ans(g.size,-1);
-		ans[s]=0;
-		function<void(int)> dfsrec=[&dfsrec,&g,&visit,&ans](int p){
-			visit[p]=true;
-			for(auto[to,cost]:g.edge[p])if(!visit[to]){
-				dfsrec(to);
-				ans[to]=ans[p]+cost;
-			}
-		};
-		dfsrec(s);
-		return ans;
-	};
-	puta(dfs(g,s));
+
+	auto[rg,group]=g.scc();
+
+	ll ans=0;
+	vl res(rg.size,0);
+	rep(i,n)res[group[i]]++;
+	for(auto i:res)ans+=i*(i-1)/2;
+	puta(ans);	
 }
