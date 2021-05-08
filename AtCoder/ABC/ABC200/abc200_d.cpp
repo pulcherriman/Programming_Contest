@@ -3,6 +3,9 @@
 // #pragma GCC target("avx")
 // #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
 // #pragma GCC optimize("unroll-loops")
+#ifdef _DEBUG
+#define _GLIBCXX_DEBUG 1
+#endif
 #pragma endregion
 
 #pragma region Include Headers
@@ -44,13 +47,16 @@ template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 #pragma region Macros
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
-#define loop(q) __loop(q, __LINE__)
-#define __loop(q,l) __loop2(q,l)
-#define __loop2(q,l) rep(_lp ## l,q)
-#define rep(i,n) range(i,0,n)
-#define rrep(i,n) rrange(i,0,n)
-#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
-#define rrange(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define __LOOPSWITCH(_1, _2, _3, __LOOPSWITCH, ...) __LOOPSWITCH
+#define rep(...) __LOOPSWITCH(__VA_ARGS__, __RANGE, __REP, __LOOP) (__VA_ARGS__)
+#define rrep(...) __LOOPSWITCH(__VA_ARGS__, __RRANGE, __RREP, __LOOP) (__VA_ARGS__)
+#define __LOOP(q) __LOOP2(q, __LINE__)
+#define __LOOP2(q,l) __LOOP3(q,l)
+#define __LOOP3(q,l) __REP(_lp ## l,q)
+#define __REP(i,n) __RANGE(i,0,n)
+#define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define __RREP(i,n) __RRANGE(i,0,n)
+#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
 #define repsq(i,n) for(ll i=0;i*i<=n;++i)
 #define each(v,a) for(auto v:a)
 #define eachref(v,a) for(auto&v:a)
@@ -128,6 +134,7 @@ template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
+template<class T>T gcd(vector<T> v){return accumulate(all(v),T(),gcd<T,T>);}
 template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 	int p=-1; T v=numeric_limits<T>::min();
 	rep(i,a.size())if(chmax(v,a[i]))p=i;
@@ -145,28 +152,57 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 
 
 void Main(){
-	geta(string,s);
-	ll n=s.size();
-	deque<char> q;
-	bool toggled=false;
+	geta(ll, n);
+	getv(a,0ll,n);
+	// vl c(200,-1);
 	rep(i,n){
-		if(s[i]=='R'){
-			toggled=!toggled;
-			continue;
-		}
-		if(toggled){
-			if(!q.empty() and q.front()==s[i]){
-				q.pop_front();
-			}else q.push_front(s[i]);
-		}else{
-			if(!q.empty() and q.back()==s[i])q.pop_back();
-			else q.push_back(s[i]);
-		}
+		a[i]%=200;
+	// 	if(c[a[i]]!=-1){
+	// 		Yn(1);
+	// 		puta(1,c[a[i]]);
+	// 		puta(1,i+1);
+	// 		return;
+	// 	}
+	// 	c[a[i]]=i+1;
 	}
-	string ans="";
-	if(!q.empty()){
-		for(auto&c:q)ans+=c;
-		if(toggled)reverse(all(ans));
+	vvl dp(200);
+	rep(i,n){
+		if(!dp[a[i]].empty()){
+			Yn(1);
+			puta(dp[a[i]].size(), dp[a[i]]);
+			puta(1,i+1);
+			return;
+		}
+		rep(j,200)if(!dp[j].empty() && dp[j].back()!=i+1){
+			ll v=(j+a[i])%200;
+			// dp[j]にiをくっつけたやつとdp[v]でペアに？
+			if(!dp[v].empty()){
+				if(a[i]==0){
+					auto t=dp[j];
+					t.push_back(i+1);
+					Yn(1);
+					puta(t.size(),t);
+					puta(dp[v].size(),dp[v]);
+				}else{
+					dp[j].push_back(i+1);
+					Yn(1);
+					puta(dp[j].size(),dp[j]);
+					puta(dp[v].size(),dp[v]);
+				}
+				return;
+			}else{
+				if(j==0){
+					Yn(1);
+					dp[j].push_back(i+1);
+					puta(dp[j].size(),dp[j]);
+					puta(1,i+1);
+					return;
+				}
+				dp[v]=dp[j];
+				dp[v].push_back(i+1);
+			}
+		}
+		dp[a[i]].push_back(i+1);
 	}
-	puta(ans);
+	Yn(0);
 }

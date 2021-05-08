@@ -3,9 +3,6 @@
 // #pragma GCC target("avx")
 // #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
 // #pragma GCC optimize("unroll-loops")
-#ifdef _DEBUG
-#define _GLIBCXX_DEBUG 1
-#endif
 #pragma endregion
 
 #pragma region Include Headers
@@ -47,16 +44,13 @@ template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 #pragma region Macros
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
-#define __LOOPSWITCH(_1, _2, _3, __LOOPSWITCH, ...) __LOOPSWITCH
-#define rep(...) __LOOPSWITCH(__VA_ARGS__, __RANGE, __REP, __LOOP) (__VA_ARGS__)
-#define rrep(...) __LOOPSWITCH(__VA_ARGS__, __RRANGE, __RREP, __LOOP) (__VA_ARGS__)
-#define __LOOP(q) __LOOP2(q, __LINE__)
-#define __LOOP2(q,l) __LOOP3(q,l)
-#define __LOOP3(q,l) __REP(_lp ## l,q)
-#define __REP(i,n) __RANGE(i,0,n)
-#define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
-#define __RREP(i,n) __RRANGE(i,0,n)
-#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define loop(q) __loop(q, __LINE__)
+#define __loop(q,l) __loop2(q,l)
+#define __loop2(q,l) rep(_lp ## l,q)
+#define rep(i,n) range(i,0,n)
+#define rrep(i,n) rrange(i,0,n)
+#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define rrange(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
 #define repsq(i,n) for(ll i=0;i*i<=n;++i)
 #define each(v,a) for(auto v:a)
 #define eachref(v,a) for(auto&v:a)
@@ -134,7 +128,6 @@ template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
-template<class T>T gcd(vector<T> v){return accumulate(all(v),T(),gcd<T,T>);}
 template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 	int p=-1; T v=numeric_limits<T>::min();
 	rep(i,a.size())if(chmax(v,a[i]))p=i;
@@ -152,10 +145,14 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 
 
 void Main(){
-	geta(ll, n,k);
-	rep(i,k){
-		if(n%200==0)n/=200;
-		else n=n*1000+200;
+	geta(string,s);
+	ll ans=0;
+	rep(i,s.size()-3){
+		string t=s.substr(i,4);
+		// puta(t);
+		if(t=="ZONe")ans++;
 	}
-	puta(n);
+	puta(ans);
+
+	// puta(s.count("ZONe"));
 }
