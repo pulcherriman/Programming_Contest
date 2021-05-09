@@ -152,10 +152,49 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 
 
 void Main(){
-	geta(ll, n,k);
-	rep(i,k){
-		if(n%200==0)n/=200;
-		else n=n*1000+200;
+	geta(ll, n);
+	getv(a,0,n);
+	getv(b,0,n);
+	map<int,int> mp;
+	rep(i,n)mp[a[i]]|=2;
+	rep(i,n)mp[b[i]]|=1;
+	vl imos(n+1,0);
+	ll samecnt=0;
+	for(auto&[k,v]:mp)if(v==3){
+		samecnt++;
+		int al,ar,bl,br;
+		al=lower_bound(all(a),k)-a.begin();
+		ar=upper_bound(all(a),k)-a.begin()-1;
+		bl=lower_bound(all(b),k)-b.begin();
+		br=upper_bound(all(b),k)-b.begin()-1;
+		dump(k,al,ar,bl,br);
+		ll c=ar-al+1+br-bl+1;
+		if(c>n){
+			puta("No");
+			return;
+		}
+		auto[low,high]=pll((ar+1-bl+n)%n,(al-1-br+n)%n);
+		if(low<=high){
+			imos[low]++;
+			imos[high+1]--;
+		}else{
+			imos[low]++;
+			imos[n]--;
+			imos[0]++;
+			imos[high+1]--;
+		}
 	}
-	puta(n);
+	rep(i,n)imos[i+1]+=imos[i];
+	
+	int mv=-1;
+	rep(i,n)if(imos[i]==samecnt){mv=i;break;}
+	if(mv==-1){
+		puta("No");
+		return;
+	}
+	auto ans=b;
+	rep(i,n)ans[(i+mv)%n]=b[i];
+
+	puta("Yes");
+	puta(ans);
 }

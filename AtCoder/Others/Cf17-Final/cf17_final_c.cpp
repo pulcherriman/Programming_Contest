@@ -152,10 +152,44 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 
 
 void Main(){
-	geta(ll, n,k);
-	rep(i,k){
-		if(n%200==0)n/=200;
-		else n=n*1000+200;
+	geta(ll, n);
+	getv(a,0,n);
+	vl cnt(13,0);
+	cnt[0]=1;
+	rep(i,n)cnt[a[i]]++;
+	rep(i,13)if(cnt[i]>2 or cnt[0]>1 or cnt[12]>1){
+		puta(0);
+		return;
 	}
-	puta(n);
+	vl tm(24,0),rd;
+	tm[0]=1;
+	rep(i,1,13)if(cnt[i]==2){
+		tm[i]=tm[24-i]=1;
+	}else if(cnt[i]==1){
+		if(i==12)tm[12]=1;
+		else rd.push_back(i);
+	}
+	// puta(tm);
+	// puta(rd);
+	ll ans=0;
+	rep(s,1<<(rd.size())){
+		vl tmp=tm;
+		rep(i,rd.size()){
+			rd[i]=abs(rd[i]);
+			if((s>>i)&1)rd[i]*=-1;
+			tmp[(24+rd[i])%24]=1;
+		}
+		// puta(tmp);
+		rep(i,24)tmp.push_back(tmp[i]);
+		ll v=100,id=-LINF;
+		rep(i,48){
+			if(tmp[i]==1){
+				chmin(v,i-id);
+				id=i;
+			}
+		}
+		// puta(v);
+		chmax(ans,v);
+	}
+	puta(ans);
 }

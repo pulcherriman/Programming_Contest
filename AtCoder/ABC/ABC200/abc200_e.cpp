@@ -1,8 +1,11 @@
 #pragma region Perfect Template
 #pragma region Unsecured Optimization
 // #pragma GCC target("avx")
-#pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
+// #pragma GCC optimize("O3,inline,omit-frame-pointer,no-asynchronous-unwind-tables,fast-math")
 // #pragma GCC optimize("unroll-loops")
+#ifdef _DEBUG
+#define _GLIBCXX_DEBUG 1
+#endif
 #pragma endregion
 
 #pragma region Include Headers
@@ -44,13 +47,16 @@ template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 #pragma region Macros
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
-#define loop(q) __loop(q, __LINE__)
-#define __loop(q,l) __loop2(q,l)
-#define __loop2(q,l) rep(_lp ## l,q)
-#define rep(i,n) range(i,0,n)
-#define rrep(i,n) rrange(i,0,n)
-#define range(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
-#define rrange(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define __LOOPSWITCH(_1, _2, _3, __LOOPSWITCH, ...) __LOOPSWITCH
+#define rep(...) __LOOPSWITCH(__VA_ARGS__, __RANGE, __REP, __LOOP) (__VA_ARGS__)
+#define rrep(...) __LOOPSWITCH(__VA_ARGS__, __RRANGE, __RREP, __LOOP) (__VA_ARGS__)
+#define __LOOP(q) __LOOP2(q, __LINE__)
+#define __LOOP2(q,l) __LOOP3(q,l)
+#define __LOOP3(q,l) __REP(_lp ## l,q)
+#define __REP(i,n) __RANGE(i,0,n)
+#define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define __RREP(i,n) __RRANGE(i,0,n)
+#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
 #define repsq(i,n) for(ll i=0;i*i<=n;++i)
 #define each(v,a) for(auto v:a)
 #define eachref(v,a) for(auto&v:a)
@@ -128,6 +134,7 @@ template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
+template<class T>T gcd(vector<T> v){return accumulate(all(v),T(),gcd<T,T>);}
 template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 	int p=-1; T v=numeric_limits<T>::min();
 	rep(i,a.size())if(chmax(v,a[i]))p=i;
@@ -139,158 +146,70 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // ここにライブラリを貼る
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
-template<class T=ll>struct Graph{
-	int size;
-	T INF_VAL;
-	vector<vector<tuple<ll,T>>>edge;
-	Graph(int n=1,T inf=LINF):size(n),INF_VAL(inf){edge.resize(size);}
-	void add(ll from, ll to, T cost, bool directed=false){
-		edge[from].emplace_back(to,cost);
-		if(!directed) edge[to].emplace_back(from,cost);
-	}
-	virtual void show(){
-		rep(i,size)for(auto&[from,val]:edge[i])
-			puta(i,"=>",from,", cost :",val);
-	}
-};
 
-template<class T=ll>struct GraphSearchBase{
-	Graph<T> g;
-	GraphSearchBase(Graph<T> g):g(g){}
-	vector<T>calc(int s){
-		vector<T> ret(g.size,g.INF_VAL);
-		ret[push(s)]=0;
-		while(!q.empty()){
-			int p=pop();
-			for(auto&[to,cost]:g.edge[p])if(ret[to]==g.INF_VAL)ret[push(to)]=ret[p]+cost;
-		}
-		return ret;
-	}
-	pair<T, vi> calc(int s, int t){
-		auto result=calc(s);
-		if(result[t]==g.INF_VAL)return {g.INF_VAL,vi()};
-		vi path(1,t);
-		while(t!=s)for(auto&[to,_]:g.edge[t])if(result[t]>result[to]){path.push_back(t=to); break;}
-		reverse(all(path));
-		return {result[path.back()],path};
-	}
-protected:
-	deque<int> q;
-	virtual int push(int s) = 0;
-	virtual int pop() = 0;
-};
-
-template<class T=ll>struct BFS : public GraphSearchBase<T>{
-	BFS(Graph<T> g):GraphSearchBase<T>(g){}
-protected:
-	int push(int s){ return this->q.emplace_back(s);}
-	int pop(){
-		int v=this->q.front();
-		this->q.pop_front();
-		return v;
-	}
-};
-
-template<class T=ll>struct DFS : public GraphSearchBase<T>{
-	DFS(Graph<T> g):GraphSearchBase<T>(g){}
-protected:
-	int push(int s){ return this->q.emplace_front(s); }
-	int pop(){
-		int v=this->q.back();
-		this->q.pop_back();
-		return v;
-	}
-};
-
-struct GridGraph : public Graph<int>{
-	int h,w;
-	vs field;
-	GridGraph(int h, int w):Graph(1,0),h(h),w(w){field.resize(h);}
-	void input(bool needOutline=true){
-		rep(i,h)cin>>field[i];
-		if(needOutline){
-			field.resize(h+2);
-			rrep(i,h)field[i+1]='#'+field[i]+'#';
-			field[0]=field[h+1]=string(w+2,'#');
-			h+=2; w+=2;
-		}
-		create();
-	}
-	void create(){
-		edge.clear();
-		edge.resize(size=h*w);
-		range(i,1,h-1)range(j,1,w-1)if(field[i][j]=='.'){
-			if(field[i+1][j]=='.')add(pos2index(i,j,w), pos2index(i+1,j,w), 1);
-			if(field[i][j+1]=='.')add(pos2index(i,j,w), pos2index(i,j+1,w), 1);
-		}
-	}
-	void show() override{ each(s,field)puta(s); }
-private:
-	static constexpr int pos2index(int y, int x, int w){ return y*w+x; }
-};
-
-template<class T=ll>struct Tree : public Graph<T>{
-	Tree(int n, T inf=LINF):Graph<T>(n,inf){}
-
-	pair<T,vi> diameter(){
-		if(_diameter.first==this->INF_VAL){
-			BFS bfs(*this);
-			auto [s,_]=getMaxAndIndex(bfs.calc(0));
-			auto [t,w]=getMaxAndIndex(bfs.calc(s));
-			_diameter=bfs.calc(s,t);
-		}
-		return _diameter;
-	}
-private:
-	pair<T,vi> _diameter = {this->INF_VAL, vi()};
-};
-
-template<class T=ll>struct Dijkstra{
-	Graph<T> g;
-	Dijkstra(Graph<T> g):g(g){}
-	vector<T>dist(int s){
-		vb visit(g.size,false);
-		vector<T> ret(g.size, g.INF_VAL);
-		priority_queue<pair<T,int>> q;
-		q.emplace(T(),s);
-		ret[s]=0;
-		while(!q.empty()){
-			auto[c,p]=q.top(); q.pop();
-			if(visit[p])continue;
-			ret[p]=-c;
-			visit[p]=true;
-			for(auto&[nxt,cost]:g.edge[p]){
-				if(visit[nxt] && ret[nxt]<=ret[p]+cost)continue;
-				q.emplace(-ret[p]-cost,nxt);
-			}
-		}
-		return ret;
-	}
-	T dist(ll s,ll t){return dist(s)[t];}
-};
 
 #pragma endregion
 
 
-void Main(){
-	geta(ll, h,w);
-	auto a=vec(0ll,h,w-1);
-	auto b=vec(0ll,h-1,w);
-	cin>>a>>b;
+void solve(ll n, ll k){
+	bool toggle=0;
+	if(n*n*n/2<k){
+		toggle=true;
+		k=n*n*n-k+1;
+	}
 
-	Graph g(h*w);
-	rep(i,h)rep(j,w-1){
-		g.add(i*w+j, i*w+j+1,a[i][j]);
-	}
-	rep(i,h-1)rep(j,w){
-		g.add(i*w+j, (i+1)*w+j,b[i][j],true);
-	}
-	rep(j,w)rep(i,h)rep(k,i){//iからkまで
-		g.add(i*w+j,k*w+j,1+i-k,true);
+	auto dp=vec(0ll,4,n*3+10);
+	dp[0][0]=1;
+	rep(i,3){
+		rep(j,i*n+1){
+			dp[i+1][j+1]+=dp[i][j];
+			dp[i+1][j+1+n]-=dp[i][j];
+		}
+		rep(j,1,n*3+2)dp[i+1][j]+=dp[i+1][j-1];
 	}
 	
-	Dijkstra dijk(g);
-	puta(dijk.dist(0,h*w-1));
-	// puta(dijk.dist(0));
-	// g.show();
+	ll total=0,index=0;
+	rep(i,n*3+1){
+		total+=dp[3][i];
+		if(total>=k){
+			index=k-(total-dp[3][i]);
+			total=i;
+			break;
+		}
+	}
+	// puta(n,k,total,index);
+
+	ll c=0;
+	rep(i,1,total-1){
+		ll rem=total-i;
+		ll z=0,q=0;
+		if(rem-1<=n){
+			z=rem-1;
+		}else{
+			q=rem-1-n;
+			z=n-(rem-1-n);
+		}
+		c+=z;
+		if(c>=index){
+			c-=z;
+			total-=i;
+			index-=c;
+			if(!toggle)
+				puta(i,index+q,total-index-q);
+			else
+				puta(n+1-i,n+1-(index+q),n+1-(total-index-q));
+			break;
+		}
+	}
+}
+
+void Main(){
+	geta(ll, n,k);
+	solve(n,k);
+	// n=10;
+	// rep(i,1,n*n*n+1){
+	// 	// puta(i);
+	// 	solve(n,i);
+	// }
+
 }

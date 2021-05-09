@@ -152,10 +152,18 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 
 
 void Main(){
-	geta(ll, n,k);
-	rep(i,k){
-		if(n%200==0)n/=200;
-		else n=n*1000+200;
-	}
-	puta(n);
+	geta(ll, a,b,c,k);
+	getv(x,0ll,a);
+	getv(y,0ll,b);
+	getv(z,0ll,c);
+	
+	vl xy;
+	rep(i,a)rep(j,b)xy.push_back(x[i]+y[j]);
+	sort(rall(xy));
+
+	vl xyz;
+	rep(i,min(k,a*b))rep(j,c)xyz.push_back(xy[i]+z[j]);
+	sort(rall(xyz));
+
+	rep(i,k)puta(xyz[i]);
 }
