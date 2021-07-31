@@ -73,10 +73,10 @@ pair<ll, vl> readURL(string s){
     return make_pair(n, marks);
 }
 
-constexpr bool isWhite(ll a, ll b){
+bool isWhite(ll a, ll b){
     return abs(a-b)==1;
 }
-constexpr bool isBlack(ll a, ll b){
+bool isBlack(ll a, ll b){
     return a*2==b or a==b*2;
 }
 vl OK(ll v1, ll v2){

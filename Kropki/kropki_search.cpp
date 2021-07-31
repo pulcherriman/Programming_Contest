@@ -40,7 +40,7 @@ ll max(int a,ll b){return max((ll)a,b);} ll max(ll a,int b){return max(a,(ll)b);
 int sgn(const double&r){return (r>EPS)-(r<-EPS);} // a>0  : sgn(a)>0
 int sgn(const double&a,const double&b){return sgn(a-b);} // b<=c : sgn(b,c)<=0
 
-template<class T>void puta(T&&t){cout<<t<<"\n";}
+template<class T>void puta(T&&t){cout<<t<<endl;}
 template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<' ';puta(t...);}
 template<class S,class T>void tf(bool b,S t,T f){if(b)puta(t);else puta(f);}
 void YN(bool b){tf(b,"YES","NO");}
@@ -201,35 +201,23 @@ int main(){
 	cin.tie(0);
 	ios::sync_with_stdio(false);
 	string s;
-    cin>>s;
-    int n; vi marks;
-    tie(n, marks) = readURL(s);
-    
-    int ansCount; vvi answer;
-    tie(ansCount, answer) = solve(n, marks);
+	while(cin>>s){
+		int n; vi marks;
+		tie(n, marks) = readURL(s);
+		
+		reset;
+		int ansCount; vvi answer;
+		tie(ansCount, answer) = solve(n, marks);
 
-    if(ansCount==1){
-        int level = progress;
-        ofstream ofstr("./Data/"+to_string(n)+"/"+to_string(n)+"_"+to_string(level)+"_"+getDatetimeStr()+".txt");
+		int level = progress;
 
-        streambuf* strbuf;
-        strbuf = cout.rdbuf( ofstr.rdbuf() );
-    
-        puta("URL:", s);
-        puta("");
-        puta("Calculate Time:", progress, "ms");
-        if(ansCount==0){
-            puta("Answer is not found.");
-        }else if(ansCount==1){
-            puta("Answer is found.");
-            rep(i,n)puta(answer[i]);
-        }else{
-            puta("Answer is not unique.");
-        }
-
-        cout.rdbuf( strbuf );
-    }else{
-        cout<<"Failed."<<endl;
-    }
+		if(ansCount==1){
+			puta("URL:", s);
+			puta("");
+			puta("Calculate Time:", progress, "ms");
+			rep(i,n)puta(answer[i]);
+			puta("");
+		}
+	}
 	return 0;
 }

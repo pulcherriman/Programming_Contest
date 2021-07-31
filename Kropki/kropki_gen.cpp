@@ -29,7 +29,7 @@ using vs=vector<string>;
 
 int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
 template<class T>bool chmax(T&a,T b){if(a<b){a=b; return true;}return false;}
-template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
+template<class T>bool chmin(T&a,T b){if(a>=b){a=b; return true;}return false;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
@@ -37,7 +37,7 @@ ll max(int a,ll b){return max((ll)a,b);} ll max(ll a,int b){return max(a,(ll)b);
 int sgn(const double&r){return (r>EPS)-(r<-EPS);} // a>0  : sgn(a)>0
 int sgn(const double&a,const double&b){return sgn(a-b);} // b<=c : sgn(b,c)<=0
 
-template<class T>void puta(T&&t){cout<<t<<"\n";}
+template<class T>void puta(T&&t){cout<<t<<endl;}
 template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<' ';puta(t...);}
 template<class S,class T>void tf(bool b,S t,T f){if(b)puta(t);else puta(f);}
 void YN(bool b){tf(b,"YES","NO");}
@@ -109,8 +109,11 @@ ll evaluate(vvl&f, ll b, ll w){
             black++;
         }
     }
-    rep(i,n)rep(j,n)score+=odd[i][j]>=2;
-    return score*score + (black-b)*(black-b)*w*w/b/b*n + (white-w)*(white-w);
+	// if(white>0)return LINF+1;
+	if(black+white==0)return LINF+1;
+	return black*100-black;
+	return black+white;
+    return (black-b)*(black-b) + (white-w)*(white-w);
 }
 
 ll getMark(ll a, ll b){
@@ -177,11 +180,13 @@ int main(){
 	ios::sync_with_stdio(false);
     ll n,b,w; cin>>n>>b>>w;
     vvl f; ll score = LINF;
-    rep(i,100){
+    rep(i,10000){
         vvl tf; ll tscore;
         tie(tf,tscore) = solve(n, b, w);
-        if(chmin(score,tscore)) f=tf;
+		if(chmin(score,tscore)){
+			f=tf;
+		    puta(getURL(f));
+		}
     }
-    puta(getURL(f));
 	return 0;
 }
