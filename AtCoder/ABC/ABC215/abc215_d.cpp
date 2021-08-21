@@ -151,62 +151,130 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // ここにライブラリを貼る
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
-
-template<class T>class Compress{
-	int _size;
-	HashMap<T,int> _zip;
-	vector<int> _unzip;
+class Random {
+	unsigned y;
+	constexpr unsigned next(){return y^=(y^=(y^=y<<13)>>17)<<5;}
 public:
-	Compress(vector<T> in){
-		sort(all(in));
-		in.erase(unique(all(in)),in.end());
-		_unzip.resize(_size=in.size());
-		rep(i,_size){_unzip[_zip[in[i]] = i] = in[i];}
+	typedef ll result_type;
+	constexpr result_type operator()(){return operator()((ll)min(),(ll)max());}
+	static constexpr result_type max(){return numeric_limits<result_type>::max();}
+	static constexpr result_type min(){return 0;}
+
+	constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242:chrono::system_clock::now().time_since_epoch().count()){}
+	constexpr int operator()(int a,int b){return next()%(b-a)+a;}
+	constexpr ll operator()(ll a,ll b){return (((ull)next())<<32|next())%(b-a)+a;}
+	constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
+} Random(0);
+// NOTICE: Require "Random"
+struct _Prime {
+private:
+	constexpr ull fast_gcd(ull a, ull b) {
+		if(a==0||b==0)return a+b;
+		int n=__builtin_ctzll(a),m=__builtin_ctzll(b);
+		a>>=n; b>>=m;
+		while(a!=b){ int x=__builtin_ctzll(a-b); a=(max(a,b)-(b=min(a,b)))>>x; }
+		return a<<min(n,m);
 	}
-	int size(){return _size;}
-	int zip(T v){return _zip[v];}
-	T unzip(int v){return _unzip[v];}
-};
+	constexpr ull mul (ull a,ull b,ull&mod) {
+		ll ret=a*b-mod*(ull)(1.L/mod*a*b);
+		return ret+(ret<0)*mod-(ret>=(ll)mod)*mod;
+	}
+	constexpr ull mod128 (ull a,ull e,ull&mod) {
+		ull ret=1;
+		while(e){ if(e&1)ret=mul(ret,a,mod); a=mul(a,a,mod),e>>=1; }
+		return ret;
+	}
+	constexpr inline ull pollard_f(ull x, ull&n, ull&c){ return mul(x,x,n)+c; }
+	ull pollard(ull n){
+		ull t=0,prod=2,q,x=0,y=0,c=0,i=2;
+		while((t++&127) or fast_gcd(prod,n)==1){
+			if(x==y)y=pollard_f(x=i,n,c=Random(1ll,n));
+			if((q=mul(prod,max(x,y)-min(x,y),n)))prod=q;
+			x=pollard_f(x,n,c),y=pollard_f(pollard_f(y,n,c),n,c);
+		}
+		return fast_gcd(prod,n);
+	}
+public:
+	constexpr bool isPrime (ull n) {
+		if(n<=1)return false;
+		if(n<4)return true;
+		if(n%6%4!=1)return false;
+		ull s=__builtin_ctzll(n-1),d=n>>s;
+
+		constexpr ull pollard_seed[7]={2, 325, 9375, 28178, 450775, 9780504, 1795265022};
+		for(ull x:pollard_seed){
+			ull p=mod128(x,d,n),i=s;
+			while(p!=1 and p!=n-1 and x%n and i--)p=mul(p,p,n);
+			if(p!=n-1 and i!=s) return false;
+		}
+		return true;
+	}
+
+	vector<ull> factor(ull n){
+		if (n==1) return{};
+		if (isPrime(n)) return{n};
+		ull x=pollard(n);
+		auto l=factor(x),r=factor(n/x);
+		l.insert(l.end(),all(r));
+		return l;
+	}
+
+	vector<ull> divisor(ull n){
+		HashSet<ull> st;
+		vector<ull> tmp;
+		st.insert(1);
+		for(auto&f:factor(n)){
+			tmp.clear();
+			for(auto&d:st)tmp.emplace_back(d*f);
+			for(auto&d:tmp)st.insert(d);
+		}
+		return vector<ull>(all(st));
+	}
+
+	int divisorCount(ull n){
+		int ret=1; ull v=0,c=0;
+		auto fac=factor(n);
+		sort(all(fac)); fac.emplace_back(-1);
+		for(auto&f:fac){if(f!=v)ret*=c+1, v=f, c=0; c++;}
+		return ret;
+	}
+}; _Prime Prime;
 
 #pragma endregion
 
 
 void Main(){
-	geta(ll,T);
-	rep(T){
-		geta(int, n);
-		vector<pair<int,int>> r;
-		rep(i,n){
-			geta(int,a,b);
-			r.emplace_back(b,a);
-		}
+	geta(ll, n, m);
+	getv(a,0,n);
+	// n=m=100000;
+	// a=vi(100000,25200);
 
-		sort(all(r));
-
-		set<pair<int,int>> st;
-		st.emplace(1000000000,1);
-
-		bool ok=true;
-		for(auto[b,a]:r){
-			auto it=st.lower_bound({a,0});
-			if(it==st.end()){
-				ok=false;
-				break;
-			}
-			auto [R,L]=*it;
-			if(b<L){
-				ok=false;
-				break;
-			}
-			st.erase(it);
-			if(L>=a){
-				if(L+1<=R)st.emplace(R,L+1);
-			}else{
-				if(L<=a-1)st.emplace(a-1,L);
-				if(a+1<=R)st.emplace(R,a+1);
+	vi fac(100001,false);
+	rep(i,n){
+		int v=a[i];
+		for(ll j=2;j*j<=v;j++){
+			while(v%j==0){
+				fac[j]=1;
+				v/=j;
 			}
 		}
-		Yn(ok);
-
+		if(v!=1)fac[v]=1;
 	}
+	// puta(fac);
+	vl ans;
+	rep(i,1,m+1){
+		bool ok=true;
+		int v=i;
+		for(ll j=2;j*j<=v;j++){
+			while(v%j==0){
+				if(fac[j])ok=false;
+				v/=j;
+			}
+			if(!ok)break;
+		}
+		if(v!=1)if(fac[v])ok=false;
+		if(ok)ans.push_back(i);
+	}
+	puta(ans.size());
+	for(ll t:ans)puta(t);
 }

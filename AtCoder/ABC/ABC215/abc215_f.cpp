@@ -37,7 +37,7 @@ using vi=vector<int>;
 using vvi=vector<vi>;
 using vl=vector<ll>;
 using vvl=vector<vl>;
-using pll=pair<ll,ll>;
+using pll=pair<int,int>;
 using vp=vector<pll>;
 using tll=tuple<ll,ll>;
 using tlll=tuple<ll,ll,ll>;
@@ -151,62 +151,93 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // ここにライブラリを貼る
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
-
-template<class T>class Compress{
-	int _size;
-	HashMap<T,int> _zip;
-	vector<int> _unzip;
+class Random {
+	unsigned y;
+	constexpr unsigned next(){return y^=(y^=(y^=y<<13)>>17)<<5;}
 public:
-	Compress(vector<T> in){
-		sort(all(in));
-		in.erase(unique(all(in)),in.end());
-		_unzip.resize(_size=in.size());
-		rep(i,_size){_unzip[_zip[in[i]] = i] = in[i];}
-	}
-	int size(){return _size;}
-	int zip(T v){return _zip[v];}
-	T unzip(int v){return _unzip[v];}
-};
+	typedef ll result_type;
+	constexpr result_type operator()(){return operator()((ll)min(),(ll)max());}
+	static constexpr result_type max(){return numeric_limits<result_type>::max();}
+	static constexpr result_type min(){return 0;}
+
+	constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242:chrono::system_clock::now().time_since_epoch().count()){}
+	constexpr int operator()(int a,int b){return next()%(b-a)+a;}
+	constexpr ll operator()(ll a,ll b){return (((ull)next())<<32|next())%(b-a)+a;}
+	constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
+} Random(0);
 
 #pragma endregion
 
 
 void Main(){
-	geta(ll,T);
-	rep(T){
-		geta(int, n);
-		vector<pair<int,int>> r;
+	geta(ll, n);
+	vp p(n); cin>>p;
+
+	// n=200000;
+	// p=vp(n);
+	// rep(i,n)p[i]=pll{Random(0,200000),Random(0,200000)};
+	n++;
+	p.emplace_back(1000000001,1000000001);
+
+	set<pll> np;
+	{
+		sort(all(p));
+		int x=-1;
+		pll dup={-1,-1};
 		rep(i,n){
-			geta(int,a,b);
-			r.emplace_back(b,a);
+			if(p[i].first>x){
+				if(dup.first!=-1)np.insert(dup);
+				dup={-1,-1};
+				x=p[i].first;
+				if(p[i].first!=1000000001)np.insert(p[i]);
+			}else dup=p[i];
 		}
-
-		sort(all(r));
-
-		set<pair<int,int>> st;
-		st.emplace(1000000000,1);
-
-		bool ok=true;
-		for(auto[b,a]:r){
-			auto it=st.lower_bound({a,0});
-			if(it==st.end()){
-				ok=false;
-				break;
-			}
-			auto [R,L]=*it;
-			if(b<L){
-				ok=false;
-				break;
-			}
-			st.erase(it);
-			if(L>=a){
-				if(L+1<=R)st.emplace(R,L+1);
-			}else{
-				if(L<=a-1)st.emplace(a-1,L);
-				if(a+1<=R)st.emplace(R,a+1);
-			}
-		}
-		Yn(ok);
-
 	}
+
+	p=vp(all(np));
+	n=p.size();
+	n++;
+	p.emplace_back(1000000001,1000000001);
+
+	set<pll> np2;
+	rep(i,n)swap(p[i].first,p[i].second);
+	{
+		sort(all(p));
+		int x=-1;
+		pll dup={-1,-1};
+		rep(i,n){
+			if(p[i].first>x){
+				if(dup.first!=-1)np2.insert({dup.second,dup.first});
+				dup={-1,-1};
+				x=p[i].first;
+				if(p[i].first!=1000000001)np2.insert({p[i].second, p[i].first});
+			}else dup=p[i];
+		}
+	}
+	p=vp(all(np2));
+	n=p.size();
+	int xmax=0,ymax=0;
+	rep(i,n){
+		chmax(xmax,p[i].first);
+		chmax(ymax,p[i].second);
+	}
+	if(xmax>ymax){
+		rep(i,n)swap(p[i].first,p[i].second);
+		sort(all(p));
+	}
+
+	// puta(n);
+	// puta(p);
+
+
+	int ans=0;
+	rep(i,n){
+		int index=lower_bound(all(p),pll{p[i].first+ans+1, 0})-p.begin();
+		if(index==n)break;
+		rep(j,index,n){
+			int d=min(abs(p[i].first-p[j].first), abs(p[i].second-p[j].second));
+			chmax(ans,d);
+		}
+	}
+	puta(ans);
 }

@@ -1,6 +1,3 @@
-// @prefix _init
-// @description テンプレート
-
 #pragma region Perfect Template
 #pragma region Unsecured Optimization
 // #pragma GCC target("avx")
@@ -12,7 +9,7 @@
 #pragma endregion
 
 #pragma region Include Headers
-#if defined(EVAL) || defined(ONLINE_JUDGE) || defined(_DEBUG)
+#if defined(ONLINE_JUDGE) || defined(_DEBUG)
 #include <atcoder/all>
 using namespace atcoder;
 #endif
@@ -152,61 +149,149 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
 
-template<class T>class Compress{
-	int _size;
-	HashMap<T,int> _zip;
-	vector<int> _unzip;
-public:
-	Compress(vector<T> in){
-		sort(all(in));
-		in.erase(unique(all(in)),in.end());
-		_unzip.resize(_size=in.size());
-		rep(i,_size){_unzip[_zip[in[i]] = i] = in[i];}
+
+
+
+
+template <typename T> struct Matrix {
+	int H, W;
+	vector<T> elem;
+	typename vector<T>::iterator operator[](int i) { return elem.begin() + i * W; }
+	inline T &at(int i, int j) { return elem[i * W + j]; }
+	inline T get(int i, int j) const { return elem[i * W + j]; }
+	operator vector<vector<T>>() const {
+		vector<vector<T>> ret(H);
+		rep(i,H) copy(elem.begin()+i*W, elem.begin()+(i+1)*W, back_inserter(ret[i]));
+		return ret;
 	}
-	int size(){return _size;}
-	int zip(T v){return _zip[v];}
-	T unzip(int v){return _unzip[v];}
+ 
+	Matrix() = default;
+	Matrix(int N) : Matrix(N, N) {}
+	Matrix(int H, int W) : H(H), W(W), elem(H * W) {}
+	Matrix(const vector<vector<T>> &d) : H(d.size()), W(d.size() ? d[0].size() : 0) {
+		for (auto &raw : d) copy(raw.begin(), raw.end(), back_inserter(elem));
+	}
+ 
+	static Matrix Identity(int N){ Matrix ret(N, N); rep(i,N)ret.at(i,i)=1; return ret; }
+ 
+	Matrix operator-() const{ Matrix ret(H, W); rep(i,H*W)ret.elem[i]=-elem[i]; return ret; }
+	Matrix operator*(const T &v) const { Matrix ret=*this; for(auto&x:ret.elem)x*=v; return ret; }
+	Matrix operator/(const T &v) const { Matrix ret=*this; for(auto&x:ret.elem)x/=v; return ret; }
+	Matrix operator+(const Matrix &r) const { Matrix ret=*this; rep(i,H*W)ret.elem[i]+=r.elem[i]; return ret;}
+	Matrix operator-(const Matrix &r) const { Matrix ret=*this; rep(i,H*W)ret.elem[i]-=r.elem[i]; return ret; }
+	Matrix operator*(const Matrix &r) const { Matrix ret(H, r.W); rep(i,H)rep(k,W)rep(j,r.W)ret.at(i, j)+=this->get(i, k)*r.get(k, j); return ret; }
+	Matrix &operator*=(const T &v) { return *this=*this*v; }
+	Matrix &operator/=(const T &v) { return *this=*this/v; }
+	Matrix &operator+=(const Matrix &r) { return *this=*this+r; }
+	Matrix &operator-=(const Matrix &r) { return *this=*this-r; }
+	Matrix &operator*=(const Matrix &r) { return *this=*this*r; }
+	bool operator==(const Matrix &r) const { return H == r.H && W == r.W && elem == r.elem; }
+	bool operator!=(const Matrix &r) const { return !(*this==r); }
+	bool operator<(const Matrix &r) const { return elem < r.elem; }
+	Matrix pow(int64_t n) const {
+		Matrix ret=Identity(H);
+		if(n)rrep(i,64-__builtin_clzll(n)){ if(ret*=ret;(n>>i)&1)ret*=*this; }
+		return ret;
+	}
+	// 転置
+	Matrix transpose() const {
+		Matrix ret(W, H);
+		rep(i,H)rep(j,W)ret.at(j, i)=this->get(i, j);
+		return ret;
+	}
+	// ガウスの掃き出し法 (整数でもdoubleにすること)
+	// O(H^2 W)
+	Matrix gauss_jordan() const {
+		int c = 0;
+		Matrix mtr(*this);
+		vector<int> ws;
+		ws.reserve(W);
+		rep(h,H) {
+			if (c == W) break;
+			int piv = -1;
+			rep(j,h,H)if(mtr.get(j, c)){piv=j; break;}
+			if(piv==-1){c++; h--; continue;}
+			if (h != piv)rep(w,W){
+				swap(mtr[piv][w], mtr[h][w]);
+				mtr.at(piv, w) *= -1;
+			}
+			ws.clear();
+			rep(w,c,W)if(mtr.at(h, w)) ws.emplace_back(w);
+			rep(hh,H)if(hh!=h){
+				const T coeff=mtr.at(hh, c)/mtr.at(h, c);
+				for(auto&w:ws)mtr.at(hh, w)-=mtr.at(h, w)*coeff;
+			}
+			c++;
+		}
+		return mtr;
+	}
+	// 掃き出し済みを仮定したランク
+	// ランク=変数の個数なら唯一解、ランク<変数の個数なら不定解
+	// 係数行列のランク!=拡大係数行列のランクの場合、この値にかかわらず解なし
+	int rank_of_gauss_jordan() const { rrep(i,H*W)if(elem[i])return i/W+1; return 0; }
+	// 上三角行列（=掃き出し済み）を仮定した行列式
+	T determinant_of_upper_triangle() const { T ret=1; rep(i,H)ret*=get(i, i); return ret; }
+	// 逆行列
+	int inverse() {
+		assert(H == W);
+		vector<vector<T>> ret = Identity(H), tmp = *this;
+		int rank = 0;
+		rep(i,H) {
+			int ti = i;
+			while (ti < H and tmp[ti][i] == 0) ti++;
+			if (ti == H) continue;
+			rank++;
+			ret[i].swap(ret[ti]), tmp[i].swap(tmp[ti]);
+			T inv = tmp[i][i].inv();
+			rep(j,W) ret[i][j] *= inv;
+			rep(j,i+1,W) tmp[i][j] *= inv;
+			rep(h,H)if(i!=h){
+				const T c = -tmp[h][i];
+				rep(j,W) ret[h][j] += ret[i][j] * c;
+				rep(j,i+1,W) tmp[h][j] += tmp[i][j] * c;
+			}
+		}
+		*this = ret;
+		return rank;
+	}
+	friend vector<T> operator*(const Matrix &m, const vector<T> &v) {
+		assert(m.W == int(v.size()));
+		vector<T> ret(m.H);
+		rep(i,m.H)rep(j,m.W) ret[i] += m.get(i, j) * v[j];
+		return ret;
+	}
+	friend vector<T> operator*(const vector<T> &v, const Matrix &m) {
+		assert(int(v.size()) == m.H);
+		vector<T> ret(m.W);
+		rep(i,m.H)rep(j,m.W) ret[j] += v[i] * m.get(i, j);
+		return ret;
+	}
+	friend ostream &operator<<(ostream &os, const Matrix &x) {
+		puta((vector<vector<T>>)x, os); return os;
+	}
+	friend istream &operator>>(istream &is, Matrix &x) {
+		return is>>x.elem;
+	}
+};
+
+struct P {
+	int x; 
+	P(): P(0){}
+	P(int _x): x(_x%100){}
+	friend ostream &operator<<(ostream &os, const P &p) {
+		return os<<p.x;
+	}
+	P operator+=(P p){ x=(x+p.x)%100; return *this;}
+	P operator*=(int p){ x=x*p%100; return *this;}
+	P operator*(const P&p){ return P(x*p.x);}
 };
 
 #pragma endregion
 
-
 void Main(){
-	geta(ll,T);
-	rep(T){
-		geta(int, n);
-		vector<pair<int,int>> r;
-		rep(i,n){
-			geta(int,a,b);
-			r.emplace_back(b,a);
-		}
-
-		sort(all(r));
-
-		set<pair<int,int>> st;
-		st.emplace(1000000000,1);
-
-		bool ok=true;
-		for(auto[b,a]:r){
-			auto it=st.lower_bound({a,0});
-			if(it==st.end()){
-				ok=false;
-				break;
-			}
-			auto [R,L]=*it;
-			if(b<L){
-				ok=false;
-				break;
-			}
-			st.erase(it);
-			if(L>=a){
-				if(L+1<=R)st.emplace(R,L+1);
-			}else{
-				if(L<=a-1)st.emplace(a-1,L);
-				if(a+1<=R)st.emplace(R,a+1);
-			}
-		}
-		Yn(ok);
-
-	}
+	geta(int, n,x,y);
+	vector<vector<P>> init = {{1, 1}, {1, 0}};
+	Matrix<P> a(init);
+	auto d=a.pow(n-2);
+	puta((y*d[0][0].x + x*d[0][1].x)%100);
 }

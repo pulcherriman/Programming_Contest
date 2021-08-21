@@ -151,62 +151,121 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // ここにライブラリを貼る
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
-
-template<class T>class Compress{
-	int _size;
-	HashMap<T,int> _zip;
-	vector<int> _unzip;
-public:
-	Compress(vector<T> in){
-		sort(all(in));
-		in.erase(unique(all(in)),in.end());
-		_unzip.resize(_size=in.size());
-		rep(i,_size){_unzip[_zip[in[i]] = i] = in[i];}
+template <int mod> struct ModInt {
+	// 原始根 O(sqrt(N))
+	static int get_primitive_root() {
+		static int primitive_root = 0;
+		if (!primitive_root) {
+			primitive_root = -1;
+			set<int> fac;
+			int v=mod-1;
+			for(int64_t i=2;i*i<=v;i++)while(v%i)fac.insert(i),v/=i;
+			if(v>1)fac.insert(v);
+			rep(g,1,mod){
+				bool ok=true;
+				for(auto&i:fac) if(ModInt(g).pow((mod-1)/i)==1){ ok=false; break; }
+				if(ok){ primitive_root=g; break; }
+			}
+		}
+		return primitive_root;
 	}
-	int size(){return _size;}
-	int zip(T v){return _zip[v];}
-	T unzip(int v){return _unzip[v];}
+	int x;
+	ModInt() : x(0) {}
+	ModInt(int64_t y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
+	explicit operator bool() const { return x != 0; }
+	explicit operator int64_t() const { return x; }
+	ModInt operator+(const ModInt &p) const { return ModInt(*this) += p; }
+	ModInt operator-(const ModInt &p) const { return ModInt(*this) -= p; }
+	ModInt operator*(const ModInt &p) const { return ModInt(*this) *= p; }
+	ModInt operator/(const ModInt &p) const { return ModInt(*this) /= p; }
+	ModInt operator-() const { return ModInt(-x); }
+	ModInt &operator+=(const ModInt &p) { if((x += p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator-=(const ModInt &p) { if((x += mod - p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator*=(const ModInt &p) { x = (int) (1LL * x * p.x % mod); return *this; }
+	ModInt &operator/=(const ModInt &p) { return *this *= p.inv(); }
+	friend ModInt operator+(int64_t a, const ModInt &p) { return p+a; }
+	friend ModInt operator-(int64_t a, const ModInt &p) { return -p+a; }
+	friend ModInt operator*(int64_t a, const ModInt &p) { return p*a; }
+	friend ModInt operator/(int64_t a, const ModInt &p) { return p.inv()*a; }
+	bool operator==(const ModInt &p) const { return x == p.x; }
+	bool operator!=(const ModInt &p) const { return x != p.x; }
+	bool operator<(const ModInt &p) const { return x < p.x; }
+	friend istream &operator>>(istream &is, ModInt &p) { int64_t t; is >> t; p = ModInt(t); return is; }
+	friend ostream &operator<<(ostream &os, const ModInt &p) { return os << p.x; }
+	ModInt pow(int64_t n) const {
+		ModInt ret(1), mul(x);
+		while(n > 0) {
+			if(n & 1) ret *= mul;
+			mul *= mul;
+			n >>= 1;
+		}
+		return ret;
+	}
+
+	ModInt inv() const {
+		int a = x, b = mod, u = 1, v = 0, t;
+		while(b > 0) {
+			t = a / b;
+			swap(a -= t * b, b);
+			swap(u -= t * v, v);
+		}
+		return u;
+	}
+
+	ModInt sqrt() const {
+		if (x==0) return 0;
+		if (mod==2) return x;
+		if (pow((mod-1)/2)!=1) return 0;
+		ModInt b = 1;
+		while (b.pow((mod-1)/2)==1)b+=1;
+		int e=0, m=mod-1;
+		while(m%2==0)m>>=1, e++;
+		ModInt p=pow((m-1)/2), y=(*this)*p*p, z=b.pow(m);
+		p*=(*this);
+		while(y!=1){
+			int j=0;
+			ModInt t=y;
+			while(t!=1)j++, t*=t;
+			z=z.pow(1LL<<(e-j-1));
+			p*=z,z*=z,y*=z,e=j;
+		}
+		return ModInt(min(p.x, mod-p.x));
+	}
 };
+using mymint = ModInt<998244353>;
+using vm = vector<mymint>;
+using vvm = vector<vm>;
+mymint operator"" _m(unsigned long long a){ return mymint(a); }
 
 #pragma endregion
 
 
 void Main(){
-	geta(ll,T);
-	rep(T){
-		geta(int, n);
-		vector<pair<int,int>> r;
-		rep(i,n){
-			geta(int,a,b);
-			r.emplace_back(b,a);
-		}
-
-		sort(all(r));
-
-		set<pair<int,int>> st;
-		st.emplace(1000000000,1);
-
-		bool ok=true;
-		for(auto[b,a]:r){
-			auto it=st.lower_bound({a,0});
-			if(it==st.end()){
-				ok=false;
-				break;
-			}
-			auto [R,L]=*it;
-			if(b<L){
-				ok=false;
-				break;
-			}
-			st.erase(it);
-			if(L>=a){
-				if(L+1<=R)st.emplace(R,L+1);
-			}else{
-				if(L<=a-1)st.emplace(a-1,L);
-				if(a+1<=R)st.emplace(R,a+1);
+	geta(ll, n);
+	geta(string,str);
+	vvm dp=vec(0_m, 1<<10, 10);
+	rep(i,n){
+		const int c=str[i]-'A';
+		// auto ndp=vec(0_m, 1<<10, 10);;
+		auto ndp=dp;
+		ndp[1<<c][c]+=1;
+		// puta(1<<c,c,1);
+		rep(s,1<<10){
+			rep(j,10)if(((s>>j)&1) and dp[s][j]){
+				if(j==c){
+					ndp[s][j]+=dp[s][j];
+					// puta(s,j,dp[s][j]);
+				}else if(!((s>>c)&1)){
+					ndp[s|(1<<c)][c]+=dp[s][j];
+					// puta(s|(1<<c),c,dp[s][j]);
+				}
 			}
 		}
-		Yn(ok);
-
+		// puta("===");
+		dp=ndp;
 	}
+	// puta(dp);
+	mymint ans=0;
+	rep(i,1,1<<10)rep(j,10)ans+=dp[i][j];
+	puta(ans);
 }

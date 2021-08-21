@@ -152,61 +152,25 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
 
-template<class T>class Compress{
-	int _size;
-	HashMap<T,int> _zip;
-	vector<int> _unzip;
-public:
-	Compress(vector<T> in){
-		sort(all(in));
-		in.erase(unique(all(in)),in.end());
-		_unzip.resize(_size=in.size());
-		rep(i,_size){_unzip[_zip[in[i]] = i] = in[i];}
-	}
-	int size(){return _size;}
-	int zip(T v){return _zip[v];}
-	T unzip(int v){return _unzip[v];}
-};
 
 #pragma endregion
 
 
 void Main(){
-	geta(ll,T);
-	rep(T){
-		geta(int, n);
-		vector<pair<int,int>> r;
-		rep(i,n){
-			geta(int,a,b);
-			r.emplace_back(b,a);
-		}
+	geta(string,s);
+	ll n=s.size();
+	geta(ll,k);
+	set<string> st;
+	vl p(n);
+	iota(all(p),0);
+	do{
+		string t="";
+		rep(i,n)t+=s[p[i]];
+		st.insert(t);
+	}while(next_permutation(all(p)));
+	// puta(st);
+	vs ans(all(st));
+	puta(ans[k-1]);
 
-		sort(all(r));
 
-		set<pair<int,int>> st;
-		st.emplace(1000000000,1);
-
-		bool ok=true;
-		for(auto[b,a]:r){
-			auto it=st.lower_bound({a,0});
-			if(it==st.end()){
-				ok=false;
-				break;
-			}
-			auto [R,L]=*it;
-			if(b<L){
-				ok=false;
-				break;
-			}
-			st.erase(it);
-			if(L>=a){
-				if(L+1<=R)st.emplace(R,L+1);
-			}else{
-				if(L<=a-1)st.emplace(a-1,L);
-				if(a+1<=R)st.emplace(R,a+1);
-			}
-		}
-		Yn(ok);
-
-	}
 }

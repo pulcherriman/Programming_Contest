@@ -140,7 +140,7 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // regionのfoldは[Ctrl+K] => [Ctrl+8] expandは9
 #pragma region Additional Libraries
 template <int mod> struct ModInt {
-	constexpr static int get_mod() { return mod; }
+	static int get_mod() { return mod; }
 	// 原始根 O(sqrt(N))
 	static int get_primitive_root() {
 		static int primitive_root = 0;
@@ -159,69 +159,48 @@ template <int mod> struct ModInt {
 		return primitive_root;
 	}
 	int val;
-	constexpr ModInt() : val(0) {}
-	constexpr ModInt &_setval(ll v) { return val = (v >= mod ? v - mod : v), *this; }
-	constexpr ModInt(ll v) { _setval(v % mod + mod); }
-	constexpr explicit operator bool() const { return val != 0; }
-	constexpr explicit operator ll() const { return val; }
-	constexpr ModInt operator+(const ModInt &x) const { return ModInt()._setval((ll)val + x.val); }
-	constexpr ModInt operator-(const ModInt &x) const { return ModInt()._setval((ll)val - x.val + mod); }
-	constexpr ModInt operator*(const ModInt &x) const { return ModInt()._setval((ll)val * x.val % mod); }
-	constexpr ModInt operator/(const ModInt &x) const { return ModInt()._setval((ll)val * x.inv() % mod); }
-	constexpr ModInt operator-() const { return ModInt()._setval(mod - val); }
-	constexpr ModInt &operator+=(const ModInt &x) { return *this = *this + x; }
-	constexpr ModInt &operator-=(const ModInt &x) { return *this = *this - x; }
-	constexpr ModInt &operator*=(const ModInt &x) { return *this = *this * x; }
-	constexpr ModInt &operator/=(const ModInt &x) { return *this = *this / x; }
-	friend constexpr ModInt operator+(ll a, const ModInt &x) { return ModInt()._setval(a % mod + x.val); }
-	friend constexpr ModInt operator-(ll a, const ModInt &x) { return ModInt()._setval(a % mod - x.val + mod); }
-	friend constexpr ModInt operator*(ll a, const ModInt &x) { return ModInt()._setval(a % mod * x.val % mod); }
-	friend constexpr ModInt operator/(ll a, const ModInt &x) { return ModInt()._setval(a % mod * x.inv() % mod); }
-	constexpr bool operator==(const ModInt &x) const { return val == x.val; }
-	constexpr bool operator!=(const ModInt &x) const { return val != x.val; }
-	constexpr bool operator<(const ModInt &x) const { return val < x.val; } // To use map<ModInt, T>
-	friend istream &operator>>(istream &is, ModInt &x) { ll t; return is >> t, x = ModInt(t), is; }
-	constexpr friend ostream &operator<<(ostream &os, const ModInt &x) { return os << x.val; }
-	constexpr ModInt pow(ll n) const {
-		ll ans=1, tmp=this->val;
-		while(n){ if(n&1)ans=ans*tmp%mod; tmp=tmp*tmp%mod, n>>=1; }
-		return ans;
-	}
-
-	// 逆元と階乗の事前計算 n<=2^20まで
-	static vl facs, invs;
-	constexpr static void _precalculation(int N) {
-		int l0 = facs.size();
-		if (N <= l0) return;
-		facs.resize(N), invs.resize(N);
-		for (int i = l0; i < N; i++) facs[i] = facs[i - 1] * i % mod;
-		ll facinv = ModInt(facs.back()).pow(mod - 2).val;
-		for (int i = N - 1; i >= l0; i--) {
-			invs[i] = facinv * facs[i - 1] % mod;
-			facinv = facinv * i % mod;
+	ModInt() : val(0) {}
+	ModInt(int64_t y) : val(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
+	explicit operator bool() const { return val != 0; }
+	explicit operator ll() const { return val; }
+	ModInt operator+(const ModInt &p) const { return ModInt(*this) += p; }
+	ModInt operator-(const ModInt &p) const { return ModInt(*this) -= p; }
+	ModInt operator*(const ModInt &p) const { return ModInt(*this) *= p; }
+	ModInt operator/(const ModInt &p) const { return ModInt(*this) /= p; }
+	ModInt operator-() const { return ModInt(-val); }
+	ModInt &operator+=(const ModInt &p) { if((val += p.val) >= mod) val -= mod; return *this; }
+	ModInt &operator-=(const ModInt &p) { if((val += mod - p.val) >= mod) val -= mod; return *this; }
+	ModInt &operator*=(const ModInt &p) { val = (int) (1LL * val * p.val % mod); return *this; }
+	ModInt &operator/=(const ModInt &p) { return *this *= p.inv(); }
+	friend ModInt operator+(ll a, const ModInt &p) { return p+a; }
+	friend ModInt operator-(ll a, const ModInt &p) { return -p+a; }
+	friend ModInt operator*(ll a, const ModInt &p) { return p*a; }
+	friend ModInt operator/(ll a, const ModInt &p) { return p.inv()*a; }
+	bool operator==(const ModInt &p) const { return val == p.val; }
+	bool operator!=(const ModInt &p) const { return val != p.val; }
+	bool operator<(const ModInt &p) const { return val < p.val; }
+	friend istream &operator>>(istream &is, ModInt &p) { ll t; is >> t; p = ModInt(t); return is; }
+	friend ostream &operator<<(ostream &os, const ModInt &p) { return os << p.val; }
+	ModInt pow(int64_t n) const {
+		ModInt ret(1), mul(val);
+		while(n > 0) {
+			if(n & 1) ret *= mul;
+			mul *= mul;
+			n >>= 1;
 		}
-	}
-	constexpr ll inv() const {
-		if(this->val < min(mod>>1, 1<<21)){
-			while(this->val >= int(facs.size())) _precalculation(facs.size()*2);
-			return invs[this->val];
-		} else return this->pow(mod-2).val;
-	}
-	constexpr ModInt fac() const {
-		while(this->val>=int(facs.size())) _precalculation(facs.size()*2);
-		return facs[this->val];
+		return ret;
 	}
 
-	// 二重階乗(!?)
-	constexpr ModInt doublefac() const {
-		ll k = (this->val + 1) / 2;
-		return (this->val & 1) ? ModInt(k * 2).fac() / (ModInt(2).pow(k) * ModInt(k).fac())
-							   : ModInt(k).fac() * ModInt(2).pow(k);
+	ModInt inv() const {
+		int a = val, b = mod, u = 1, v = 0, t;
+		while(b > 0) {
+			t = a / b;
+			swap(a -= t * b, b);
+			swap(u -= t * v, v);
+		}
+		return u;
 	}
-	constexpr ModInt nCr(const ModInt &r) const {
-		return (this->val<r.val)? 0 : this->fac()/((*this-r).fac()*r.fac());
-	}
- 
+
 	ModInt sqrt() const {
 		if (val==0) return 0;
 		if (mod==2) return val;
@@ -242,12 +221,10 @@ template <int mod> struct ModInt {
 		return ModInt(min(x.val, mod-x.val));
 	}
 };
-template <int mod> vector<ll> ModInt<mod>::facs = {1};
-template <int mod> vector<ll> ModInt<mod>::invs = {0};
 using mymint = ModInt<MOD>;
-constexpr mymint operator"" _m(unsigned long long a){ return mymint(a); }
-
-
+using vm = vector<mymint>;
+using vvm = vector<vm>;
+mymint operator"" _m(unsigned long long a){ return mymint(a); }
 #pragma endregion
 
 
@@ -379,7 +356,7 @@ void Main(){
 	auto ra=vec(0ll,n,n);
 	cin>>ra;
 
-	Matrix<modint998244353> a(n);
+	Matrix<ModInt<998244353>> a(n);
 	rep(i,n)rep(j,n)a[i][j]=ra[i][j];
-	puta(a.gauss_jordan().determinant_of_upper_triangle().val());
+	puta(a.gauss_jordan().determinant_of_upper_triangle());
 }
