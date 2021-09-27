@@ -158,6 +158,22 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 }
 
 // ここにライブラリを貼る
+template<class T>struct Graph;
+template<class T>struct DFSResult{
+	vb connected;
+	vector<T> distance;
+	vi preorder, postorder, eulertour, subtreeNodeCount;
+	vl subtreePathLengthSum;
+	DFSResult(Graph<T>&g):
+		connected(g.size,false),
+		distance(g.size,g.INF_VAL),
+		preorder(g.size,-1),
+		postorder(g.size,-1),
+		subtreeNodeCount(g.size,1),
+		subtreePathLengthSum(g.size,0){
+			eulertour.reserve(g.size*2);
+	}
+};
 template<class T=ll>struct Graph{
 	int size;
 	T INF_VAL;
@@ -178,26 +194,11 @@ template<class T=ll>struct Graph{
 		return {n,g};
 	}
 
-	struct DFSResult{
-		vb connected;
-		vector<T> distance;
-		vi preorder, postorder, eulertour, subtreeNodeCount;
-		vl subtreePathCount;
-		DFSResult(Graph<T>&g):
-			connected(g.size,false),
-			distance(g.size,g.INF_VAL),
-			preorder(g.size,-1),
-			postorder(g.size,-1),
-			subtreeNodeCount(g.size,1),
-			subtreePathCount(g.size,0){
-				eulertour.reserve(g.size*2);
-		}
-	};
 	// s始点で深さ優先探索して情報を返す。木以外で使うのか？
 	// この関数は変更しない
-	constexpr DFSResult dfs(int s){
+	constexpr DFSResult<T> dfs(int s){
 		int pre=0,post=0;
-		DFSResult ret(*this);
+		DFSResult<T> ret(*this);
 		ret.distance[s]=0;
 		const function<void(int)> dfsrec=[this, &ret ,&pre, &post, &dfsrec](int p){
 			ret.connected[p]=true;
@@ -206,10 +207,9 @@ template<class T=ll>struct Graph{
 			for(auto[to,cost]:edge[p])if(!ret.connected[to]){
 				ret.distance[to]=ret.distance[p]+cost;
 				dfsrec(to);
-				ret.subtreePathCount[p]+=ret.subtreePathCount[to];
+				ret.subtreePathLengthSum[p]+=ret.subtreePathLengthSum[to] + ret.subtreeNodeCount[to] * cost;
 				ret.subtreeNodeCount[p]+=ret.subtreeNodeCount[to];
 			}
-			ret.subtreePathCount[p]+=ret.subtreeNodeCount[p]-1;
 			ret.postorder[p]=post++;
 			ret.eulertour.emplace_back(p);
 		};
@@ -314,19 +314,18 @@ template<class T=int>struct Tree : public Graph<T>{
 };
 
 void Main(){
+	// auto [n,g] = Graph<>::input(true,false);
 	auto [n,g] = Tree<>::input();
-
-	
 	const auto dfs=[](auto&g, int s){
 		const size_t n=g.size;
 		const auto r=g.dfs(0);
 		vl ans(n,0);
 		bool visit[n] = {0};
-		ans[0] = r.subtreePathCount[0];
+		ans[0] = r.subtreePathLengthSum[0];
 		const function<void(int)> dfsrec=[&](int p){
 			visit[p]=true;
 			for(auto[to,cost]:g.edge[p])if(!visit[to]){
-				ans[to]=ans[p]+n-r.subtreeNodeCount[to]*2;
+				ans[to]=ans[p]+(n-r.subtreeNodeCount[to]*2)*cost;
 				dfsrec(to);
 			}
 		};
@@ -336,4 +335,5 @@ void Main(){
 	auto ans=dfs(g,0);
 
 	rep(i,n)puta(ans[i]);
+	
 }
