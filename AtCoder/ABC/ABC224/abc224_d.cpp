@@ -160,22 +160,40 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 // ここにライブラリを貼る
 
 
-int toHash(vi v){
-	int r=0;
-	rep(i,9)r=r*10+v[i];
-	return r;
-}
-vi toField(int h){
-	vi f(9,0);
-	rrep(i,9){
-		f[i]=h%10;
-		h/=10;
+struct PermutationHash{
+	int len;
+	ll total=0;
+	vl f;
+	PermutationHash(int _len):len(_len){
+		f.resize(len,1);
+		rep(i,1,len)f[i]=min(i*f[i-1], LINF);
+		total=f.back()*len;
 	}
-	return f;
-}
+
+	vi toPermutation(ll index){
+		vb used(len,0);
+		vi permutation(len,0);
+		rep(i,len)rep(j,len)if(!used[j]){
+			if(f[len-1-i]>index)used[permutation[i]=j]=1,j=len;
+			else index-=f[len-1-i];
+		}
+		return permutation;  
+	}
+
+	ll toIndex(vi permutation){
+		vb used(len,0);
+		ll ret=0;
+		rep(i,len){  
+			rrep(j,permutation[i])if(!used[j])ret+=f[len-1-i];  
+			used[permutation[i]]=1;
+		}
+		return ret;
+	}
+};
 
 void Main(){
 	int n=9;
+	PermutationHash pHash(9);
 	geta(ll, m);
 	vvl edge(n,vl(n,0));
 	rep(m){
@@ -186,11 +204,11 @@ void Main(){
 	vi init(9,0);
 	rep(i,8)init[ini[i]-1]=i+1;
 
-	int tgt=toHash({1,2,3,4,5,6,7,8,0});
+	int tgt=pHash.toIndex({1,2,3,4,5,6,7,8,0});
 
-	HashSet<int> st;
+	vb st(pHash.total,0);
 	queue<pair<int,int>> q;
-	q.emplace(toHash(init), 0);
+	q.emplace(pHash.toIndex(init), 0);
 	while(!q.empty()){
 		auto[h,c]=q.front(); q.pop();
 		if(h==tgt){
@@ -198,16 +216,16 @@ void Main(){
 			return;
 		}
 
-		if(st.find(h)!=st.end())continue;
-		st.insert(h);
+		if(st[h])continue;
+		st[h]=true;
 
-		auto v=toField(h);
+		auto v=pHash.toPermutation(h);
 		int from=0;
 		rep(i,n)if(v[i]==0)from=i;
 		rep(to,n)if(edge[from][to]){
 			swap(v[from],v[to]);
-			auto h2=toHash(v);
-			if(st.find(h2)==st.end()) q.emplace(h2,c+1);
+			auto h2=pHash.toIndex(v);
+			if(!st[h2]) q.emplace(h2,c+1);
 			swap(v[to],v[from]);			
 		}
 	}
