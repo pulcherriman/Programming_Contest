@@ -1,3 +1,6 @@
+// @prefix _init
+// @description テンプレート
+
 /*
  * Unsecured Optimization
  */
@@ -155,144 +158,24 @@ template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
 }
 
 // ここにライブラリを貼る
-class Timer {
-	#ifdef _DEBUG
-	static constexpr uint64_t ClocksPerMsec = 3587000;
-	#else
-	static constexpr uint64_t ClocksPerMsec = 2987000;
-	#endif
-	const uint64_t start,limit;
-	uint64_t getClocks() const{
-		unsigned int lo,hi;
-		__asm__ volatile ("rdtsc" : "=a" (lo), "=d" (hi));
-		return((uint64_t)hi<<32)|lo;
-	}
-public:
-	Timer(uint64_t _limit): start(getClocks()),limit(start+_limit*ClocksPerMsec) {}
-	uint64_t get() const{return (getClocks()-start)/ClocksPerMsec;}
-	operator bool()const{return getClocks()<limit;}
-};
-void wait(const int&msec){Timer tm(msec); while(tm);}
 
-class Random {
-public:
-	typedef uint_fast32_t result_type;
-	constexpr result_type operator()(){return operator()((ll)min(),(ll)max());}
-	static constexpr result_type max(){return numeric_limits<result_type>::max();}
-	static constexpr result_type min(){return 0;}
-	constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242:chrono::system_clock::now().time_since_epoch().count()){}
-	constexpr int operator()(int a,int b){return next()%(b-a)+a;}
-	constexpr ll operator()(ll a,ll b){return (((ull)next())<<32|next())%(b-a)+a;}
-	constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
-private:
-	result_type y;
-	constexpr result_type next(){return y^=(y^=(y^=y<<13)>>17)<<5;}
-} Random(0);
-
-
-const int TLE=1950;
-const int n=1000;
-const int m=50;
-const int f=800;
-using P=pair<int,int>;
-vector<P> from(n),to(n);
-const P base={400,400};
-
-static int dist(P a, P b) {
-	return abs(a.first-b.first)+abs(a.second-b.second);
-}
-
-pair<int,vector<P>> calculateScore(vector<int> use){
-	int cm=use.size();
-	map<P,vi> fromMap,toMap;
-	rep(i,cm)fromMap[from[use[i]]].push_back(use[i]);
-	rep(i,cm)toMap[to[use[i]]].push_back(use[i]);
-
-	vb useFrom(n,false),useTo(n,false);
-	P ikinow=base;
-
-	vector<pair<P,int>> iki;
-	rep(i,cm)iki.emplace_back(from[use[i]],use[i]);
-	auto ikicmp=[&ikinow](pair<P,int> a, pair<P,int> b){
-		return dist(ikinow,a.first)>dist(ikinow,b.first);
-	};
-
-	vector<P> ikiroute(1,base);
-	int ikicost=0;
-	while(true){
-		bool updated=false;
-		if(!iki.empty()){
-			sort(all(iki), ikicmp);
-			auto [pos,ind]=iki.back(); iki.pop_back();
-			// dump(ind,pos,(from[ind]==pos?"FROM":"TO"));
-			if(from[ind]==pos){
-				if(useFrom[ind])continue;
-			}else{
-				if(useTo[ind])continue;
-			}
-			ikiroute.push_back(pos);
-			ikicost+=dist(ikinow,pos);
-			ikinow=pos;
-			if(fromMap.find(pos)!=fromMap.end()){
-				each(e,fromMap[pos]){
-					useFrom[e]=true;
-					iki.emplace_back(to[e],e);
-				}
-			}
-			if(toMap.find(pos)!=toMap.end()){
-				each(e,toMap[pos])if(useFrom[e]){
-					useTo[e]=true;
-				}
-			}
-			updated=true;
-		}
-		if(!updated)break;
-	}
-	ikicost+=dist(ikiroute.back(), base);
-	ikiroute.push_back(base);
-	return {round(1e8/(1000+ikicost)), ikiroute};
-}
 
 void Main(){
-	Timer timer(TLE);
-	rep(i,n)cin>>from[i]>>to[i];
+	geta(ll, n, w);
 
-	vi use(m);
-
-	int maxScore=0;
-	vector<P> maxRoute;
-	vi maxUse;
-	P pivot=base;
-	int tryCnt=0;
-	while(timer){
-		tryCnt++;
-		{
-			vector<P> v;
-			rep(i,n){
-				v.emplace_back(
-					max(dist(from[i],pivot), dist(to[i],pivot)),
-					i
-				);
-			}
-			sort(all(v));
-			rep(i,m)use[i]=v[i].second;
-		}
-
-		auto [score,route]=calculateScore(use);
-		if(chmax(maxScore,score)){
-			maxUse=use;
-			maxRoute=route;
-		}
-		// dump(tryCnt,score,pivot);
-		pivot={Random(0,801), Random(0,801)};
+	priority_queue<pll> q;
+	rep(n){
+		geta(ll,a,b);
+		q.emplace(a,b);
 	}
 
-	rep(i,maxUse.size())maxUse[i]++;
-	puta(maxUse.size(),maxUse);
-	cout<<maxRoute.size();
-	for(auto[p,q]:maxRoute){
-		cout<<" "<<p<<" "<<q;
+	ll ans=0;
+	while(!q.empty()){
+		auto [a,b]=q.top(); q.pop();
+		ll use=min(b,w);
+		ans+=a*use;
+		w-=use;
 	}
-	cout<<endl;
-	dump(tryCnt,maxScore);
+	puta(ans);
+
 }
