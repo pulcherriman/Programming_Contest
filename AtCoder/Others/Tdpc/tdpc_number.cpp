@@ -1,185 +1,272 @@
-#include <bits/stdc++.h>
+/*
+ * Unsecured Optimization
+ */
+#pragma GCC optimize "O3" /* 最適化 */
+#pragma GCC target "avx" /* SIMD(ベクトル化) */
+// #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native") /* 浮動小数点数のSIMD */
+// #pragma GCC optimize "fast-math"
+// #pragma GCC optimize "unroll-loops" /* ループの展開 */
+#ifdef _DEBUG
+#define _GLIBCXX_DEBUG 1
+#endif
+
+/* 
+ * Include Headers
+ */
+#if defined(EVAL) || defined(ONLINE_JUDGE) || defined(_DEBUG)
+#include <atcoder/all>
+using namespace atcoder;
+#endif
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+
 using namespace std;
+
+struct Setup_io {
+	Setup_io() {
+		ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+		cout<<fixed<<setprecision(11);
+	}
+} setup_io;
+
+/*
+ * Additional Type Definition
+ */
 using ll=long long;
+using ld=long double;
+using ull=unsigned long long;
 using vb=vector<bool>;
 using vvb=vector<vb>;
-using vd=vector<double>;
+using vd=vector<ld>;
 using vvd=vector<vd>;
 using vi=vector<int>;
 using vvi=vector<vi>;
 using vl=vector<ll>;
 using vvl=vector<vl>;
+using pii=pair<int,int>;
 using pll=pair<ll,ll>;
-using tll=tuple<ll,ll>;
-using tlll=tuple<ll,ll,ll>;
+using vp=vector<pll>;
+using tl2=tuple<ll,ll>;
+using tl3=tuple<ll,ll,ll>;
 using vs=vector<string>;
+template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type>;
+template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
+template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
+
+/*
+ * Macros
+ */
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
-#define rep(i,n) range(i,0,n)
-#define rrep(i,n) for(ll i=(n)-1;i>=0;i--)
-#define range(i,a,n) for(ll i=(a);i<(n);i++)
-#define LINF ((ll)1ll<<60)
-#define INF ((int)1<<30)
-#define EPS (1e-9)
-#define MOD (1000000007ll)
+#define __LOOPSWITCH(_1, _2, _3, __LOOPSWITCH, ...) __LOOPSWITCH
+#define rep(...) __LOOPSWITCH(__VA_ARGS__, __RANGE, __REP, __LOOP) (__VA_ARGS__)
+#define rrep(...) __LOOPSWITCH(__VA_ARGS__, __RRANGE, __RREP, __LOOP) (__VA_ARGS__)
+#define __LOOP(q) __LOOP2(q, __LINE__)
+#define __LOOP2(q,l) __LOOP3(q,l)
+#define __LOOP3(q,l) __REP(_lp ## l,q)
+#define __REP(i,n) __RANGE(i,0,n)
+#define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define __RREP(i,n) __RRANGE(i,0,n)
+#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define repsq(i,n) for(ll i=0;i*i<=n;++i)
+#define each(v,a) for(auto v:a)
+#define eachref(v,a) for(auto&v:a)
 #define fcout(a) cout<<setprecision(a)<<fixed
-#define fs first
-#define sc second
-#define PI (3.1415926535897932384)
 
-int dx[]={1,0,-1,0,1,-1,-1,1},dy[]={0,1,0,-1,1,1,-1,-1};
-template<class T>bool chmax(T&a,T b){if(a<b){a=b; return true;}return false;}
-template<class T>bool chmin(T&a,T b){if(a>b){a=b; return true;}return false;}
+/*
+ * Constants
+ */
+constexpr ll LINF=1ll<<60;
+constexpr int INF=1<<30;
+constexpr double EPS=(1e-14);
+constexpr ll MOD=1000000007ll;
+constexpr long double PI=3.14159265358979323846;
+
+/*
+ * Output Assist
+ */
+template<class T>struct hasItr{
+	template<class U>static constexpr true_type check(class U::iterator*);
+	template<class U>static constexpr false_type check(...);
+	static constexpr bool v=decltype(check<T>(nullptr))::value;
+};
+template<>struct hasItr<string>{static constexpr bool v=false;};
+
+template<class T>void puta(T&t,false_type,ostream&os,[[maybe_unused]]char el){os<<t;}
+template<class T>void puta(T&t,true_type,ostream&os,char el){
+	constexpr bool h=hasItr<typename T::value_type>::v;
+	bool F=true,I;
+	for(auto&i:t){
+		if(!F)os<<' ';
+		puta(i,bool_constant<h>(),os,el);
+		F=I=h;
+	}
+	if(!I)os<<el;
+}
+template<class T>void puta(const T&t, ostream&os=cout, char el='\n'){
+	puta(t,bool_constant<hasItr<T>::v>(),os,el);
+	if(!hasItr<T>::v)os<<el;
+}
+template<class H,class...T>void puta(const H&h,const T&...t){cout<<h<<' ';puta(t...);}
+template<size_t i,class...T>void puta(tuple<T...>const&t, ostream&os){
+	if constexpr(i==sizeof...(T)-1)puta(get<i>(t),os);
+	else{os<<get<i>(t)<<' ';puta<i+1>(t,os);}
+}
+template<class...T>void puta(tuple<T...>const&t, ostream&os=cout){puta<0>(t,os);}
+template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){
+	os<<'['<<p.first<<", ";
+	if constexpr(hasItr<T>::v)puta(p.second,bool_constant<true>(),os,']');
+	else os<<p.second<<']';
+	return os;
+};
+template<class...T>constexpr ostream&operator<<(ostream&os,tuple<T...>t){puta(t,os); return os;}
+void YN(bool b){puta(b?"YES":"NO");}
+void Yn(bool b){puta(b?"Yes":"No");}
+
+#ifdef _DEBUG
+template<class T>void dump_f(const T&t){puta(t,cerr);}
+template<class H,class...T>void dump_f(const H&h,const T&...t){cerr<<h<<' ';dump_f(t...);}
+template<class...T>void dump_f(tuple<T...>const&t){puta(t,cerr);}
+#define dump(...)cerr<<"  "<<string(#__VA_ARGS__)<<": ["<<to_string(__LINE__)<<":"<<__FUNCTION__<<"]\n    ",dump_f(__VA_ARGS__)
+#else
+#define dump(...)                                                              
+#endif
+
+/*
+ * Input Assist
+ */
+template<class S,class T>auto&operator>>(istream&is,pair<S,T>&p){is>>p.first>>p.second;return is;}
+template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)is>>a;return is;}
+template<typename...S>void geta_(S&...s){((cin>>s),...);}
+#define geta(t,...) t __VA_ARGS__;geta_(__VA_ARGS__)
+template<class T,class...Args>auto vec(T x,int arg,Args...args){if constexpr(sizeof...(args)==0)return vector(arg,x);else return vector(arg,vec(x,args...));}
+#define getv(a,...) auto a=vec(__VA_ARGS__);cin>>a
+
+/*
+ * Utilities
+ */
+template<class T>constexpr bool chmax(T&a,T b){return a<b?a=b,1:0;}
+template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
-ll max(int a,ll b){return max((ll)a,b);} ll max(ll a,int b){return max(a,(ll)b);}
-
-template<class T>void puta(T&&t){cout<<t<<"\n";}
-template<class H,class...T>void puta(H&&h,T&&...t){cout<<h<<' ';puta(t...);}
-template<class S,class T>void tf(bool b,S t,T f){if(b)puta(t);else puta(f);}
-void YN(bool b){tf(b,"YES","NO");}
-void Yn(bool b){tf(b,"Yes","No");}
-void yn(bool b){tf(b,"yes","no");}
-template<class S,class T>ostream&operator<<(ostream&os,pair<S,T>p){os<<"["<<p.first<<", "<<p.second<<"]";return os;};
-template<class S>auto&operator<<(ostream&os,vector<S>t){bool a=1;for(auto s:t){os<<(a?"":" ")<<s;a=0;}return os;}
-template<class S>auto&operator>>(istream&is,vector<S>&t){for(S&a:t)cin>>a;return is;}
-
-/*他のライブラリを入れる場所*/
-int mpow(int v, ll a) {
-	ll x = v, n = a, res = 1;
-	while ( n ) {
-		if ( n & 1 )res = res*x%MOD;
-		x = x*x%MOD;
-		n >>= 1;
-	}
-	return res;
+template<class T>T gcd(vector<T> v){return accumulate(all(v),T(),gcd<T,T>);}
+template<class T> pair<int,T> getMaxAndIndex(vector<T> a){
+	int p=-1; T v=numeric_limits<T>::min();
+	rep(i,a.size())if(chmax(v,a[i]))p=i;
+	return {p,v};
+}
+template<class T> vector<pair<T,int>> addIndex(vector<T> a){
+	vector<pair<T,int>> r;
+	rep(i,a.size())r.emplace_back(a[i],i);
+	return r;
 }
 
-class mint {
-private:
-	ll v;
-public:
-	static ll mod(ll a) { return ( a % MOD + MOD ) % MOD; }
-	mint(ll a = 0) { this->v = mod(a); };
-	mint(const mint &a) { v = a.v; }
-	mint operator+(const mint &a) { return mint(v + a.v); }
-	mint operator+(const ll a) { return mint(v + a % MOD); }
-	mint operator+(const signed a) { return mint(v + a % MOD); }
-	friend mint operator+(const ll a, const mint &b) { return mint(a % MOD + b.v); }
-	void operator+=(const mint &a) { v = ( v + a.v ) % MOD; }
-	void operator+=(const ll a) { v = mod(v + a % MOD); }
-	void operator+=(const signed a) { v = mod(v + a % MOD); }
-	friend void operator+=(ll &a, const mint &b) { a = mod(a % MOD + b.v); }
-	mint operator-(const mint &a) { return mint(v - a.v); }
-	mint operator-(const ll a) { return mint(v - a % MOD); }
-	mint operator-(const signed a) { return mint(v - a % MOD); }
-	friend mint operator-(const ll a, const mint &b) { return mint(a % MOD - b.v); }
-	void operator-=(const mint &a) { v = mod(v - a.v); }
-	void operator-=(const ll a) { v = mod(v - a % MOD); }
-	void operator-=(const signed a) { v = mod(v - a % MOD); }
-	friend void operator-=(ll &a, const mint &b) { a = mod(a % MOD - b.v); }
-	mint operator*(const mint &a) { return mint(v * a.v); }
-	mint operator*(const ll a) { return mint(v * ( a % MOD )); }
-	mint operator*(const signed a) { return mint(v * ( a % MOD )); }
-	friend mint operator*(const ll a, const mint &b) { return mint(a % MOD * b.v); }
-	void operator*=(const mint &a) { v = ( v * a.v ) % MOD; }
-	void operator*=(const ll a) { v = mod(v * ( a % MOD )); }
-	void operator*=(const signed a) { v = mod(v * ( a % MOD )); }
-	friend void operator*=(ll &a, const mint &b) { a = mod(a % MOD * b.v); }
-	mint operator/(const mint &a);
-	mint operator/(const ll a);
-	mint operator/(const signed a);
-	friend mint operator/(const ll a, const mint &b);
-	void operator/=(const mint &a);
-	void operator/=(const ll a);
-	void operator/=(const signed a);
-	friend void operator/=(ll &a, const mint &b);
-	mint operator^(const mint &a) { return mpow(v, a.v); };
-	mint operator^(const ll a) { return mpow(v, a); };
-	mint operator^(const signed a) { return mpow(v, a); };
-	friend mint operator^(const ll a, const mint &b) { return mpow(a, b.v); };
-	void operator^=(const mint &a) { v = mpow(v, a.v); }
-	void operator^=(const ll a) { v = mpow(v, a); }
-	void operator^=(const signed a) { v = mpow(v, a); }
-	mint operator+() { return *this; }
-	mint operator++() { v++; return *this; }
-	mint operator++(signed d) { mint res = *this; v++; return res;}
-	mint operator-() { return operator*(-1); }
-	mint operator--() { v--; return *this; }
-	mint operator--(signed d) { mint res = *this; v--; return res;}
-	bool operator==(mint &a) { return v == a.v; }
-	bool operator==(signed a) { return v == a; }
-	friend bool operator==(signed a, mint &b) { return a == b.v; }
-	bool operator!=(mint &a) { return v != a.v; }
-	bool operator!=(signed a) { return v != a; }
-	friend bool operator!=(signed a, mint &b) { return a != b.v; }
-	operator int() { return v; }
+// ここにライブラリを貼る
+template <int mod> struct ModInt {
+	// 原始根 O(sqrt(N))
+	static int get_primitive_root() {
+		static int primitive_root = 0;
+		if (!primitive_root) {
+			primitive_root = -1;
+			set<int> fac;
+			int v=mod-1;
+			for(int64_t i=2;i*i<=v;i++)while(v%i)fac.insert(i),v/=i;
+			if(v>1)fac.insert(v);
+			rep(g,1,mod){
+				bool ok=true;
+				for(auto&i:fac) if(ModInt(g).pow((mod-1)/i)==1){ ok=false; break; }
+				if(ok){ primitive_root=g; break; }
+			}
+		}
+		return primitive_root;
+	}
+	int x;
+	ModInt() : x(0) {}
+	ModInt(int64_t y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
+	explicit operator bool() const { return x != 0; }
+	explicit operator int64_t() const { return x; }
+	ModInt operator+(const ModInt &p) const { return ModInt(*this) += p; }
+	ModInt operator-(const ModInt &p) const { return ModInt(*this) -= p; }
+	ModInt operator*(const ModInt &p) const { return ModInt(*this) *= p; }
+	ModInt operator/(const ModInt &p) const { return ModInt(*this) /= p; }
+	ModInt operator-() const { return ModInt(-x); }
+	ModInt &operator+=(const ModInt &p) { if((x += p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator-=(const ModInt &p) { if((x += mod - p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator*=(const ModInt &p) { x = (int) (1LL * x * p.x % mod); return *this; }
+	ModInt &operator/=(const ModInt &p) { return *this *= p.inv(); }
+	friend ModInt operator+(int64_t a, const ModInt &p) { return p+a; }
+	friend ModInt operator-(int64_t a, const ModInt &p) { return -p+a; }
+	friend ModInt operator*(int64_t a, const ModInt &p) { return p*a; }
+	friend ModInt operator/(int64_t a, const ModInt &p) { return p.inv()*a; }
+	bool operator==(const ModInt &p) const { return x == p.x; }
+	bool operator!=(const ModInt &p) const { return x != p.x; }
+	bool operator<(const ModInt &p) const { return x < p.x; }
+	friend istream &operator>>(istream &is, ModInt &p) { int64_t t; is >> t; p = ModInt(t); return is; }
+	friend ostream &operator<<(ostream &os, const ModInt &p) { return os << p.x; }
+	ModInt pow(int64_t n) const {
+		ModInt ret(1), mul(x);
+		while(n > 0) {
+			if(n & 1) ret *= mul;
+			mul *= mul;
+			n >>= 1;
+		}
+		return ret;
+	}
+
+	ModInt inv() const {
+		int a = x, b = mod, u = 1, v = 0, t;
+		while(b > 0) {
+			t = a / b;
+			swap(a -= t * b, b);
+			swap(u -= t * v, v);
+		}
+		return u;
+	}
+
+	ModInt sqrt() const {
+		if (x==0) return 0;
+		if (mod==2) return x;
+		if (pow((mod-1)/2)!=1) return 0;
+		ModInt b = 1;
+		while (b.pow((mod-1)/2)==1)b+=1;
+		int e=0, m=mod-1;
+		while(m%2==0)m>>=1, e++;
+		ModInt p=pow((m-1)/2), y=(*this)*p*p, z=b.pow(m);
+		p*=(*this);
+		while(y!=1){
+			int j=0;
+			ModInt t=y;
+			while(t!=1)j++, t*=t;
+			z=z.pow(1LL<<(e-j-1));
+			p*=z,z*=z,y*=z,e=j;
+		}
+		return ModInt(min(p.x, mod-p.x));
+	}
 };
-const int setModMax = 510000;
-mint fac[setModMax], finv[setModMax], inv[setModMax];
-void setMod() {
-	fac[0] = fac[1] = finv[0] = finv[1] = inv[1] = 1;
-	for ( int i = 2; i < setModMax; i++ ) {
-		fac[i] = fac[i - 1] * i % MOD;
-		inv[i] = MOD - inv[MOD % i] * ( MOD / i ) % MOD;
-		finv[i] = finv[i - 1] * inv[i] % MOD;
-	}
-}
-mint minv(ll a) {
-	if ( fac[0] == 0 )setMod();
-	if ( a < setModMax ) return inv[a];
-	a %= MOD;
-	ll b = MOD, x = 1, y = 0;
-	while ( b ) {
-		ll t = a / b;
-		a -= t*b; swap(a, b);
-		x -= t*y; swap(x, y);
-	}
-	return ( x % MOD + MOD ) % MOD;
-}
-
-mint mint::operator/(const mint &a) { return mint(v * minv(a.v)); }
-mint mint::operator/(const ll a) { return mint(v * minv(a)); }
-mint mint::operator/(const signed a) { return mint(v * minv(a)); }
-mint operator/(const ll a, const mint &b) { return mint(a % MOD * minv(b.v)); }
-void mint::operator/=(const mint &a) { v = ( v * minv(a.v) ) % MOD; }
-void mint::operator/=(const ll a) { v = mod(v * minv(a)); }
-void mint::operator/=(const signed a) { v = mod(v * minv(a)); }
-void operator/=(ll &a, const mint &b) { a = mint::mod(a % MOD * minv(b.v)); }
-auto&operator>>(istream&is,mint&t){ll a; cin>>a; t=a; return is;};
-auto&operator<<(ostream&os,mint&t){cout<<((int)t); return os;};
-mint operator"" _m(unsigned long long a){return mint(a);}
-using vm=vector<mint>;
-using vvm=vector<vm>;
-mint nCr(ll n,ll r){
-	static vm f;
-	if(f.size()<n+1){
-		f.assign(n+1,1);
-		range(i,2,n+1)f[i]=f[i-1]*i;
-	}
-	return f[n]/f[r]/f[n-r];
-}
+using mymint = ModInt<MOD>;
+using vm = vector<mymint>;
+using vvm = vector<vm>;
+mymint operator"" _m(unsigned long long a){ return mymint(a); }
 
 int main(){
-	cin.tie(0);
-	ios::sync_with_stdio(false);
-	ll d;
-	string s;
-	cin>>d>>s;
+	geta(ll, d);
+	geta(string,s);
 	ll n=s.size();
-	vector<vvm> dp(n+1,vvm(2,vm(d,0)));
+	auto dp=vec(0_m, n+1, d, 2);
 	dp[0][0][0]=1;
+
 	rep(i,n){
-		ll val=s[i]-'0';
-		rep(j,2){
-			rep(k,d){
-				rep(v,j?10:val+1){
-					dp[i+1][j or (v<val)][(k+v)%d]+=dp[i][j][k];
-				}
+		rep(j,d){
+			dp[i+1][(j+s[i]-'0')%d][0] += dp[i][j][0];
+			rep(k,s[i]-'0'){
+				dp[i+1][(j+k)%d][1] += dp[i][j][0];
+			}
+			rep(k,10){
+				dp[i+1][(j+k)%d][1] += dp[i][j][1];
 			}
 		}
 	}
-	puta(dp[n][0][0]+dp[n][1][0]-1);
-	return 0;
+	puta(dp[n][0][0] + dp[n][0][1] - 1);
 }

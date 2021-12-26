@@ -80,7 +80,7 @@ template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 constexpr ll LINF=1ll<<60;
 constexpr int INF=1<<30;
 constexpr double EPS=(1e-14);
-constexpr ll MOD=998244353ll;
+constexpr ll MOD=1000000007ll;
 constexpr long double PI=3.14159265358979323846;
 
 /*
@@ -164,28 +164,104 @@ template<class T> vector<pair<T,int>> addIndex(vector<T> a){
 }
 
 // ここにライブラリを貼る
-ld calc(int a, int b){
-	return 1.0/(1+pow(10,(b-a)/400.L));
-}
+template <int mod> struct ModInt {
+	// 原始根 O(sqrt(N))
+	static int get_primitive_root() {
+		static int primitive_root = 0;
+		if (!primitive_root) {
+			primitive_root = -1;
+			set<int> fac;
+			int v=mod-1;
+			for(int64_t i=2;i*i<=v;i++)while(v%i)fac.insert(i),v/=i;
+			if(v>1)fac.insert(v);
+			rep(g,1,mod){
+				bool ok=true;
+				for(auto&i:fac) if(ModInt(g).pow((mod-1)/i)==1){ ok=false; break; }
+				if(ok){ primitive_root=g; break; }
+			}
+		}
+		return primitive_root;
+	}
+	int x;
+	ModInt() : x(0) {}
+	ModInt(int64_t y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
+	explicit operator bool() const { return x != 0; }
+	explicit operator int64_t() const { return x; }
+	ModInt operator+(const ModInt &p) const { return ModInt(*this) += p; }
+	ModInt operator-(const ModInt &p) const { return ModInt(*this) -= p; }
+	ModInt operator*(const ModInt &p) const { return ModInt(*this) *= p; }
+	ModInt operator/(const ModInt &p) const { return ModInt(*this) /= p; }
+	ModInt operator-() const { return ModInt(-x); }
+	ModInt &operator+=(const ModInt &p) { if((x += p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator-=(const ModInt &p) { if((x += mod - p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator*=(const ModInt &p) { x = (int) (1LL * x * p.x % mod); return *this; }
+	ModInt &operator/=(const ModInt &p) { return *this *= p.inv(); }
+	friend ModInt operator+(int64_t a, const ModInt &p) { return p+a; }
+	friend ModInt operator-(int64_t a, const ModInt &p) { return -p+a; }
+	friend ModInt operator*(int64_t a, const ModInt &p) { return p*a; }
+	friend ModInt operator/(int64_t a, const ModInt &p) { return p.inv()*a; }
+	bool operator==(const ModInt &p) const { return x == p.x; }
+	bool operator!=(const ModInt &p) const { return x != p.x; }
+	bool operator<(const ModInt &p) const { return x < p.x; }
+	friend istream &operator>>(istream &is, ModInt &p) { int64_t t; is >> t; p = ModInt(t); return is; }
+	friend ostream &operator<<(ostream &os, const ModInt &p) { return os << p.x; }
+	ModInt pow(int64_t n) const {
+		ModInt ret(1), mul(x);
+		while(n > 0) {
+			if(n & 1) ret *= mul;
+			mul *= mul;
+			n >>= 1;
+		}
+		return ret;
+	}
+
+	ModInt inv() const {
+		int a = x, b = mod, u = 1, v = 0, t;
+		while(b > 0) {
+			t = a / b;
+			swap(a -= t * b, b);
+			swap(u -= t * v, v);
+		}
+		return u;
+	}
+
+	ModInt sqrt() const {
+		if (x==0) return 0;
+		if (mod==2) return x;
+		if (pow((mod-1)/2)!=1) return 0;
+		ModInt b = 1;
+		while (b.pow((mod-1)/2)==1)b+=1;
+		int e=0, m=mod-1;
+		while(m%2==0)m>>=1, e++;
+		ModInt p=pow((m-1)/2), y=(*this)*p*p, z=b.pow(m);
+		p*=(*this);
+		while(y!=1){
+			int j=0;
+			ModInt t=y;
+			while(t!=1)j++, t*=t;
+			z=z.pow(1LL<<(e-j-1));
+			p*=z,z*=z,y*=z,e=j;
+		}
+		return ModInt(min(p.x, mod-p.x));
+	}
+};
+using mymint = ModInt<MOD>;
+using vm = vector<mymint>;
+using vvm = vector<vm>;
+mymint operator"" _m(unsigned long long a){ return mymint(a); }
 
 int main(){
-	geta(ll, k);
-	int n=1<<k;
-	vl r(n); cin>>r;
-
-	vd win(n,1);
-
-	rep(i,k){
-		vd nwin(n,0);
-		rep(j,n){
-			//i回戦 人j
-			int tgt=((j>>i)^1)<<i;
-			rep(l,tgt, tgt+(1<<i)){
-				nwin[j]+=win[l] * calc(r[j], r[l]);
-			}
-			nwin[j] *= win[j];
-		}
-		win=nwin;
+	geta(ll,n,k);
+	// DP[i][j]=i番目まで見て、現在j個連続で止まっているときの答え
+	deque<mymint> q(k,0);
+	q[1]=1;
+	mymint s=1;
+	rep(i,1,n){
+		q.push_front(s);
+		s+=s;
+		s-=q.back();
+		q.pop_back();
 	}
-	rep(i,n)puta(win[i]);
+	puta(s-q[0]);
+
 }
