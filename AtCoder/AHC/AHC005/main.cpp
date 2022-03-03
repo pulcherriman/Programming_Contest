@@ -1,41 +1,19 @@
-/*
- * Unsecured Optimization
- */
 #pragma GCC optimize "O3" /* 最適化 */
 #pragma GCC target "avx" /* SIMD(ベクトル化) */
-// #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native") /* 浮動小数点数のSIMD */
 // #pragma GCC optimize "fast-math"
 // #pragma GCC optimize "unroll-loops" /* ループの展開 */
-#ifdef _DEBUG
-// #define _GLIBCXX_DEBUG 1
-#endif
-
-/* 
- * Include Headers
- */
 #include<bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 
 using namespace std;
 
-/*
- * Additional Type Definition
- */
-using ll=long long;
-using ld=long double;
-using ull=unsigned long long;
 using vb=vector<bool>;
 using vvb=vector<vb>;
-using vd=vector<ld>;
-using vvd=vector<vd>;
 using vi=vector<int>;
 using vvi=vector<vi>;
-using vl=vector<ll>;
-using vvl=vector<vl>;
 using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-using vp=vector<pll>;
-using tl2=tuple<ll,ll>;
+using vp=vector<pii>;
+using tl2=tuple<int,int>;
 using tl3=tuple<int,int,int>;
 using vs=vector<string>;
 template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
@@ -43,9 +21,6 @@ template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_typ
 template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
 template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 
-/*
- * Macros
- */
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define __LOOPSWITCH(_1, _2, _3, __LOOPSWITCH, ...) __LOOPSWITCH
@@ -55,10 +30,10 @@ template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 #define __LOOP2(q,l) __LOOP3(q,l)
 #define __LOOP3(q,l) __REP(_lp ## l,q)
 #define __REP(i,n) __RANGE(i,0,n)
-#define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
+#define __RANGE(i,a,n) for(int i=((int)a);i<((int)n);++i)
 #define __RREP(i,n) __RRANGE(i,0,n)
-#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
-#define repsq(i,n) for(ll i=0;i*i<=n;++i)
+#define __RRANGE(i,a,n) for(int i=((int)n-1);i>=((int)a);--i)
+#define repsq(i,n) for(int i=0;i*i<=n;++i)
 #define each(v,a) for(auto v:a)
 #define eachref(v,a) for(auto&v:a)
 #define fcout(a) cout<<setprecision(a)<<fixed
@@ -101,12 +76,11 @@ void wait(const int&msec){Timer tm(msec); while(tm);}
 class Random {
 public:
 	typedef uint_fast32_t result_type;
-	constexpr result_type operator()(){return operator()((ll)min(),(ll)max());}
+	constexpr result_type operator()(){return operator()((int)min(),(int)max());}
 	static constexpr result_type max(){return numeric_limits<result_type>::max();}
 	static constexpr result_type min(){return 0;}
 	constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242:chrono::system_clock::now().time_since_epoch().count()){}
 	constexpr int operator()(int a,int b){return next()%(b-a)+a;}
-	constexpr ll operator()(ll a,ll b){return (((ull)next())<<32|next())%(b-a)+a;}
 	constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
 private:
 	result_type y;
@@ -114,54 +88,14 @@ private:
 } Random(0);
 
 
-struct StaticDataStore {
-private:
-	StaticDataStore() = default;
-
-public:
-	static inline int n, sy, sx;
-	static inline vector<vector<int>> stage;
-	static inline Timer timer;
-
-	static void Input() {
-		cin>>n>>sy>>sx;
-		sy++; sx++;
-		stage.resize(n+2, vi(n+2,0));
-
-		char c;
-		rep(i,n)rep(j,n){
-			cin>>c;
-			if(c=='#')continue;
-			stage[i+1][j+1] = (c - '0');
-		}
-	}
-};
-
-struct _Construct {
-	_Construct(){
-		StaticDataStore::Input();
-	}
-} _construct;
-
-
-struct SolverInterface {
-	virtual int Solve() = 0;
-	virtual void Print() = 0;
-	virtual string GetAnswer() = 0;
-
-protected:
-
-};
-
 #define endl '\n'
-
 
 template<class T>struct Graph;
 template<class T>struct DFSResult{
 	vb connected;
 	vector<T> distance;
 	vi preorder, postorder, eulertour, subtreeNodeCount;
-	vl subtreePathLengthSum;
+	vi subtreePathLengthSum;
 	DFSResult(Graph<T>&g):
 		connected(g.size,false),
 		distance(g.size,g.INF_VAL),
@@ -172,18 +106,23 @@ template<class T>struct DFSResult{
 			eulertour.reserve(g.size*2);
 	}
 };
-template<class T=ll>struct Graph{
+template<class T=int>struct Graph{
 	int size;
 	T INF_VAL;
-	vector<vector<tuple<ll,T>>>edge;
-	Graph(int n=1,T inf=INF):size(n),INF_VAL(inf){edge.resize(size);}
-	constexpr void add(ll from, ll to, T cost, bool directed=false){
-		edge[from].emplace_back(to,cost);
-		if(!directed) edge[to].emplace_back(from,cost);
+	vector<vector<tuple<int,T>>>edge;
+	vector<vector<tuple<int,T>>>inverseEdge;
+	Graph(int n=1,T inf=INF):size(n),INF_VAL(inf){
+		edge.resize(size);
+		inverseEdge.resize(size);
 	}
-	constexpr friend ostream &operator<<(ostream &os, const Graph<T> &g) {
-		rep(i,g.size)for(auto[from,val]:g.edge[i])puta(make_tuple(i,"=>",from,", cost :",val),os);
-		return os;
+
+	constexpr void add(int from, int to, T cost, bool directed=false){
+		edge[from].emplace_back(to,cost);
+		inverseEdge[to].emplace_back(from,cost);
+		if (!directed) {
+			edge[to].emplace_back(from,cost);
+			edge[from].emplace_back(to,cost);
+		}
 	}
 
 	// s始点で深さ優先探索して情報を返す。木以外で使うのか？
@@ -208,66 +147,51 @@ template<class T=ll>struct Graph{
 		dfsrec(s);
 		return ret;
 	};
-	// BFSする。この関数は変更しない
-	constexpr vector<T> bfs(int s){
-		vector<T> ret(size,INF_VAL);
-		deque<int> q;
-		ret[q.emplace_back(s)]=0;
-		while(!q.empty()){
-			int p=q.front(); q.pop_front();
-			for(auto[to,cost]:edge[p])if(chmin(ret[to],ret[p]+cost)){
-				if(cost==0)q.emplace_front(to); else q.emplace_back(to);
-			}
-		}
-		return ret;
-	}
-	// BFSしてパスを復元する。
-	// 余分にO(N)掛けてるので、距離だけほしい場合はbfs(s)[t]を見るとよい
-	constexpr pair<T,vi> bfs(int s, int t){
-		auto dist=bfs(s);
-		vi path(1,t);
-		while(path.back()!=s)for(auto[to,_]:edge[path.back()])if(dist[to]==dist[path.back()]-1){path.emplace_back(to);break;}
-		reverse(all(path));
-		return {dist[t], path};
-	}
 };
 
-template<class T=ll>struct Dijkstra{
+template<class T=int>struct Dijkstra{
 	Graph<T> g;
 	Dijkstra(Graph<T> g):g(g){}
-	vector<T>dist(ll s){
+	vector<T>dist(int s){
 		vector<T> ret(g.size, g.INF_VAL);
-		priority_queue<tuple<T,ll>> q;
+		priority_queue<tuple<T,int>> q;
 		q.emplace(T(),s);
 		while(!q.empty()){
 			auto[c,p]=q.top(); q.pop();
 			if(ret[p]!=g.INF_VAL)continue;
 			ret[p]=abs(c);
-			for(auto&[nxt,cost]:g.edge[p]){
+			for(auto [nxt,cost]:g.edge[p]){
 				if(ret[nxt]<=ret[p]+cost)continue;
 				q.emplace(-ret[p]-cost,nxt);
 			}
 		}
 		return ret;
 	}
-	pair<T,vi> dist(ll s,ll t){
+	pair<T,vi> dist(int s,int t){
 		vi dist=this->dist(s);
 		vi path(1,t);
-		while(path.back()!=s)for(auto[to,cost]:g.edge[path.back()])if(dist[to]==dist[path.back()]-cost){path.emplace_back(to);break;}
+		while(path.back()!=s){
+			for(auto[from,cost]:g.inverseEdge[path.back()]){
+				if(dist[from]==dist[path.back()]-cost){
+					path.emplace_back(from);
+					break;
+				}
+			}
+		}
 		reverse(all(path));
 		return {dist[t], path};
 	}
 };
 
 struct UnionFind{
-	vl par,dist;
+	vi par,dist;
 	UnionFind(int x){par.assign(x,-1); dist.assign(x,0);}
-	ll find(ll x){return par[x]<0?x:find(par[x]);}
-	ll depth(ll x){return par[x]<0?0:depth(par[x])+dist[x];}
-	bool same(ll x,ll y){return find(x)==find(y);}
-	ll size(ll x){return -par[find(x)];}
-	ll diff(ll x,ll y){return same(x,y)?depth(x)-depth(y):INF;}
-	bool unite(ll x,ll y,ll k=0){
+	int find(int x){return par[x]<0?x:find(par[x]);}
+	int depth(int x){return par[x]<0?0:depth(par[x])+dist[x];}
+	bool same(int x,int y){return find(x)==find(y);}
+	int size(int x){return -par[find(x)];}
+	int diff(int x,int y){return same(x,y)?depth(x)-depth(y):INF;}
+	bool unite(int x,int y,int k=0){
 		k+=depth(y); k-=depth(x); k=-k;
 		x=find(x); y=find(y);
 		if(x==y)return false;
@@ -283,11 +207,11 @@ template<class T>struct Kruskal{
 	pair<T, vector<pair<int,int>>> calc(){
 		T ans=0;
 		UnionFind uf(g.size);
-		vector<tuple<T,ll,ll>> edge;
+		vector<tuple<T,int,int>> edge;
 		vector<pair<int,int>> used;
-		rep(from,g.size)for(auto&[to,cost]:g.edge[from])edge.emplace_back(cost,from,to);
+		rep(from,g.size)for(auto [to,cost]:g.edge[from])edge.emplace_back(cost,from,to);
 		sort(all(edge));
-		for(auto&[cost,from,to]:edge)if(uf.unite(from,to)){
+		for(auto [cost,from,to]:edge)if(uf.unite(from,to)){
 			used.emplace_back(from,to);
 			ans+=cost;
 		}
@@ -295,140 +219,161 @@ template<class T>struct Kruskal{
 	}
 };
 
+struct StaticDataStore {
+private:
+	StaticDataStore() = default;
+
+public:
+	static inline int n, sy, sx;
+	static inline vector<vector<int>> stage;
+	static inline Timer timer;
+	static inline Graph<int> cellGraph;
+
+	static void Input() {
+		cin>>n>>sy>>sx;
+		sy++; sx++;
+		stage.resize(n+2, vi(n+2,0));
+
+		char c;
+		rep(i,n)rep(j,n){
+			cin>>c;
+			if(c=='#')continue;
+			stage[i+1][j+1] = (c - '0');
+		}
+
+		cellGraph = Graph<int>((n+2)*(n+2));
+		rep(i,1,n+1)rep(j,1,n+1)if(stage[i][j]){
+			if(stage[i-1][j])cellGraph.add(i*(n+2)+j,(i-1)*(n+2)+j,stage[i-1][j], 1);
+			if(stage[i+1][j])cellGraph.add(i*(n+2)+j,(i+1)*(n+2)+j,stage[i+1][j], 1);
+			if(stage[i][j-1])cellGraph.add(i*(n+2)+j,i*(n+2)+j-1,stage[i][j-1], 1);
+			if(stage[i][j+1])cellGraph.add(i*(n+2)+j,i*(n+2)+j+1,stage[i][j+1], 1);
+		}
+	}
+};
+
+struct _Construct {
+	_Construct(){
+		StaticDataStore::Input();
+	}
+} _construct;
+
+
+struct SolverInterface {
+	virtual int Solve() = 0;
+	virtual void Print() = 0;
+	virtual string GetAnswer() = 0;
+
+protected:
+
+};
+
+
 struct GreedySolver : public SolverInterface {
-	int score = 0;
-	vector<vector<pair<int,int>>> graph;
-	vector<pair<int, int>> point;
-	vector<vector<int>> pointMap;
-	vector<vector<int>> distance;
-	int startPoint;
-	vector<int> path;
-	Graph<int> g;
+	using Point = pair<int, int>;
 
-	GreedySolver(int pivotY, int pivotX) {
-		const auto& stage = StaticDataStore::stage;
-		const int n = StaticDataStore::n;
+	const int pivotY, pivotX;		// 交差点選択のためのピボット
+	vector<Point> allPoint;			// 全ての交差点の集合
+	vector<Point> point;			// 訪れる交差点の集合
+	vvi pointMap;					// pointの逆対応
+	vvi distance;					// 交差点間の最短距離
+	vi path;						// 交差点の訪問順
 
-		vvi isLightenH(n+2, vi(n+2,0));
-		vvi isLightenV(n+2, vi(n+2,0));
+	static inline const auto& STAGE = StaticDataStore::stage;
+	static inline const int n = StaticDataStore::n;
+	static inline const int sy = StaticDataStore::sy;
+	static inline const int sx = StaticDataStore::sx;
+	static inline const Timer& baseTimer = StaticDataStore::timer;
+	static inline const Graph<int> cellGraph = StaticDataStore::cellGraph;
 
-		graph.resize(n+2);
-		pointMap.resize(n+2, vi(n+2,-1));
+	GreedySolver(int _pivotY, int _pivotX) : pivotY(_pivotY), pivotX(_pivotX) {
+		pointMap.resize(n+2, vi(n+2, -1));
 
-		const int sy = StaticDataStore::sy;
-		const int sx = StaticDataStore::sx;
-		startPoint = pointMap[sy][sx]=0;
-		point.emplace_back(sy,sx);
-		{
-			int i=sy, j=sx;
-			for(int dy=i ; stage[dy][j] ; dy--){
-				if(stage[dy][j]==0)break;
-				isLightenV[dy][j]=1;
+		vvi isLightenH(n+2, vi(n+2, 0));
+		vvi isLightenV(n+2, vi(n+2, 0));
+		const auto addPoint = [&](int y, int x){
+			pointMap[y][x]=point.size();
+			point.emplace_back(y,x);
+			for(int dy=y ; STAGE[dy][x] ; dy--){
+				if(STAGE[dy][x]==0)break;
+				isLightenV[dy][x]=1;
 			}
-			for(int dy=i ; stage[dy][j] ; dy++){
-				if(stage[dy][j]==0)break;
-				isLightenV[dy][j]=1;
+			for(int dy=y ; STAGE[dy][x] ; dy++){
+				if(STAGE[dy][x]==0)break;
+				isLightenV[dy][x]=1;
 			}
-			for(int dx=j ; stage[i][dx] ; dx--){
-				if(stage[i][dx]==0)break;
-				isLightenH[i][dx]=1;
+			for(int dx=x ; STAGE[y][dx] ; dx--){
+				if(STAGE[y][dx]==0)break;
+				isLightenH[y][dx]=1;
 			}
-			for(int dx=j ; stage[i][dx] ; dx++){
-				if(stage[i][dx]==0)break;
-				isLightenH[i][dx]=1;
+			for(int dx=x ; STAGE[y][dx] ; dx++){
+				if(STAGE[y][dx]==0)break;
+				isLightenH[y][dx]=1;
 			}
+		};
+		addPoint(sy, sx);
+
+		rep(i,1,n+1)rep(j,1,n+1)if(STAGE[i][j]!=0){
+			bool v = STAGE[i-1][j] or STAGE[i+1][j];
+			bool h = STAGE[i][j-1] or STAGE[i][j+1];
+			if(v and h) allPoint.emplace_back(i,j);
 		}
 
-		vector<pair<int,int>> koho;
-		rep(i,1,n+1)rep(j,1,n+1)if(stage[i][j]!=0){
-			bool v=false, h=false;
-			if(stage[i-1][j])v=true;
-			if(stage[i+1][j])v=true;
-			if(stage[i][j-1])h=true;
-			if(stage[i][j+1])h=true;
-			if(v and h){
-				koho.emplace_back(i,j);
-			}
-		}
-		sort(all(koho), [&](const auto& a, const auto& b){
+		const auto compare = [this](const auto& a, const auto& b){
 			int d=abs(a.first-pivotY)+abs(a.second-pivotX);
 			int d2=abs(b.first-pivotY)+abs(b.second-pivotX);
 			return d>d2;
-		});
-		for(auto&[i,j]:koho){
+		};
+		sort(all(allPoint), compare);
+
+		for(auto [i,j]:allPoint){
 			if(isLightenH[i][j] and isLightenV[i][j])continue;
-			pointMap[i][j]=point.size();
-			point.emplace_back(i,j);
-			for(int dy=i ; stage[dy][j] ; dy--){
-				if(stage[dy][j]==0)break;
-				isLightenV[dy][j]=1;
-			}
-			for(int dy=i ; stage[dy][j] ; dy++){
-				if(stage[dy][j]==0)break;
-				isLightenV[dy][j]=1;
-			}
-			for(int dx=j ; stage[i][dx] ; dx--){
-				if(stage[i][dx]==0)break;
-				isLightenH[i][dx]=1;
-			}
-			for(int dx=j ; stage[i][dx] ; dx++){
-				if(stage[i][dx]==0)break;
-				isLightenH[i][dx]=1;
-			}
-			// cerr<<pointMap[i][j]<<" : ("<<i<<","<<j<<")"<<endl;
+			addPoint(i, j);
 		}
 
-		g = Graph<int>((n+2)*(n+2));
-		rep(i,1,n+1)rep(j,1,n+1)if(stage[i][j]){
-			// if(stage[i-1][j])g.add(i*(n+2)+j,(i-1)*(n+2)+j,stage[i-1][j]);
-			if(stage[i+1][j])g.add(i*(n+2)+j,(i+1)*(n+2)+j,stage[i+1][j]);
-			// if(stage[i][j-1])g.add(i*(n+2)+j,i*(n+2)+j-1,stage[i][j-1]);
-			if(stage[i][j+1])g.add(i*(n+2)+j,i*(n+2)+j+1,stage[i][j+1]);
-		}
-		distance = vvi(point.size(), vi(point.size(),INF));
-
-		Dijkstra<int> dijkstra(g);
+		distance = vvi(point.size(), vi(point.size(), INF));
+		Dijkstra<int> dijkstra(cellGraph);
 		rep(i, point.size()){
-			int from = point[i].first*(n+2)+point[i].second;
+			int from = GetCellGraphIndexFromPoint(point[i]);
 			auto res = dijkstra.dist(from);
 			rep(j, point.size()){
-				int to = point[j].first*(n+2)+point[j].second;
+				int to = GetCellGraphIndexFromPoint(point[j]);
 				distance[i][j] = res[to];
 			}
 		}
 	}
 
-	void createInit(){
-		Graph<int> pointGraph(point.size());
-		rep(i,point.size())rep(j,point.size())if(i!=j){
-			pointGraph.add(i,j,distance[i][j],1);
-		}
-		Kruskal<int> kruskal(pointGraph);
-		auto[_,usedEdge] = kruskal.calc();
-		
+	void createInitPath(){
+		path.clear();
+		path.resize(point.size());
 		Graph<int> mst(point.size());
-		for(auto&[from, to] : usedEdge){
-			// mst.add(from, to, distance[from][to], 1);
-			// mst.add(to, from, distance[to][from], 1);
-			mst.add(from, to, (distance[from][to]+distance[to][from])/2);
+		{
+			Graph<int> pointGraph(point.size());
+			rep(i,point.size())rep(j,point.size())if(i!=j){
+				pointGraph.add(i,j,distance[i][j],1);
+			}
+			const auto[_, usedEdge] = Kruskal<int>(pointGraph).calc();
+			for(auto [from, to] : usedEdge){
+				mst.add(from, to, (distance[from][to]+distance[to][from])/2);
+			}
 		}
-		auto preorder = mst.dfs(startPoint).preorder;
-		path = preorder;
 
+		auto preorder = mst.dfs(0).preorder;
 		rep(i,preorder.size()){
 			path[preorder[i]] = i;
 		}
-		path.emplace_back(startPoint);
-
-		return;
+		path.emplace_back(0);
+		// rep(i,path.size()){
+		// 	cout<<path[i]<<" ";
+		// }
+		// cout<<endl;
 	}
 
-	int calculate(vi path){
+	int calculate(vi currentPath){
 		int r=0;
-		rep(i,path.size()-1){
-			r+=distance[path[i]][path[i+1]];
+		rep(i,currentPath.size()-1){
+			r += distance[currentPath[i]][currentPath[i+1]];
 		}
-		return (int)round(10000 + 10000000.0 * StaticDataStore::n / r);
+		return (int)round(10000 + 10000000.0 * n / r);
 	}
 
 	bool IsMovable(int from, int to) {
@@ -442,88 +387,125 @@ struct GreedySolver : public SolverInterface {
 	}
  
 	float Temperature(){
-	return 100-pow(100,StaticDataStore::timer.get()/3000.0);
+		return 100-pow(100, baseTimer.get()/3000.0);
 	}
-	
+
 	int Solve() {
-		createInit();
+		createInitPath();
 
 		int bestScore = calculate(path);
 		cerr<<"INIT: "<<bestScore<<endl;
 
 		auto currentPath = path;
-		// cerr<<bestScore<<endl<<flush;
 		int challenge = 0;
-		int type=0;
-		while(StaticDataStore::timer){
+		int type=0, typeCount = 3;
+		bool isModified = false;
+
+		int a=1, b=1;
+		while(baseTimer){
 			/* change */
 			challenge++;
-			int a = challenge % path.size();
-			int b = challenge / path.size() % path.size();
-			if(a==0 and b==0){
-				if(type==1)break;
-				type=1;
+
+			if(++b == path.size() - 1){
+				if(++a == path.size() - 2){
+					if(++type==typeCount){
+						if(!isModified) break;
+						isModified = false;
+						type = 0;
+					}
+					a=1;
+				}
+				b=a+1;
 			}
-			if(currentPath[a]==0 or currentPath[b]==0)continue;
-			if(a==b)continue;
-			if(type==0){
-				swap(currentPath[a], currentPath[b]);
-			}else{
-				if(a>=b)continue;
-				auto c2=currentPath;
-				currentPath.clear();
-				rep(i,c2.size()){
-					if(i==a)continue;
-					currentPath.emplace_back(c2[i]);
-					if(i==b)currentPath.emplace_back(c2[a]);
+
+			if(currentPath[a] == 0)continue;
+			if(currentPath[b] == 0)continue;
+			switch(type){
+				case 0: {
+					/* 隣接要素の訪問順をswap */
+					
+					swap(currentPath[a], currentPath[b]);
+					break;
+				}
+				case 1: {
+					/**
+					 *  a, a+1, ... , b  を
+					 *  a+1, ... , b, a  に変更
+					 */
+					auto c2=currentPath;
+					currentPath.clear();
+					rep(i,c2.size()){
+						if(i==a)continue;
+						currentPath.emplace_back(c2[i]);
+						if(i==b)currentPath.emplace_back(c2[a]);
+					}
+					break;
+				}
+				case 2: {
+					/**
+					 *  a, a+1, ... , b  を
+					 *  b, a, a+1, ...   に変更
+					 */
+					auto c2=currentPath;
+					currentPath.clear();
+					rep(i,c2.size()){
+						if(i==a)currentPath.emplace_back(c2[b]);
+						if(i!=b)currentPath.emplace_back(c2[i]);
+					}
+					break;
+				}
+				case 3: {
+					/**
+					 *  aを削除
+					 */
+					if(b!=1)continue;
+					auto c2=currentPath;
+					currentPath.clear();
+					rep(i,c2.size()){
+						if(i!=a)currentPath.emplace_back(c2[i]);
+					}
+					break;
 				}
 			}
 
 			int currentScore = calculate(currentPath);
 			if(chmax(bestScore, currentScore)){
 				path = currentPath;
+				isModified = true;
 			}else{
 				currentPath = path;
-				// cerr<<StaticDataStore::timer.get()<<","<<challenge<<","<<bestScore<<endl;
 			}
 		}
-
+		// rep(i,path.size()){
+		// 	cout<<path[i]<<" ";
+		// }
+		// cout<<endl<<endl;
 		return bestScore;
 	}
 
-	string Move(int from, int to) {
-		const int n=StaticDataStore::n;
-		auto[fy,fx]=point[from];
-		auto[ty,tx]=point[to];
-		// cout<<"MOVE "<<from<<" "<<to<<endl<<flush;
-		from = fy*(n+2)+fx;
-		to = ty*(n+2)+tx;
-		
-		Dijkstra<int> dijkstra(g);
-		auto[_, route] = dijkstra.dist(from, to);
+	static int GetCellGraphIndexFromPoint(Point& p){
+		return p.first*(n+2)+p.second;
+	}
 
+	string Move(int fromPoint, int toPoint) {
+		Dijkstra<int> dijkstra(cellGraph);
+
+		int fromIndex = GetCellGraphIndexFromPoint(point[fromPoint]);
+		int toIndex = GetCellGraphIndexFromPoint(point[toPoint]);
+		auto[_, route] = dijkstra.dist(fromIndex, toIndex);
 
 		string ret = "";
 		rep(i,route.size()-1){
-			if(route[i]+1 == route[i+1]){
-				ret += "R";
-			}
-			if(route[i]-1 == route[i+1]){
-				ret += "L";
-			}
-			if(route[i]+n+2 == route[i+1]){
-				ret += "D";
-			}
-			if(route[i]-n-2 == route[i+1]){
-				ret += "U";
-			}
+			if(route[i]+1 == route[i+1]) ret += "R";
+			if(route[i]-1 == route[i+1]) ret += "L";
+			if(route[i]+n+2 == route[i+1]) ret += "D";
+			if(route[i]-n-2 == route[i+1]) ret += "U";
 		}
-
 		return ret;
 	}
 
 	void Print() {
-		cout<<GetAnswer()<<endl<<std::flush;
+		cout<<GetAnswer()<<endl<<flush;
 	}
 
 	string GetAnswer(){
@@ -536,8 +518,6 @@ struct GreedySolver : public SolverInterface {
 };
 
 int main(){
-	Timer timer;
-
 	SolverInterface* solver = new GreedySolver(StaticDataStore::sy, StaticDataStore::sx);
 
 	int bestScore = solver->Solve();
@@ -557,16 +537,13 @@ int main(){
 		}
 	}
 
-	int challenge = 0;
-	// while(StaticDataStore::timer){
-	int mode = 0;
-	while(timer and !pivots.empty()){
+	int challenge = 0, mode = 0;
+	while(StaticDataStore::timer and !pivots.empty()){
 		auto[y,x] = pivots.back();
 		pivots.pop_back();
 
 		challenge++;
-		// int y = StaticDataStore::sy + Random(-5,6);
-		// int x = StaticDataStore::sx + Random(-5,6);
+
 		solver = new GreedySolver(y,x);
 		int score = solver->Solve();
 		if(chmax(bestScore, score)){
@@ -606,7 +583,7 @@ int main(){
 	cerr<<"N: "<<StaticDataStore::n<<endl;
 	cerr<<"CHALLENGE: "<<challenge<<endl;
 	cerr<<"SCORE: "<<bestScore<<endl;
-	cerr<<timer.get()<<" ms"<<endl;
+	cerr<<StaticDataStore::timer.get()<<" ms"<<endl;
 	
 	// cout<<StaticDataStore::n<<"\t"<<bestScore<<"\t";
 	// cout<<StaticDataStore::sy<<"\t"<<StaticDataStore::sx<<"\t";
