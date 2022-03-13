@@ -1,0 +1,52 @@
+{
+	"header": {
+		"title": "8th Asprova Programming Contest Visualizer"
+	},
+	"help": {
+		"usage": {
+			"title": "How To Use",
+			"texts": {
+				"0": "If you specify an import file for the import and an output file for the output, the production scheduler will be shown.",
+				"1": "One row is a full lap (full circle) of the line (hanger H).",
+				"2": "Shapes▲ and ■ etc. represent the shape of the product, while the color (red, blue etc.) represents the color of the product.",
+				"3": "However, when the ▲ and ■ shapes are slightly faded, it means that only the hangers are hung.",
+				"4": "The \"x\" marker represents where the hanger will be collected.",
+				"5": "The grey cell represents an empty hook.",
+				"6": "If the upper half of a grey cell is colored light blue, it means that the cell should not be hung with products due to the shape switching constraint; if the lower half is colored green, it means that the cell should not be hung with products due to the color switching constraint."
+			}
+		},
+		"caution": {
+			"title": "USAGE NOTES",
+			"texts": {
+				"0": "The visualizer is not guaranteed to work on all browsers. The recommended browser is Google Chrome, FireFox, and Microsoft Edge.",
+				"1": "The score calculated with this visualizer is not guaranteed to match the score calculated on AtCoder. When dealing with large real numbers, there may be differences due precision limitations.",
+				"2": "Use output_checker.cpp to evaluate the output data of your program. Consider visualizer as an auxiliary tool for visualizing the output data.",
+				"3": "If the evaluation results of output_checker.cpp and the visualizer are different, please trust output_checker.cpp."
+			}
+		}
+	},
+	"info": {
+		"title": "Input data",
+		"shapeNumDescription": "Number of shapes",
+		"colorNumDescription": "Number of colors",
+		"hookNumDescription": "Number of hooks",
+		"hangerPenaltyDescription": "Value deducted from the score for each time a hanger is mounted or removed",
+		"hookPenaltyDescription": "Value deducted from the score for each time a hanger is empty"
+	},
+	"violation": {
+		"notEnoughDataMessage": "There is not enough data.",
+		"tooManyDataMessage": "There is too much data.",
+		"invalidNumberMessage": "Invalid value.",
+		"wrongProductCountMessage": "The production count (Shape {0}, Color {1}) is incorrect. It should be {2}, but it is {3}.",
+		"missingInstructionCountMessage": "Please output the number of instructions \"L\" on the first line.",
+		"notEnoughHangerMessage": "There are not enough hangers.",
+		"notEnoughIntervalMessage": "There are not enough spaces for hangers to change.",
+		"cantCollectHangerMessage": "There is no collection hanger."
+	},
+	"metrics": {
+		"hangerSwappingCountLabel": "The number of exchanged hangers",
+		"numOfEmptyHookLabel": "The number of empty hooks",
+		"numOfInstructionsLabel": "Instruction length",
+		"scoreLabel": "Score"
+	}
+}

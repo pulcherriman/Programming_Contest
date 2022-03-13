@@ -1,0 +1,52 @@
+{
+	"header": {
+		"title": "第8回 Asprova プログラミングコンテスト ビジュアライザ"
+	},
+	"help": {
+		"usage": {
+			"title": "使い方",
+			"texts": {
+				"0": "inputに入力データファイルを、outputに出力データファイルを指定すると生産計画を表示します。",
+				"1": "一行がライン一周分(ハンガーH個)です。",
+				"2": "▲や■などの図形が製品の形状（ハンガーの種類）、色は製品の色を表します。",
+				"3": "ただし、▲や■などの図形が半透明のときは、ハンガーのみが掛けられていることを表します。",
+				"4": "xマークは、そこでハンガーが回収されることを表します。",
+				"5": "グレーのセルは空きフックです。",
+				"6": "グレーのセルの上半分が水色で塗られていた場合、そのセルは形状の切り替え制約から製品を掛けてはいけないことを表し、下半分が緑色で塗られていた場合、そのセルは色の切り替え制約から製品を掛けてはいけないことを表しています。"
+			}
+		},
+		"caution": {
+			"title": "使用上の注意",
+			"texts": {
+				"0": "このビジュアライザはすべてのブラウザで作動することを保証していません。 推奨ブラウザはGoogle Chrome、Firefox、Microsoft Edgeです。",
+				"1": "このビジュアライザで計算された得点が、AtCoder上で計算される得点と一致することは保証されていません。 大きな実数を扱った場合、有効桁数の問題で差異が出ることがあります。",
+				"2": "自分のプログラムの出力データの評価はoutput_checker.cppを使用し、 ビジュアライザはあくまで出力データの視覚化のための補助的なツールとして使って頂けると幸いです。",
+				"3": "output_checker.cppとビジュアライザの評価結果が異なる場合はoutput_checker.cppの方を信用してください。"
+			}
+		}
+	},
+	"info": {
+		"title": "入力データ",
+		"shapeNumDescription": "形状の種類数",
+		"colorNumDescription": "色の種類数",
+		"hookNumDescription": "フックの数",
+		"hangerPenaltyDescription": "ハンガーの取付・取り外し1回ごとにスコアから引かれる値",
+		"hookPenaltyDescription": "空きフックの個数1個につきスコアから引かれる値"
+	},
+	"violation": {
+		"notEnoughDataMessage": "データが足りていません。",
+		"tooManyDataMessage": "データが多すぎます。",
+		"invalidNumberMessage": "無効な数値です。",
+		"wrongProductCountMessage": "(形状 {0}, 色 {1}) の生産数が正しくありません。{2} である必要がありますが {3} となっています。",
+		"missingInstructionCountMessage": "1行目には指示の数Lを出力してください。",
+		"notEnoughHangerMessage": "ハンガーの数が足りません。",
+		"notEnoughIntervalMessage": "製品変更のための間隔が足りません。",
+		"cantCollectHangerMessage": "回収するハンガーがありません。"
+	},
+	"metrics": {
+		"hangerSwappingCountLabel": "ハンガー付け替え回数",
+		"numOfEmptyHookLabel": "空きフック数",
+		"numOfInstructionsLabel": "指示の長さ",
+		"scoreLabel": "スコア"
+	}
+}
