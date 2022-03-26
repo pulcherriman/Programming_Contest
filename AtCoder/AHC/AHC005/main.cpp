@@ -255,6 +255,9 @@ struct _Construct {
 	_Construct(){
 		StaticDataStore::Input();
 	}
+	~_Construct(){
+		cerr<<StaticDataStore::timer.get()<<" ms"<<endl;
+	}
 } _construct;
 
 
@@ -588,7 +591,6 @@ int main(){
 	cerr<<"N: "<<StaticDataStore::n<<endl;
 	cerr<<"CHALLENGE: "<<challenge<<endl;
 	cerr<<"SCORE: "<<bestScore<<endl;
-	cerr<<StaticDataStore::timer.get()<<" ms"<<endl;
 	
 	// cout<<StaticDataStore::n<<"\t"<<bestScore<<"\t";
 	// cout<<StaticDataStore::sy<<"\t"<<StaticDataStore::sx<<"\t";
