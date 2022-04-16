@@ -33,7 +33,7 @@ set /p count="enter tasks count: "
 set /a count-=1
 
 set num2char=abcdefghijklmnopqrstuvwxyz
-set initCodePath="C:\Users\tsumi\AppData\Local\Temp\SW5pdGlhbGl6ZQ==.cpp.snippet"
+set initCodePath="C:\Users\tsumi\AppData\Local\Temp\dGVtcGxhdGU=.cpp.snippet"
 set filePaths=
 for /l %%i in (0,1,%count%) do (
 	call set filePath="%contestName%_%%num2char:~%%i,1%%.cpp"
