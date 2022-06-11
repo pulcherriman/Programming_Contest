@@ -1,0 +1,5 @@
+# ### Turn 1START
+# status : 0
+# Placed : 0 * 2
+# Lines: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+r.LRRLR
