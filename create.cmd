@@ -24,6 +24,9 @@ set /p contestName="enter contest name: "
 mkdir %contestName%
 cd %contestName%
 
+set okimochiPath="%~dp0\okimochi\%contestName%.txt"
+echo. >> %okimochiPath%
+
 for %%i in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
 	call set contestName=%%contestName:%%i=%%i%%
 )
@@ -34,12 +37,14 @@ set /a count-=1
 
 set num2char=abcdefghijklmnopqrstuvwxyz
 set initCodePath="C:\Users\tsumi\AppData\Local\Temp\dGVtcGxhdGU=.cpp.snippet"
-set filePaths=
+set filePaths=%okimochiPath%
 for /l %%i in (0,1,%count%) do (
 	call set filePath="%contestName%_%%num2char:~%%i,1%%.cpp"
 	call copy %initCodePath% %%filePath%%
 	call set filePaths=%%filePaths%% %%filePath%%
 )
+
+
 code -a %filePaths%
 
 exit
