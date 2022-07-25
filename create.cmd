@@ -24,7 +24,7 @@ set /p contestName="enter contest name: "
 mkdir %contestName%
 cd %contestName%
 
-set okimochiPath="%~dp0\okimochi\%contestName%.txt"
+set okimochiPath="okimochi.txt"
 echo. >> %okimochiPath%
 
 for %%i in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
