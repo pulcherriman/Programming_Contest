@@ -204,14 +204,19 @@ namespace std::tr1 {
 
 int main() {
 	/*$1*/
-	def(int,n,k,q);
-	vi a(k); cin>>a;
-	rep(q){
-		def(int,v);
-		v--;
-		if(v+1!=k and a[v]+1==a[v+1])continue;
-		if(v+1==k and a[v]==n)continue;
-		a[v]++;
+	def(int,n,m);
+	vvl e(n,vl(n,0));
+	rep(m){
+		def(int,a,b);
+		a--; b--;
+		e[a][b] = 1;
+		e[b][a] = 1;
 	}
-	out(a);
+	ll ans=0;
+	rep(i,n)rep(j,i)rep(k,j){
+		if(e[i][j]&&e[j][k]&&e[k][i]){
+			ans++;
+		}
+	}
+	out(ans);
 }

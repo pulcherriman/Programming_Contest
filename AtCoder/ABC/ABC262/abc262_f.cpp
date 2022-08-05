@@ -6,7 +6,8 @@
 #pragma GCC optimize("inline")
 #pragma GCC diagnostic ignored "-Wunused-value"
 #ifdef _DEBUG
-// #define _GLIBCXX_DEBUG 1
+#define _GLIBCXX_DEBUG 1
+// #define _GLIBCXX_DEBUG_PEDANTIC 1
 #endif
 
 /* 
@@ -57,7 +58,7 @@ template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 #define __REP(i,n) __RANGE(i,0,n)
 #define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
 #define __RREP(i,n) __RRANGE(i,0,n)
-#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define __RRANGE(i,a,n) for(ll i=((ll)(n)-1);i>=((ll)a);--i)
 #define sz(a) ((ll)(a).size())
 
 /*
@@ -114,7 +115,7 @@ namespace IO {
 	#else
 	#define debug(...) if(false)debug_f(__VA_ARGS__)
 	#endif
-
+	void Yn(bool f) { out(f?"Yes":"No"); }
 
 	// input
 	template<class T, class...Ts> constexpr istream& gargs(istream&is, T&&t, Ts&&...args) {
@@ -203,6 +204,8 @@ namespace std::tr1 {
 
 
 
+
+
 template <typename Monoids>
 class SegmentTree {
 	using Val = typename Monoids::Val;
@@ -260,7 +263,7 @@ public:
 	SegmentTree(int n_): SegmentTree(n_, Monoids::init_val()) {}
 	SegmentTree(int n_, Val v1) : SegmentTree(vector<Val>(n_, v1)) {}
 	SegmentTree(const vector<Val>& data_)
-		: h(ceil(log2(data_.size()))), n(1 << h), data(n * 2, Monoids::id_val()), lazy(n * 2, Monoids::id_op()) {
+		: h(ceil(log2(data_.size()))+1), n(1 << h), data(n * 2, Monoids::id_val()), lazy(n * 2, Monoids::id_op()) {
 		for (int i = 0; i < (int)data_.size(); i++) data[i + n] = data_[i];
 		for (int i = n - 1; i >= 1; i--) data[i] = Monoids::concat_val(data[i * 2], data[i * 2 + 1]);
 	}
@@ -371,7 +374,7 @@ namespace SegTreeUtil {
 
 	template<typename T>
 	struct Add_Min {
-		using Val = Val_HasSize<T>;
+		using Val = T;
 		using Op = T;
 		static Val init_val() { return id_val(); }
 		static Val id_val() { return numeric_limits<Val>::max(); }
@@ -383,7 +386,7 @@ namespace SegTreeUtil {
 
 	template<typename T>
 	struct Add_Max {
-		using Val = Val_HasSize<T>;
+		using Val = T;
 		using Op = T;
 		static Val init_val() { return id_val(); }
 		static Val id_val() { return numeric_limits<Val>::min(); }
@@ -408,68 +411,112 @@ namespace SegTreeUtil {
 
 // SegmentTree<SegTreeUtil::Add_Sum<ll>> st(n);
 
+vi calc(vi a, int d){
+	SegmentTree<SegTreeUtil::Add_Min<int>> st(a);
+	vi ans;
+	int id=0;
+	while(id<a.size()){
+		int minV = st.query(id, min(id+d, (int)a.size())+1);
+		debug(d, id, minV);
+		while(true){
+			if(a[id] != minV) {
+				if(d==0)break;
+				d--;
+				id++;
+			}else{
+				ans.push_back(a[id]);
+				id++;
+				break;
+			}
+		}
+		debug(" =>", ans);
+	}
+	debug(d);
+	while(ans.size()> 0 and d){
+		d--;
+		ans.pop_back();
+	}
+	return ans;
+}
+
+
+vi calc2(vi a){
+	SegmentTree<SegTreeUtil::Add_Min<int>> st(a);
+	vi ans;
+	int id=0;
+	while(id<a.size()){
+		debug(id)<<flush;
+		int minV = st.query(id, a.size()+1);
+		debug(id, minV)<<flush;
+		while(true){
+			if(a[id] != minV) {
+				id++;
+			}else{
+				ans.push_back(a[id]);
+				id++;
+				break;
+			}
+		}
+	}
+	return ans;
+}
+
+
+
 int main() {
 	/*$1*/
-	def(ll,n);
-	vp p(n);
-	in(p);
-	debug(p);
-	vl d(n);
-	rep(i,n){
-		d[i]=p[i].first*p[(i+1)%n].second-p[i].second*p[(i+1)%n].first;
-		debug(i,"-", (i+1)%n, ":", d[i]);
+	def(ll,n,k);
+	vi a(n); cin>>a;
+	// 最初の先頭、もしくはうしろからk個のどれかが先頭に来る
+	int minV=a[0], minI=0;
+	rep(i,k){
+		if(chmin(minV, a[n-1-i])) minI=n-1-i;
 	}
+	debug(minV, minI);
+	if(minI==0){
+		// rotateしないのが最適、1番目以降をK回消していく
+		vi b;
+		b = calc(a,k);
+		out(b);
+	}else{
+		vvi ans;
+		{
+			vi b;
+			b = calc(a,k);
+			ans.push_back(b);
+		}
 
-	vl e(n+1,0);
-	rep(i,n){
-		e[i+1]=e[i]+d[i];
+		int dk=k;
+		{
+			k-=n-minI;
+			vi b;
+			rep(i,minI)b.push_back(a[i]);
+			vi c = calc(b, k);
+			debug(k,"back:",c);
+			// a[0..minI)をk回消せる
+			int tgt=c[0];// todo bが空
+			b.clear();
+			rep(i,minI,n){
+				if(a[i]<tgt)b.push_back(a[i]);
+			}
+			debug("front before", b);
+			b =  calc2(b);
+			for(auto&i:c)b.push_back(i);
+			ans.push_back(b);
+		}
+		{
+			k=dk;
+			if(k>=minI){
+				k-=minI;
+				vi b;
+				rep(i,minI,n){
+					b.push_back(a[i]);
+				}
+				b=calc(b,k);
+				ans.push_back(b);
+			}
+		}
+		out(*min_element(all(ans)));
 	}
-	debug(e);
-	ll s=e.back();
-	auto calc=[&](int l,int r){
-		return e[r]-e[l]+p[r].first*p[l].second-p[r].second*p[l].first;
-	};
-
-	ll ans=numeric_limits<ll>::max();
-	rep(i,n-1){
-		int ok=i+1, ng=n;
-		if(i==0)ng--;
-		while(ng-ok>1){
-			int mid=(ok+ng)/2;
-			ll x=calc(i,mid);
-			if(x*4<s)ok=mid;
-			else ng=mid;
-		}
-		debug(i,ok);
-		rep(j,ok,ok+2){
-			if(j>=n)continue;
-			ll x=calc(i,j);
-			debug(i,j,x, abs(s - 4*x), abs(s - 4*(s-x)));
-			chmin(ans, abs(s - 4*x));
-			chmin(ans, abs(s - 4*(s-x)));
-		}
-	}
-
-	rep(i,n-1){
-		int ok=i+1, ng=n;
-		if(i==0)ng--;
-		while(ng-ok>1){
-			int mid=(ok+ng)/2;
-			ll x=calc(i,mid);
-			if(x*4<s*3)ok=mid;
-			else ng=mid;
-		}
-		debug(i,ok);
-		rep(j,ok,ok+2){
-			if(j>=n)continue;
-			ll x=calc(i,j);
-			debug(i,j,x, abs(s - 4*x), abs(s - 4*(s-x)));
-			chmin(ans, abs(s - 4*x));
-			chmin(ans, abs(s - 4*(s-x)));
-		}
-	}
-
-
-	out(ans);
-
+	
 }

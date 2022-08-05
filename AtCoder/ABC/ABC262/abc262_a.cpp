@@ -6,6 +6,7 @@
 #pragma GCC optimize("inline")
 #pragma GCC diagnostic ignored "-Wunused-value"
 #ifdef _DEBUG
+// #define _GLIBCXX_DEBUG 1
 // #define _GLIBCXX_DEBUG_PEDANTIC 1
 #endif
 
@@ -57,7 +58,7 @@ template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 #define __REP(i,n) __RANGE(i,0,n)
 #define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
 #define __RREP(i,n) __RRANGE(i,0,n)
-#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define __RRANGE(i,a,n) for(ll i=((ll)(n)-1);i>=((ll)a);--i)
 #define sz(a) ((ll)(a).size())
 
 /*
@@ -203,18 +204,12 @@ namespace std::tr1 {
 
 int main() {
 	/*$1*/
-	def(ll,n);
-	HashSet<string> exist;
-	vp p;
-	rep(i,n){
-		def(string,s);
-		def(ll,v);
-		if(exist.find(s)==exist.end()){
-			exist.insert(s);
-			p.emplace_back(v, -i-1);
+	def(int,n);
+	rep(i,1,1000000){
+		if(i%4!=2)continue;
+		if(i>=n){
+			out(i);
+			return 0;
 		}
 	}
-	sort(all(p));
-	debug(p);
-	out(-p.back().second);
 }

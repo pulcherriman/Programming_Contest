@@ -202,231 +202,107 @@ namespace std::tr1 {
 	};
 }
 
-
-
-template <typename Monoids>
-class SegmentTree {
-	using Val = typename Monoids::Val;
-	using Op = typename Monoids::Op;
-
-private:
-	const int h, n;
-	vector<Val> data;
-	vector<Op> lazy;
-
-	void push(int node) {
-		if (lazy[node] == Monoids::id_op()) return;
-		if (node < n) {
-			lazy[node * 2] = Monoids::concat_op(lazy[node * 2], lazy[node]);
-			lazy[node * 2 + 1] = Monoids::concat_op(lazy[node * 2 + 1], lazy[node]);
-		}
-		data[node] = Monoids::operate(data[node], lazy[node]);
-		lazy[node] = Monoids::id_op();
-	}
-	void eval(int node) {
-		data[node] = Monoids::concat_val(Monoids::operate(data[node * 2], lazy[node * 2])
-						, Monoids::operate(data[node * 2 + 1], lazy[node * 2 + 1]));
-	}
-
-	int find_rightest_sub(int a, int b, Val x, int k, int l, int r) {
-		if (data[k] > x || r <= a || b <= l) {
-			return a - 1;
-		} else if (k >= n - 1) {
-			return (k - (n - 1));
-		} else {
-			int vr = find_rightest_sub(a, b, x, 2 * k + 2, (l + r) / 2, r);
-			if (vr != a - 1) {
-				return vr;
-			} else {
-				return find_rightest_sub(a, b, x, 2 * k + 1, l, (l + r) / 2);
+template <int mod> struct ModInt {
+	// 原始根 O(sqrt(N))
+	static int get_primitive_root() {
+		static int primitive_root = 0;
+		if (!primitive_root) {
+			primitive_root = -1;
+			set<int> fac;
+			int v=mod-1;
+			for(int64_t i=2;i*i<=v;i++)while(v%i)fac.insert(i),v/=i;
+			if(v>1)fac.insert(v);
+			rep(g,1,mod){
+				bool ok=true;
+				for(auto&i:fac) if(ModInt(g).pow((mod-1)/i)==1){ ok=false; break; }
+				if(ok){ primitive_root=g; break; }
 			}
 		}
+		return primitive_root;
 	}
-	int find_leftest_sub(int a, int b, Val x, int k, int l, int r) {
-		if (data[k] > x || r <= a || b <= l) {
-			return b;
-		} else if (k >= n - 1) {
-			return (k - (n - 1));
-		} else {
-			int vl = find_leftest_sub(a, b, x, 2 * k + 1, l, (l + r) / 2);
-			if (vl != b) {
-				return vl;
-			} else {
-				return find_leftest_sub(a, b, x, 2 * k + 2, (l + r) / 2, r);
-			}
+	int x;
+	ModInt() : x(0) {}
+	ModInt(int64_t y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
+	explicit operator bool() const { return x != 0; }
+	explicit operator int64_t() const { return x; }
+	ModInt operator+(const ModInt &p) const { return ModInt(*this) += p; }
+	ModInt operator-(const ModInt &p) const { return ModInt(*this) -= p; }
+	ModInt operator*(const ModInt &p) const { return ModInt(*this) *= p; }
+	ModInt operator/(const ModInt &p) const { return ModInt(*this) /= p; }
+	ModInt operator-() const { return ModInt(-x); }
+	ModInt &operator+=(const ModInt &p) { if((x += p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator-=(const ModInt &p) { if((x += mod - p.x) >= mod) x -= mod; return *this; }
+	ModInt &operator*=(const ModInt &p) { x = (int) (1LL * x * p.x % mod); return *this; }
+	ModInt &operator/=(const ModInt &p) { return *this *= p.inv(); }
+	friend ModInt operator+(int64_t a, const ModInt &p) { return p+a; }
+	friend ModInt operator-(int64_t a, const ModInt &p) { return -p+a; }
+	friend ModInt operator*(int64_t a, const ModInt &p) { return p*a; }
+	friend ModInt operator/(int64_t a, const ModInt &p) { return p.inv()*a; }
+	bool operator==(const ModInt &p) const { return x == p.x; }
+	bool operator!=(const ModInt &p) const { return x != p.x; }
+	bool operator<(const ModInt &p) const { return x < p.x; }
+	friend istream &operator>>(istream &is, ModInt &p) { int64_t t; is >> t; p = ModInt(t); return is; }
+	friend ostream &operator<<(ostream &os, const ModInt &p) { return os << p.x; }
+	ModInt pow(int64_t n) const {
+		ModInt ret(1), mul(x);
+		while(n > 0) {
+			if(n & 1) ret *= mul;
+			mul *= mul;
+			n >>= 1;
 		}
+		return ret;
 	}
 
-public:
-	SegmentTree(int n_): SegmentTree(n_, Monoids::init_val()) {}
-	SegmentTree(int n_, Val v1) : SegmentTree(vector<Val>(n_, v1)) {}
-	SegmentTree(const vector<Val>& data_)
-		: h(ceil(log2(data_.size()))), n(1 << h), data(n * 2, Monoids::id_val()), lazy(n * 2, Monoids::id_op()) {
-		for (int i = 0; i < (int)data_.size(); i++) data[i + n] = data_[i];
-		for (int i = n - 1; i >= 1; i--) data[i] = Monoids::concat_val(data[i * 2], data[i * 2 + 1]);
-	}
-
-	/* 区間 [l,r) の各要素に対してopを作用させる */
-	void update(int l, int r, Op op) {
-		l += n, r += n - 1;
-		for (int i = h; i > 0; i--) push(l >> i), push(r >> i);
-		int tl = l, tr = r;
-		r++;
-		while (l < r) {
-			if (l & 1) lazy[l] = Monoids::concat_op(lazy[l], op), l++;
-			if (r & 1) r--, lazy[r] = Monoids::concat_op(lazy[r], op);
-			l >>= 1; r >>= 1;
+	ModInt inv() const {
+		int a = x, b = mod, u = 1, v = 0, t;
+		while(b > 0) {
+			t = a / b;
+			swap(a -= t * b, b);
+			swap(u -= t * v, v);
 		}
-		while (tl >>= 1, tr >>= 1, tl) {
-			if (lazy[tl] == Monoids::id_op()) eval(tl);
-			if (lazy[tr] == Monoids::id_op()) eval(tr);
+		return u;
+	}
+
+	ModInt sqrt() const {
+		if (x==0) return 0;
+		if (mod==2) return x;
+		if (pow((mod-1)/2)!=1) return 0;
+		ModInt b = 1;
+		while (b.pow((mod-1)/2)==1)b+=1;
+		int e=0, m=mod-1;
+		while(m%2==0)m>>=1, e++;
+		ModInt p=pow((m-1)/2), y=(*this)*p*p, z=b.pow(m);
+		p*=(*this);
+		while(y!=1){
+			int j=0;
+			ModInt t=y;
+			while(t!=1)j++, t*=t;
+			z=z.pow(1LL<<(e-j-1));
+			p*=z,z*=z,y*=z,e=j;
 		}
+		return ModInt(min(p.x, mod-p.x));
 	}
-
-	/* i番目の要素に対してopを作用させる */
-	void update(int i, Op op) { update(i, i+1, op); }
-
-	/* 区間 [l,r) の値に対してconcat_valを作用させた結果を得る */
-	Val query(int l, int r) {
-		l += n, r += n - 1;
-		for (int i = h; i > 0; i--) push(l >> i), push(r >> i);
-		r++;
-		Val res1 = Monoids::id_val(), res2 = Monoids::id_val();
-		while (l < r) {
-			if (l & 1) res1 = Monoids::concat_val(res1, Monoids::operate(data[l], lazy[l])), l++;
-			if (r & 1) r--, res2 = Monoids::concat_val(Monoids::operate(data[r], lazy[r]), res2);
-			l >>= 1; r >>= 1;
-		}
-		return Monoids::concat_val(res1, res2);
-	}
-
-	/* i番目の要素を得る */
-	Val operator[](int i) {
-		int l=i+n;
-		rep(h) push(l>>=1);
-		return Monoids::operate(data[i+n], lazy[i+n]);
-	}
-
-	/* 区間 [l,r) の中で、x以下の要素を持つ最も右の要素の位置を返す 無ければr
-	 * Valに演算子 > が必要
-	 * TODO: 非再帰にする
-	 */
-	int find_rightest(int l, int r, Val x) { return find_rightest_sub(l, r, x, 0, 0, n); }
-
-	/* 区間 [l,r) の中で、x以下の要素を持つ最も左の要素の位置を返す 無ければl-1
-	 * Valに演算子 > が必要
-	 * TODO: 非再帰にする
-	 */
-	int find_leftest(int l, int r, Val x) { return find_leftest_sub(l, r, x, 0, 0, n); }
 };
-
-namespace SegTreeUtil {
-	template<typename T>
-	struct Val_HasSize {
-		using V_t = Val_HasSize<T>;
-		T val;
-		int len;
-		Val_HasSize() : Val_HasSize(0, 0) {}
-		Val_HasSize(T v, int l=1) : val(v), len(l) {}
-		friend ostream& operator<<(ostream& os, V_t&v) { return os << v.val; }
-		friend V_t operator+(const V_t&a, const V_t&b) {
-			return V_t(a.val + b.val, a.len + b.len);
-		}
-	};
-
-	template<typename T>
-	struct Update_Min {
-		using Val = T;
-		using Op = T;
-		static Val init_val() { return id_val(); }
-		static Val id_val() { return numeric_limits<Val>::max(); }
-		static Op id_op() { return numeric_limits<Op>::min(); }
-		static Val concat_val(const Val& l, const Val& r) { return min(l, r); }
-		static Val operate(const Val& l, const Op& r) { return r != id_op() ? r : l; }
-		static Op concat_op(const Op& l, const Op& r) { return r != id_op() ? r : l; }
-	};
-
-	template<typename T>
-	struct Update_Max {
-		using Val = T;
-		using Op = T;
-		static Val init_val() { return id_val(); }
-		static Val id_val() { return numeric_limits<Val>::min(); }
-		static Op id_op() { return numeric_limits<Op>::max(); }
-		static Val concat_val(const Val& l, const Val& r) { return max(l, r); }
-		static Val operate(const Val& l, const Op& r) { return r != id_op() ? r : l; }
-		static Op concat_op(const Op& l, const Op& r) { return r != id_op() ? r : l; }
-	};
-
-	template<typename T>
-	struct Update_Sum {
-		using Val = Val_HasSize<T>;
-		using Op = T;
-		static Val init_val() { return Val(0); }
-		static Val id_val() { return Val(); }
-		static Op id_op() { return numeric_limits<Op>::max(); }
-		static Val concat_val(const Val& l, const Val& r) { return l + r; }
-		static Val operate(const Val& l, const Op& r) { return r != id_op() ? Val(r*l.len, l.len) : l; }
-		static Op concat_op(const Op& l, const Op& r) { return r != id_op() ? r : l; }
-	};
-
-	template<typename T>
-	struct Add_Min {
-		using Val = T;
-		using Op = T;
-		static Val init_val() { return id_val(); }
-		static Val id_val() { return 0; }
-		static Op id_op() { return Op(); }
-		static Val concat_val(const Val& l, const Val& r) { return gcd(l, r); }
-		static Val operate(const Val& l, const Op& r) { return l + r; }
-		static Op concat_op(const Op& l, const Op& r) { return l + r; }
-	};
-
-	template<typename T>
-	struct Add_Max {
-		using Val = T;
-		using Op = T;
-		static Val init_val() { return id_val(); }
-		static Val id_val() { return numeric_limits<Val>::min(); }
-		static Op id_op() { return Op(); }
-		static Val concat_val(const Val& l, const Val& r) { return max(l, r); }
-		static Val operate(const Val& l, const Op& r) { return l + r; }
-		static Op concat_op(const Op& l, const Op& r) { return l + r; }
-	};
-
-	template<typename T>
-	struct Add_Sum {
-		using Val = Val_HasSize<T>;
-		using Op = T;
-		static Val init_val() { return Val(0); }
-		static Val id_val() { return Val(); }
-		static Op id_op() { return Op(); }
-		static Val concat_val(const Val& l, const Val& r) { return l + r; }
-		static Val operate(const Val& l, const Op& r) { return Val(l.val + r*l.len, l.len); }
-		static Op concat_op(const Op& l, const Op& r) { return l + r; }
-	};
-}
-
-// SegmentTree<SegTreeUtil::Add_Sum<ll>> st(n);
+using mymint = ModInt<MOD>;
+using vm = vector<mymint>;
+using vvm = vector<vm>;
+mymint operator"" _m(unsigned long long a){ return mymint(a); }
 
 int main() {
 	/*$1*/
-	def(ll,n,q);
-	vl h(n),w(n); cin>>h>>w;
-	vl h2(n-1),w2(n-1);
-	rep(i,n-1){
-		h2[i]=abs(h[i+1]-h[i]);
-		w2[i]=abs(w[i+1]-w[i]);
+	def(ll,n);
+	vl a(n); cin>>a;
+	mymint ans=0;
+	rep(c,1,n+1){
+		vvm dp(n+1, vm(c, 0));
+		dp[0][0]=1;
+		rep(i,n){
+			rrep(j,c)rep(k,c){
+				dp[j+1][(k+a[i])%c] += dp[j][k];
+			}
+		}
+		ans += dp[c][0];
 	}
-	debug(h2);
-	debug(w2);
-	SegmentTree<SegTreeUtil::Add_Min<ll>> sh(h2), sw(w2);
-	rep(q){
-		def(ll,hl,hr,wl,wr);
-		hl--; hr--; wl--; wr--;
-		ll hMin=sh.query(hl,hr), wMin=sw.query(wl,wr);
-		ll g=gcd(hMin,wMin);
-		out(gcd(g, h[hl]+w[wl]));
-	}
+	out(ans);
 	
 }

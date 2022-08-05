@@ -7,6 +7,7 @@
 #pragma GCC diagnostic ignored "-Wunused-value"
 #ifdef _DEBUG
 // #define _GLIBCXX_DEBUG 1
+// #define _GLIBCXX_DEBUG_PEDANTIC 1
 #endif
 
 /* 
@@ -57,7 +58,7 @@ template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 #define __REP(i,n) __RANGE(i,0,n)
 #define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
 #define __RREP(i,n) __RRANGE(i,0,n)
-#define __RRANGE(i,a,n) for(ll i=((ll)n-1);i>=((ll)a);--i)
+#define __RRANGE(i,a,n) for(ll i=((ll)(n)-1);i>=((ll)a);--i)
 #define sz(a) ((ll)(a).size())
 
 /*
@@ -114,7 +115,7 @@ namespace IO {
 	#else
 	#define debug(...) if(false)debug_f(__VA_ARGS__)
 	#endif
-
+	void Yn(bool f) { out(f?"Yes":"No"); }
 
 	// input
 	template<class T, class...Ts> constexpr istream& gargs(istream&is, T&&t, Ts&&...args) {
@@ -203,18 +204,16 @@ namespace std::tr1 {
 
 int main() {
 	/*$1*/
-	def(ll,n,h,w);
-
-	ll d=0;
-	rep(n){
-		rep(h){
-			ll c=d;
-			rep(n){
-				rep(w)cout<<(c%2?'#':'.');
-				c=1-c;
-			}
-			cout<<endl;
+	def(ll,n);
+	vl a(n);cin>>a;
+	ll ans=0;
+	ll cnt=0;
+	rep(i,n){
+		if(a[i]==i+1)cnt++;
+		else{
+			if(a[i]-1 > i and a[a[i]-1]==i+1) ans++;
 		}
-		d=1-d;
 	}
+	out(ans + cnt*(cnt-1)/2);
+	
 }

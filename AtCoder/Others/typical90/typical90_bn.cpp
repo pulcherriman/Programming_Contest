@@ -1,6 +1,3 @@
-// @prefix _template
-// @description 新テンプレート
-
 #pragma GCC optimize("Ofast")
 #pragma GCC optimize("unroll-loops")
 #pragma GCC optimize("inline")
@@ -202,100 +199,20 @@ namespace std::tr1 {
 	};
 }
 
-struct Prime {
-private:
-	static constexpr ull fast_gcd(ull a, ull b) {
-		if(a==0||b==0)return a+b;
-		int n=__builtin_ctzll(a),m=__builtin_ctzll(b);
-		a>>=n; b>>=m;
-		while(a!=b){ int x=__builtin_ctzll(a-b); a=(max(a,b)-(b=min(a,b)))>>x; }
-		return a<<min(n,m);
-	}
-	static constexpr ull mul (ull a,ull b,ull&mod) {
-		ll ret=a*b-mod*(ull)(1.L/mod*a*b);
-		return ret+(ret<0)*mod-(ret>=(ll)mod)*mod;
-	}
-	static constexpr ull mod128 (ull a,ull e,ull&mod) {
-		ull ret=1;
-		while(e){ if(e&1)ret=mul(ret,a,mod); a=mul(a,a,mod),e>>=1; }
-		return ret;
-	}
-	static constexpr inline ull pollard_f(ull x, ull&n, ull&c){ return mul(x,x,n)+c; }
-	static ull pollard(ull n){
-		ull t=0,prod=2,q,x=0,y=0,c=0,i=2;
-		while((t++&127) or fast_gcd(prod,n)==1){
-			if(x==y)y=pollard_f(x=i,n,c=Random(1ll,n));
-			if((q=mul(prod,max(x,y)-min(x,y),n)))prod=q;
-			x=pollard_f(x,n,c),y=pollard_f(pollard_f(y,n,c),n,c);
-		}
-		return fast_gcd(prod,n);
-	}
-	static inline const auto pollard_seed={2, 7, 61};
-	static inline const auto pollard_seed_64={2, 325, 9375, 28178, 450775, 9780504, 1795265022};
-public:
-	static constexpr bool isPrime (ull n) {
-		if(n<=1)return false;
-		if(n<4)return true;
-		if(n%6%4!=1)return false;
-		ull s=__builtin_ctzll(n-1),d=n>>s;
-
-		for(auto x:(n<(1<<30) ? pollard_seed : pollard_seed_64)){
-			ull p=mod128(x,d,n),i=s;
-			while(p!=1 and p!=n-1 and x%n and i--)p=mul(p,p,n);
-			if(p!=n-1 and i!=s) return false;
-		}
-		return true;
-	}
-
-	static vector<ull> factor(ull n){
-		if (n==1) return{};
-		if (isPrime(n)) return{n};
-		ull x=pollard(n);
-		auto l=factor(x),r=factor(n/x);
-		l.insert(l.end(),all(r));
-		return l;
-	}
-
-	static vector<ull> divisor(ull n){
-		HashSet<ull> st;
-		vector<ull> tmp;
-		st.insert(1);
-		for(auto&f:factor(n)){
-			tmp.clear();
-			for(auto&d:st)tmp.emplace_back(d*f);
-			for(auto&d:tmp)st.insert(d);
-		}
-		return vector<ull>(all(st));
-	}
-
-	static int divisorCount(ull n){
-		int ret=1; ull v=0,c=0;
-		auto fac=factor(n);
-		sort(all(fac)); fac.emplace_back(-1);
-		for(auto&f:fac){if(f!=v)ret*=c+1, v=f, c=0; c++;}
-		return ret;
-	}
-};
-
 int main() {
-	/*$1*/
+	/**/
 	def(ll,n);
-	ll ans=0;
-	vl l2;
-	rep(i,1,n+1)l2.emplace_back(i*i);
-	rep(i,1,n+1){
-		vl st; ll jMin=n,q=i;
-		for(ll p=2; p*p<=q; p++){
-			int cnt=0;
-			while(q%p==0){
-				cnt++;
-				q/=p;
-			}
-			if(cnt%2==1)jMin/=p;
+	vp t(n);
+	cin>>t;
+	ld ans=0;
+	rep(i,n)rep(j,i+1,n){
+		ld p=0,q=0;
+		rep(l,t[i].first,t[i].second+1)
+		rep(r,t[j].first,t[j].second+1){
+			if(l>r)p++;
+			q++;
 		}
-		if(q>1)jMin/=q;
-		ll val=upper_bound(all(l2), jMin)-l2.begin();
-		ans+=val;
+		ans+=p/q;
 	}
 	out(ans);
 }
