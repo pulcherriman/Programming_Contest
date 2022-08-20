@@ -1,8 +1,10 @@
 #pragma GCC optimize("Ofast")
 #pragma GCC optimize("unroll-loops")
 #pragma GCC optimize("inline")
+#pragma GCC diagnostic ignored "-Wunused-value"
 #ifdef _DEBUG
 // #define _GLIBCXX_DEBUG 1
+// #define _GLIBCXX_DEBUG_PEDANTIC 1
 #endif
 
 /* 
@@ -42,7 +44,6 @@ template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pb
 template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
 template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 
-
 #define all(a) begin(a),end(a)
 #define rall(a) rbegin(a),rend(a)
 #define __LOOPSWITCH(_1, _2, _3, __LOOPSWITCH, ...) __LOOPSWITCH
@@ -52,11 +53,10 @@ template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 #define __LOOP2(q,l) __LOOP3(q,l)
 #define __LOOP3(q,l) __REP(_lp ## l,q)
 #define __REP(i,n) __RANGE(i,0,n)
-#define __RANGE(i,a,n) for(int i=((int)a);i<((int)n);++i)
+#define __RANGE(i,a,n) for(ll i=((ll)a);i<((ll)n);++i)
 #define __RREP(i,n) __RRANGE(i,0,n)
-#define __RRANGE(i,a,n) for(int i=((int)n-1);i>=((int)a);--i)
-#define sz(a) ((int)(a).size())
-
+#define __RRANGE(i,a,n) for(ll i=((ll)(n)-1);i>=((ll)a);--i)
+#define sz(a) ((ll)(a).size())
 
 /*
  * Constants
@@ -77,33 +77,7 @@ template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
 
 namespace IO {
-	namespace IO_Inner {
-		template<class T, class...Ts> constexpr ostream& print_args(ostream&os, T&&t, Ts&&...args) {
-			return ((os<<t)<<...<<(os<<' ', args));
-		}
-	}
-
-	template<class...Ts> constexpr ostream& print(Ts...args) {
-		return IO_Inner::print_args(cout, args...)<<'\n';
-	}
-	template<class...Ts> constexpr ostream& debug_f(Ts...args) {
-		return IO_Inner::print_args(cerr, args...)<<'\n';
-	}
-	#ifdef _DEBUG
-	template<class...Ts> constexpr ostream& debug(Ts...args) {
-		return IO_Inner::print_args(cerr, args...)<<'\n';
-	}
-	#else
-	static inline ostream& debug(...) { return cerr; }
-	#endif
-
-	template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){
-		return os<<'['<<p.first<<", "<<p.second<<']';
-	};
-	template<class...Ts>constexpr ostream&operator<<(ostream&os,tuple<Ts...>t){
-		return apply([&os](auto&&t,auto&&...args)->ostream&{return IO_Inner::print_args(os, t, args...);}, t);
-	};
-
+	// container detection
 	template<typename T, typename _=void> struct is_container : false_type {};
 	template<> struct is_container<string> : false_type {};
 	template<typename...Ts> struct is_container_helper {};
@@ -117,11 +91,42 @@ namespace IO {
 		typename enable_if<is_container<T>{}, nullptr_t>::type = nullptr,
 		char Separator = is_container<typename T::value_type>{} ? '\n' : ' ' >
 	constexpr ostream&operator<<(ostream&os, T t){
-		if(t.empty()) return os;
-		auto b=begin(t); os<<(*b++);
-		for(const auto&&e=end(t);b!=e;++b) os<<Separator<<(*b);
+		if(auto b=begin(t), e=end(t) ; !t.empty()) for(os<<(*b++);b!=e;os<<Separator<<(*b++)) ;
 		return os;
 	}
+
+	// output
+	template<class T, class...Ts> constexpr ostream& pargs(ostream&os, T&&t, Ts&&...args); // support clang
+	template<class S,class T>constexpr ostream&operator<<(ostream&os,pair<S,T>p){ return os<<'['<<p.first<<", "<<p.second<<']'; };
+	template<class...Ts>constexpr ostream&operator<<(ostream&os,tuple<Ts...>t){
+		return apply([&os](auto&&t,auto&&...args)->ostream&{return pargs(os, t, args...);}, t);
+	};
+	template<class T, class...Ts> constexpr ostream& pargs(ostream&os, T&&t, Ts&&...args) {
+		return ((os<<t)<<...<<(os<<' ', args));
+	}
+
+	template<class...Ts> constexpr ostream& out(Ts...args) { return pargs(cout, args...)<<'\n'; }
+	template<class...Ts> constexpr ostream& debug_f(Ts...args) { return pargs(cerr, args...)<<'\n'; }
+	#ifdef _DEBUG
+	template<class...Ts> constexpr ostream& debug(Ts...args) { return pargs(cerr, args...)<<'\n'; }
+	#else
+	#define debug(...) if(false)debug_f(__VA_ARGS__)
+	#endif
+	void Yn(bool f) { out(f?"Yes":"No"); }
+
+	// input
+	template<class T, class...Ts> constexpr istream& gargs(istream&is, T&&t, Ts&&...args) {
+		return ((is>>t)>>...>>args);
+	}
+	template<class S,class T>auto&operator>>(istream&is,pair<S,T>&p){return is>>p.first>>p.second;}
+	template<class...Ts>constexpr istream&operator>>(istream&is,tuple<Ts...>&t){
+		return apply([&is](auto&&t,auto&&...args)->istream&{return gargs(is, t, args...);}, t);
+	};
+
+	template<typename...S>auto&in(S&...s){return gargs(cin, s...);}
+	#define def(t,...) t __VA_ARGS__; in(__VA_ARGS__)
+	template<typename T, typename enable_if<is_container<T>{}, nullptr_t>::type = nullptr>
+	auto&operator>>(istream&is,T&t){for(auto&a:t)is>>a; return is;}
 }
 using namespace IO;
 
@@ -159,22 +164,23 @@ public:
 };
 void wait(const int&msec){Timer tm(msec); while(tm);}
 
-struct Manager {
+struct Mgr {
 	static const int TLE = 2000;
-	static inline Timer baseTimer = Timer(TLE);
-	Manager() {
-		ios_base::sync_with_stdio(0), cin.tie(0);
+	static inline Timer timer = Timer(TLE-20);
+	Mgr() {
+		ios_base::sync_with_stdio(0); cin.tie(0);
 		cout<<fixed<<setprecision(11);
+		cerr<<fixed<<setprecision(3);
 	}
-	~Manager(){
-		debug_f(baseTimer.get(), "ms")<<flush;
+	~Mgr(){
+		debug_f(timer.get(), "ms")<<flush;
 	}
 } _manager;
 
 namespace std::tr1 {
 	template<class T>
 	struct hash_base {
-		static inline size_t hash_value = 0x9e3779b9;
+		const static inline size_t hash_value = 0x9e3779b9;
 		static inline size_t hash_rnd = Random(0, numeric_limits<size_t>::max());
 		template<class V> static size_t& do_hash(size_t&seed, V&v) {
 			return seed ^= hash<V>{}(v) + hash_value + (seed<<6) + (seed>2);
@@ -193,79 +199,49 @@ namespace std::tr1 {
 	};
 }
 
-void output() {
-	auto output_test = [](auto&&t){
-		cout<<t<<endl;
-		debug(t);
-	};
 
-	// primitive
-	print(false, 1, 2.3, "abc", 'D');
-
-	// pair, tuple
-	output_test(make_pair("XYZ", LINF));
-	output_test(make_tuple("tuple", "of", "taputapu"));
-
-	// string, char*
-	auto test = "HOGE";
-	string str = "PIYO";
-	output_test(test);		// const char *
-	output_test("FUGA");	// const char(&)[5]
-	output_test(str);		// std::string
-	output_test("POYA"s);	// std::__cxx11::basic_string<char>
-
-	// iterator
-	deque<int> d1(10); iota(all(d1), 0);
-	output_test(d1);
-
-	array<int,10> d2; iota(all(d2), 10);
-	output_test(d2);
-	
-	// nested iterator
-	vector<array<int, 10>> d3(10); rep(i,10)iota(all(d3[i]), 100+i*10);
-	output_test(d3);
-
-	// map, set
-	map<int, string> m1;
-	m1[0] = "ABC";
-	m1[1] = "DEF";
-	m1[2] = "GHI";
-	output_test(m1);
-
-	set<ld> s1;
-	s1.insert(1.1);
-	s1.insert(2.2);
-	s1.insert(3.3);
-	output_test(s1);
-
-	unordered_set<ld> us1(all(s1));
-	output_test(us1);
-
-	HashSet<ld> hs1(all(s1));
-	output_test(hs1);
-
-	// empty data
-	s1.clear();
-	output_test(s1);
+using mymint = dynamic_modint<0>;
+using vm=vector<mymint>;
+using vvm=vector<vm>;
+namespace IO{
+	template<> struct is_container<mymint> : false_type {};
+	istream &operator>>(istream &is, mymint &a) {
+		ll tmp; is >> tmp; a = tmp; return is;
+	}
+	ostream& operator<<(ostream& os, const mymint& a) {
+		return os << a.val();
+	}
 }
-
-void hashable(){
-	auto hash_test = [](auto&&t){
-		cout<<t<<endl;
-		debug(t);
-	};
-	HashSet<int> hs1;
-	hs1.insert(1);
-	hs1.insert(2);
-	hash_test(hs1);
-
-	HashSet<pii> hs2;
-	hs2.insert(make_pair(1,2));
-	hs2.insert(make_pair(3,4));
-	hash_test(hs2);
-}
+// usage: mymint::set_mod(10007);
 
 int main() {
-	output();
-	hashable();
+	/**
+	 * N,K,M
+	 * 1~Nを0~K個含む非空のmultisetで、平均がx=1..Nであるものの個数 mod Mを求めよ
+	 */
+	def(ll,n,k,m);
+	mymint::set_mod(m);
+
+	// 1~iまでを最大k個ずつ使って、合計がjになる場合の数
+	ll smax=n*(n+1)*k/2;
+	vvm dp(n+1, vm(smax, 0));
+	dp[0][0] = 1;
+	rep(i,1,n+1){
+		vm dp2(i,0);
+		rep(j,smax){
+			dp2[j%i]+=dp[i-1][j];
+			if(j-i*(k+1) >= 0) dp2[j%i]-=dp[i-1][j-i*(k+1)];
+			dp[i][j] += dp2[j%i];
+		}
+	}
+
+	rep(x,1,n+1){
+		mymint ans=0;
+		rep(j,smax){
+			ans += (dp[x-1][j] * dp[n-x][j]);
+		}
+		out((k+1)*ans-1);
+	}
+
+	
 }
