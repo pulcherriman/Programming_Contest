@@ -203,192 +203,323 @@ namespace std::tr1 {
 }
 
 
-template<typename T> class BIT {
+
+
+
+
+template <typename Monoids>
+class SegmentTree {
+	using Val = typename Monoids::Val;
+	using Op = typename Monoids::Op;
+
 private:
-	int n;
-	vector<T> bit;
+	const int h, n;
+	vector<Val> data;
+	vector<Op> lazy;
+
+	void push(int node) {
+		if (lazy[node] == Monoids::id_op()) return;
+		if (node < n) {
+			lazy[node * 2] = Monoids::concat_op(lazy[node * 2], lazy[node]);
+			lazy[node * 2 + 1] = Monoids::concat_op(lazy[node * 2 + 1], lazy[node]);
+		}
+		data[node] = Monoids::operate(data[node], lazy[node]);
+		lazy[node] = Monoids::id_op();
+	}
+	void eval(int node) {
+		data[node] = Monoids::concat_val(Monoids::operate(data[node * 2], lazy[node * 2])
+						, Monoids::operate(data[node * 2 + 1], lazy[node * 2 + 1]));
+	}
+
+	int find_rightest_sub(int a, int b, Val x, int k, int l, int r) {
+		if (data[k] > x || r <= a || b <= l) {
+			return a - 1;
+		} else if (k >= n - 1) {
+			return (k - (n - 1));
+		} else {
+			int vr = find_rightest_sub(a, b, x, 2 * k + 2, (l + r) / 2, r);
+			if (vr != a - 1) {
+				return vr;
+			} else {
+				return find_rightest_sub(a, b, x, 2 * k + 1, l, (l + r) / 2);
+			}
+		}
+	}
+	int find_leftest_sub(int a, int b, Val x, int k, int l, int r) {
+		if (data[k] > x || r <= a || b <= l) {
+			return b;
+		} else if (k >= n - 1) {
+			return (k - (n - 1));
+		} else {
+			int vl = find_leftest_sub(a, b, x, 2 * k + 1, l, (l + r) / 2);
+			if (vl != b) {
+				return vl;
+			} else {
+				return find_leftest_sub(a, b, x, 2 * k + 2, (l + r) / 2, r);
+			}
+		}
+	}
+
 public:
-	// 0_indexed で i 番目の要素に x を加える
-	void add(int i, T x){
-		i++;
-		while(i < n){
-			bit[i] += x, i += i & -i;
+	SegmentTree(int n_): SegmentTree(n_, Monoids::init_val()) {}
+	SegmentTree(int n_, Val v1) : SegmentTree(vector<Val>(n_, v1)) {}
+	SegmentTree(const vector<Val>& data_)
+		: h(ceil(log2(data_.size()))), n(1 << h), data(n * 2, Monoids::id_val()), lazy(n * 2, Monoids::id_op()) {
+		for (int i = 0; i < (int)data_.size(); i++) data[i + n] = data_[i];
+		for (int i = n - 1; i >= 1; i--) data[i] = Monoids::concat_val(data[i * 2], data[i * 2 + 1]);
+	}
+
+	/* 区間 [l,r) の各要素に対してopを作用させる */
+	void update(int l, int r, Op op) {
+		l += n, r += n - 1;
+		for (int i = h; i > 0; i--) push(l >> i), push(r >> i);
+		int tl = l, tr = r;
+		r++;
+		while (l < r) {
+			if (l & 1) lazy[l] = Monoids::concat_op(lazy[l], op), l++;
+			if (r & 1) r--, lazy[r] = Monoids::concat_op(lazy[r], op);
+			l >>= 1; r >>= 1;
+		}
+		while (tl >>= 1, tr >>= 1, tl) {
+			if (lazy[tl] == Monoids::id_op()) eval(tl);
+			if (lazy[tr] == Monoids::id_op()) eval(tr);
 		}
 	}
-	// 0_indexed で [0,i] の要素の和(両閉区間！！)
-	T sum(int i){
-		i++;
-		T s = 0;
-		while(i > 0){
-			s += bit[i], i -= i & -i;
+
+	/* i番目の要素に対してopを作用させる */
+	void update(int i, Op op) { update(i, i+1, op); }
+
+	/* 区間 [l,r) の値に対してconcat_valを作用させた結果を得る */
+	Val query(int l, int r) {
+		l += n, r += n - 1;
+		for (int i = h; i > 0; i--) push(l >> i), push(r >> i);
+		r++;
+		Val res1 = Monoids::id_val(), res2 = Monoids::id_val();
+		while (l < r) {
+			if (l & 1) res1 = Monoids::concat_val(res1, Monoids::operate(data[l], lazy[l])), l++;
+			if (r & 1) r--, res2 = Monoids::concat_val(Monoids::operate(data[r], lazy[r]), res2);
+			l >>= 1; r >>= 1;
 		}
-		return s;
+		return Monoids::concat_val(res1, res2);
 	}
-	BIT(){}
-	//初期値がすべて0の場合
-	BIT(int sz) : n(sz+1), bit(n, 0){}
-	BIT(const vector<T>& v) : n((int)v.size()+1), bit(n, 0){
-		for(int i = 0; i < n-1; i++){
-			add(i,v[i]);
-		}
+
+	/* i番目の要素を得る */
+	Val operator[](int i) {
+		int l=i+n;
+		rep(h) push(l>>=1);
+		return Monoids::operate(data[i+n], lazy[i+n]);
 	}
-	void print(){
-		for(int i = 0; i < n-1; i++){
-			cout << sum(i) - sum(i-1) << " ";
-		}
-		cout << "\n";
-	}
-	//-1スタート
-	void print_sum(){
-		for(int i = 0; i < n; i++){
-			cout << sum(i-1) << " ";
-		}
-		cout << "\n";
+
+	/* 区間 [l,r) の中で、x以下の要素を持つ最も右の要素の位置を返す 無ければr
+	 * Valに演算子 > が必要
+	 * TODO: 非再帰にする
+	 */
+	int find_rightest(int l, int r, Val x) { return find_rightest_sub(l, r, x, 0, 0, n); }
+
+	/* 区間 [l,r) の中で、x以下の要素を持つ最も左の要素の位置を返す 無ければl-1
+	 * Valに演算子 > が必要
+	 * TODO: 非再帰にする
+	 */
+	int find_leftest(int l, int r, Val x) { return find_leftest_sub(l, r, x, 0, 0, n); }
+
+	friend ostream &operator<<(ostream &os, SegmentTree &st) {
+		Val v;
+		rep(i,st.input_n-1) os<<(v=st[i])<<' ';
+		return os<<(v=st[st.input_n-1]);
 	}
 };
- 
-// u を昇順にソートするのに必要な交換回数(転倒数) (u は {0,..., n-1} からなる重複を許した長さ n の数列)
-long long inv_count(const vector<ll>& u)
-{
-	int n = (int)u.size();
-	BIT<int> bt(n);
-	long long ans = 0;
-	for(int i = 0; i < n; i++){
-		ans += i - bt.sum(u[i]);
-		bt.add(u[i], 1);
-	}
-	return ans;
+
+namespace SegTreeUtil {
+	template<typename T>
+	struct Val_HasSize {
+		using V_t = Val_HasSize<T>;
+		T val;
+		int len;
+		Val_HasSize() : Val_HasSize(0, 0) {}
+		Val_HasSize(T v, int l=1) : val(v), len(l) {}
+		friend ostream& operator<<(ostream& os, V_t&v) { return os << v.val; }
+		friend V_t operator+(const V_t&a, const V_t&b) {
+			return V_t(a.val + b.val, a.len + b.len);
+		}
+	};
+
+	template<typename T>
+	struct Update_Min {
+		using Val = T;
+		using Op = T;
+		static Val init_val() { return id_val(); }
+		static Val id_val() { return numeric_limits<Val>::max(); }
+		static Op id_op() { return numeric_limits<Op>::min(); }
+		static Val concat_val(const Val& l, const Val& r) { return min(l, r); }
+		static Val operate(const Val& l, const Op& r) { return r != id_op() ? r : l; }
+		static Op concat_op(const Op& l, const Op& r) { return r != id_op() ? r : l; }
+	};
+
+	template<typename T>
+	struct Update_Max {
+		using Val = T;
+		using Op = T;
+		static Val init_val() { return id_val(); }
+		static Val id_val() { return numeric_limits<Val>::min(); }
+		static Op id_op() { return numeric_limits<Op>::max(); }
+		static Val concat_val(const Val& l, const Val& r) { return max(l, r); }
+		static Val operate(const Val& l, const Op& r) { return r != id_op() ? r : l; }
+		static Op concat_op(const Op& l, const Op& r) { return r != id_op() ? r : l; }
+	};
+
+	template<typename T>
+	struct Update_Sum {
+		using Val = Val_HasSize<T>;
+		using Op = T;
+		static Val init_val() { return Val(0); }
+		static Val id_val() { return Val(); }
+		static Op id_op() { return numeric_limits<Op>::max(); }
+		static Val concat_val(const Val& l, const Val& r) { return l + r; }
+		static Val operate(const Val& l, const Op& r) { return r != id_op() ? Val(r*l.len, l.len) : l; }
+		static Op concat_op(const Op& l, const Op& r) { return r != id_op() ? r : l; }
+	};
+
+	template<typename T>
+	struct Add_Min {
+		using Val = T;
+		using Op = T;
+		static Val init_val() { return id_val(); }
+		static Val id_val() { return numeric_limits<Val>::max(); }
+		static Op id_op() { return Op(); }
+		static Val concat_val(const Val& l, const Val& r) { return min(l, r); }
+		static Val operate(const Val& l, const Op& r) { return l + r; }
+		static Op concat_op(const Op& l, const Op& r) { return l + r; }
+	};
+
+	template<typename T>
+	struct Add_Max {
+		using Val = T;
+		using Op = T;
+		static Val init_val() { return id_val(); }
+		static Val id_val() { return numeric_limits<Val>::min(); }
+		static Op id_op() { return Op(); }
+		static Val concat_val(const Val& l, const Val& r) { return max(l, r); }
+		static Val operate(const Val& l, const Op& r) { return l + r; }
+		static Op concat_op(const Op& l, const Op& r) { return l + r; }
+	};
+
+	template<typename T>
+	struct Add_Sum {
+		using Val = Val_HasSize<T>;
+		using Op = T;
+		static Val init_val() { return Val(0); }
+		static Val id_val() { return Val(); }
+		static Op id_op() { return Op(); }
+		static Val concat_val(const Val& l, const Val& r) { return l + r; }
+		static Val operate(const Val& l, const Op& r) { return Val(l.val + r*l.len, l.len); }
+		static Op concat_op(const Op& l, const Op& r) { return l + r; }
+	};
+
+
+	struct Op_Inv {
+		vi tr;
+
+		Op_Inv() : Op_Inv(0,1,2) {}
+		Op_Inv(int t0, int t1, int t2){
+			tr={t0, t1, t2};
+		}
+
+		friend Op_Inv operator+(const Op_Inv&a, const Op_Inv&b) {
+			Op_Inv ret;
+			rep(i,3) ret.tr[i]=b.tr[a.tr[i]];
+			return ret;
+		}
+
+
+		friend bool operator==(const Op_Inv&a, const Op_Inv&b) {
+			return a.tr == b.tr;
+		}
+	};
+
+
+	struct Val_Inv {
+		ll c0=0, c1=0, c2=0;
+		ll c10=0, c21=0, c20=0;
+
+		Val_Inv(){}
+		Val_Inv(int v) {
+			if(v==0) c0=1;
+			if(v==1) c1=1;
+			if(v==2) c2=1;
+		}
+		friend Val_Inv operator+(const Val_Inv&a, const Val_Inv&b) {
+			Val_Inv ret;
+			ret.c0 = a.c0 + b.c0;
+			ret.c1 = a.c1 + b.c1;
+			ret.c2 = a.c2 + b.c2;
+			ret.c10 = a.c10 + b.c10 + a.c1*b.c0;
+			ret.c21 = a.c21 + b.c21 + a.c2*b.c1;
+			ret.c20 = a.c20 + b.c20 + a.c2*b.c0;
+			return ret;
+		}
+		Val_Inv operate(const Op_Inv&op) const {
+			Val_Inv ret;
+			{
+				vl cnt={c0, c1, c2};
+				ret.c0=cnt[op.tr[0]];
+				ret.c1=cnt[op.tr[1]];
+				ret.c2=cnt[op.tr[2]];
+			}
+			ll cnt[3][3]={};
+			cnt[op.tr[1]][op.tr[0]]+=c10;
+			cnt[op.tr[2]][op.tr[0]]+=c20;
+			cnt[op.tr[2]][op.tr[1]]+=c21;
+			cnt[op.tr[0]][op.tr[1]]+=c0*c1 - c10;
+			cnt[op.tr[0]][op.tr[2]]+=c0*c2 - c20;
+			cnt[op.tr[1]][op.tr[2]]+=c1*c2 - c21;
+			ret.c10=cnt[1][0];
+			ret.c20=cnt[2][0];
+			ret.c21=cnt[2][1];
+			return ret;
+		}
+
+		ll getInversion(){
+			return c10 + c20 + c21;
+		}
+	};
+
+
+
+	struct Update_Inversion {
+		using Val = Val_Inv;
+		using Op = Op_Inv;
+		static Val init_val() { return Val(); }
+		static Val id_val() { return Val(); }
+		static Op id_op() { return Op(); }
+		static Val concat_val(const Val& l, const Val& r) { return l + r; }
+		static Val operate(const Val& l, const Op& r) { return l.operate(r); }
+		static Op concat_op(const Op& l, const Op& r) { return l + r; }
+	};
 }
 
-int getBi(int i, int bsize){
-	return i/bsize;
-}
+// SegmentTree<SegTreeUtil::Add_Sum<ll>> st(n);
 
 int main() {
 	/*$1*/
 	def(ll,n,q);
-	vl a(n); cin>>a;
-
-	ll b=ceil(sqrt(n));
-	ll bc=(n+b-1)/b;
-
-	vl inv(bc,0);
-	
-	vvl bucket(bc);
+	vector<SegTreeUtil::Val_Inv> a(n); 
 	rep(i,n){
-		bucket[i/b].push_back(a[i]);
-	}
-	// out(bucket);
-
-	vvl cnt(bc, vl(3,0));
-	rep(i,bc){
-		for(auto&v:bucket[i]){
-			if(v==0){
-				inv[i]+=cnt[i][1];
-			}
-			if(v<=1){
-				inv[i]+=cnt[i][2];
-			}
-			cnt[i][v]++;
-		}
-	}
-	vvl desc(n,vl(3,0));
-	rep(i,bc){
-		vl c(3,0);
-		rep(j,i*b,i*b+b){
-			if(j==n)break;
-			desc[j]=c;
-			c[a[j]]++;
-		}
+		def(ll,v);
+		a[i] = SegTreeUtil::Val_Inv(v);
 	}
 
+	SegmentTree<SegTreeUtil::Update_Inversion> st(a);
 
 	rep(q){
 		def(ll,t,l,r);
-		l--;r--;
-		int li=getBi(l,b);
-		int ri=getBi(r,b);
+		l--;
 
 		if(t==1){
 			//区間転倒数
-			ll ans=0;
-			rep(i,li+1,ri){
-				ans+=inv[i];
-			}
-
-			vl tcnt(3,0);
-			rep(i,li*b,(li+1)*b){
-				if(i==n)break;
-				if(l<=i and i<=r){
-					if(a[i]==0) ans+=tcnt[1];
-					if(a[i]<=1) ans+=tcnt[2];
-				}
-				tcnt[a[i]]++;
-			}
-			rep(i,li+1,ri){
-				ans+=cnt[i][0]*tcnt[1];
-				ans+=cnt[i][0]*tcnt[2];
-				ans+=cnt[i][1]*tcnt[2];
-				tcnt[0]+=cnt[i][0];
-				tcnt[1]+=cnt[i][1];
-				tcnt[2]+=cnt[i][2];
-			}
-			rep(i,ri*b,(ri+1)*b){
-				if(i==n)break;
-				if(l<=i and i<=r){
-					if(a[i]==0) ans+=tcnt[1];
-					if(a[i]<=1) ans+=tcnt[2];
-				}
-				tcnt[a[i]]++;
-			}
+			out(st.query(l,r).getInversion());
 		}else{
-			vl tr(3,0); cin>>tr;
-
-			{
-				vl ocnt(3,0), ncnt(3,0);
-				rep(i,li*b,(li+1)*b){
-					if(i==n)break;
-					if(l<=i and i<=r){
-						if(a[i]==0) inv[li]-=ocnt[1];
-						if(a[i]<=1) inv[li]-=ocnt[2];
-					}
-					ocnt[a[i]]++;
-
-					a[i]=tr[a[i]];
-					bucket[i/b][i%b]=a[i];
-					if(l<=i and i<=r){
-						if(a[i]==0) inv[li]+=ncnt[1];
-						if(a[i]<=1) inv[li]+=ncnt[2];
-					}
-					desc[i]=ncnt;
-					ncnt[a[i]]++;
-				}
-				cnt[li]=ncnt;
-			}
-			{
-				vl ocnt(3,0), ncnt(3,0);
-				rep(i,ri*b,(ri+1)*b){
-					if(i==n)break;
-					if(l<=i and i<=r){
-						if(a[i]==0) inv[ri]-=ocnt[1];
-						if(a[i]<=1) inv[ri]-=ocnt[2];
-					}
-					ocnt[a[i]]++;
-
-					a[i]=tr[a[i]];
-					bucket[i/b][i%b]=a[i];
-					if(l<=i and i<=r){
-						if(a[i]==0) inv[ri]+=ncnt[1];
-						if(a[i]<=1) inv[ri]+=ncnt[2];
-					}
-					desc[i]=ncnt;
-					ncnt[a[i]]++;
-				}
-				cnt[ri]=ncnt;
-			}
-			rep(i,li+1,ri){
-				
-			}
+			def(int,t0,t1,t2);
+			st.update(l,r,SegTreeUtil::Op_Inv(t0,t1,t2));
 		}
 	}
 
