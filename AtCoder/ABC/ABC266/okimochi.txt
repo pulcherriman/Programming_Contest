@@ -1,5 +1,5 @@
 #ABC266 結果
-A~G 91:58+2 254th (perf.2081)
+A~G 91:58+2 254th (perf.2136)
 
 B:Nが負かつ解が0のときにMODを出力して1WA
 C:https://ei1333.github.io/algorithm/is-convex.html
