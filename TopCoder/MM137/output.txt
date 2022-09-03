@@ -1,0 +1,74 @@
+Test Case #1:
+Score = 251.0
+Run Time = 9785ms
+
+9830 ms
+
+
+
+Test Case #2:
+Score = 180249.0
+Run Time = 9790ms
+
+9837 ms
+
+
+
+Test Case #3:
+Score = 104160.0
+Run Time = 9791ms
+
+9839 ms
+
+
+
+Test Case #4:
+Score = 113519.0
+Run Time = 9793ms
+
+9838 ms
+
+
+
+Test Case #5:
+Score = 98843.0
+Run Time = 9787ms
+
+9835 ms
+
+
+
+Test Case #6:
+Score = 7372.0
+Run Time = 9784ms
+
+9830 ms
+
+
+
+Test Case #7:
+Score = 1031.0
+Run Time = 9786ms
+
+
+Test Case #8:
+Score = 4128.0
+Run Time = 9786ms
+
+9830 ms
+
+
+
+Test Case #9:
+Score = 8708.0
+Run Time = 9786ms
+
+
+Test Case #10:
+Score = 60910.0
+Run Time = 9786ms
+
+9831 ms
+
+
+
