@@ -1,6 +1,3 @@
-// @prefix _template
-// @description 新テンプレート
-
 #ifdef _DEBUG
 // #define _GLIBCXX_DEBUG 1
 #else
@@ -201,79 +198,57 @@ namespace std::tr1 {
 	};
 }
 
-int main() {
-	/*$1*/
-	def(ll,n,m);
-	vs s(n); cin>>s;
+template <typename ForwardIt>
+bool next_partition(ForwardIt first, ForwardIt last, int total)
+{
+	auto itr = lower_bound(first, last, (*first)+2);
+	if(itr==last) return false;
+	auto itr2 = lower_bound(first, itr, --*itr);
+	int remain = total-accumulate(itr2, last, 0), fillValue = min(remain, *itr2);
+	fill(itr = itr2-remain/fillValue, itr2, fillValue);
+	fill(first, itr, 0);
+	if(itr>first) *(--itr) = remain%fillValue;
+	return true;
+}
 
-	int total_size=n-1;
-	rep(i,n)total_size+=s[i].size();
-	if(total_size>16 or total_size<3){
-		out("-1");
+int main() {
+	def(int,n,m);
+	vs s(n), _t(m); cin>>s>>_t;
+	HashSet<string> t(all(_t));
+
+	if(n==1){
+		bool ok = t.find(s[0]) == t.end() and s[0].size()>=3;
+		out(ok ? s[0] : "-1");
+		return 0;
+	}
+	
+	sort(all(s));
+
+	int str_size_sum = accumulate(all(s), 0, [](int a, string b){return a+b.size();}) + n-1;
+	if(str_size_sum>16 or str_size_sum<3){
+		out(-1);
 		return 0;
 	}
 
+	int delimiter_max = 16-str_size_sum;
+	do {
+		rep(d,delimiter_max+1){
+			vi delimiter_base(n-1, 0);
+			delimiter_base.back() = d;
+			do {
+				auto delimiter = delimiter_base;
+				do {
+					string tmp = s[0];
+					rep(i,n-1) tmp += string(delimiter[i]+1, '_') + s[i+1];
 
-	HashSet<string> t;
-	rep(m){
-		def(string,tmp);
-		t.insert(tmp);
-	}
-
-
-	if(n==1){
-		if(t.find(s[0])!=t.end()){
-			out("-1");
-			return 0;
-		}else{
-			out(s[0]);
-			return 0;
-		}
-	}
-
-
-	vi perm(n,0);
-	iota(all(perm),0);
-	do{
-		string base=s[perm[0]];
-		rep(i,1,n){
-			base+='_'+s[perm[i]];
-		}
-		if(t.find(base)==t.end()){
-			out(base);
-			return 0;
-		}
-
-		rep(len, total_size+1, 17){
-			int amari=len-total_size;
-			vi b(n-2, 0);
-			rep(amari)b.push_back(1);
-
-			do{
-				b.push_back(0);
-				string tmp=s[perm[0]];
-				int tgt=1;
-				rep(i,b.size()){
-					if(b[i]==0){
-						tmp+='_'+s[perm[tgt]];
-						tgt++;
-					}else{
-						tmp+='_';
+					if(t.find(tmp) == t.end()){
+						out(tmp);
+						return 0;
 					}
-				}
-				if(tmp.front() =='_' or tmp.back()=='_')continue;
-				// out(b,tmp);
-				// out(tmp);
-				if(t.find(tmp)==t.end()){
-					out(tmp);
-					return 0;
-				}
-				b.pop_back();
-			}while(next_permutation(all(b)));
+				}while(next_permutation(all(delimiter)));
+			}while(next_partition(all(delimiter_base), d));
 		}
+	}while(next_permutation(all(s)));
 
-	}while(next_permutation(all(perm)));
 	out(-1);
-	return 0;
-
 }
