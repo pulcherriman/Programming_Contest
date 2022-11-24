@@ -79,6 +79,7 @@ namespace IO {
 	// container detection
 	template<typename T, typename _=void> struct is_container : false_type {};
 	template<> struct is_container<string> : false_type {};
+	template<class T> struct is_container<valarray<T>> : true_type {};
 	template<typename...Ts> struct is_container_helper {};
 	template<typename T> struct is_container<T, conditional_t<
 		true, void, is_container_helper<
@@ -90,7 +91,7 @@ namespace IO {
 		typename enable_if<is_container<T>{}, nullptr_t>::type = nullptr,
 		char Separator = is_container<typename T::value_type>{} ? '\n' : ' ' >
 	constexpr ostream&operator<<(ostream&os, T t){
-		if(auto b=begin(t), e=end(t) ; !t.empty()) for(os<<(*b++);b!=e;os<<Separator<<(*b++)) ;
+		if(auto b=begin(t), e=end(t) ; t.size()) for(os<<(*b++);b!=e;os<<Separator<<(*b++)) ;
 		return os;
 	}
 
@@ -198,37 +199,43 @@ namespace std::tr1 {
 	};
 }
 
+template<class T>
+struct CumSum1 {
+	vector<T> v;
+	CumSum1(const vector<T>&_v):v(_v.size()+1,0){
+		partial_sum(begin(_v), end(_v), begin(v)+1);
+	}
+	T operator()(int l,int r)const{return v[r]-v[l];}
+};
+
+template<class T>
+struct CumSum2 {
+	vector<valarray<T>> v;
+	CumSum2(const vector<vector<T>>&_v):v(_v.size()+1,valarray<T>(_v[0].size()+1)){
+		transform(begin(_v), end(_v), begin(v)+1, [](auto&a){
+			valarray<T> r(a.size()+1);
+			partial_sum(all(a), begin(r)+1);
+			return r;
+		});
+		partial_sum(begin(v), end(v), begin(v));
+	}
+	inline T operator()(int t,int l,int b,int r)const{return v[b][r]-v[b][l]-v[t][r]+v[t][l];}
+};
+
 int main() {
 	/**/
 	def(ll,h,w,n,y,x);
 	vvl a(h,vl(w)); in(a);
+	CumSum2 cs(a);
+	out(cs.v);
 
 	vvl ans(h-y+1, vl(w-x+1, n));
 	rep(v,1,n+1){
-		ll minY=h, maxY=0, minX=w, maxX=0;
-		int cnt=0;
-		rep(i,h)rep(j,w)if(a[i][j]==v){
-			chmin(minY, i);
-			chmax(maxY, i);
-			chmin(minX, j);
-			chmax(maxX, j);
-			cnt++;
-		}
-		ll l,r,t,b;
-		if(cnt==0){
-			l=t=0; r=w; b=h;
-			rep(i,h-y+1)rep(j,w-x+1)ans[i][j]--;
-		}else{
-			l=maxX-x+1; r=minX+1;
-			t=maxY-y+1; b=minY+1;
-			if(l<0)l=0;
-			if(t<0)t=0;
-			if(r>w-x+1)r=w-x+1;
-			if(b>h-y+1)b=h-y+1;
-			
-			if(r-l<=0 or b-t<=0)continue;
-			debug(v,l,r,t,b);
-			rep(i,t,b)rep(j,l,r)ans[i][j]--;
+		vvl b = a;
+		rep(i,h)rep(j,w)b[i][j] = b[i][j] == v;
+		CumSum2<ll> cs(b);
+		rep(i,h-y+1)rep(j,w-x+1) {
+			if(cs(i,j,i+y,j+x) == cs(0,0,h,w)) ans[i][j]--;
 		}
 	}
 	out(ans);
