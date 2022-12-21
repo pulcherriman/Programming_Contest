@@ -404,74 +404,22 @@ struct UnionFind{
 int main() {
 	/**/
 	def(ll,n,m,q);
-	Graph g(n);
-	vector<HashMap<int,ll>> edges(n);
-	vb isInfinite(n, false);
-	UnionFind uf(n+1);
-	rep(i,m){
+	UnionFind uf(n+1), uf2(n+1);
+	rep(m){
 		def(ll,a,b,c);
-		a--;b--;
-		if(a==b){
-			isInfinite[a]=true;
-			uf.unite(a-1, n);
-			continue;
-		}
-
-		if(edges[a].find(b) != edges[a].end()){
-			edges[a][b] = max(edges[a][b], c);
-			edges[b][a] = max(edges[b][a], -c);
-		}else{
-			edges[a][b] = c;
-			edges[b][a] = -c;
-			uf.unite(a, b);
+		if(!uf.same(a,b)){
+			uf.unite(a,b,c);
+			uf2.unite(a,b,0);
+		}else if(uf.diff(a,b)!=c){
+			uf2.unite(0,a,0);
 		}
 	}
-	rep(i,n)for(auto&[j,c]:edges[i])g.add(i,j,c,true);
-	vb visited(n,false);
-	rep(i,n)if(!isInfinite[i] and visited[i]==false){
-		queue<int> st;
-		vi ans, in=g.inDegree();
-		vi dist(n, INF);
-		st.push(i);
-		dist[i]=0;
-
-		while(!st.empty()){
-			int p=st.front(); st.pop();
-			ans.push_back(p);
-			visited[p]=true;
-			debug(p,dist[p]);
-			for(auto&[to,cost]:g.edge[p]){
-				if(dist[to]!=INF){
-					if(dist[to] < dist[p] + cost){
-						isInfinite[to] = true;
-						uf.unite(to, n);
-						continue;
-					}else{
-						continue;
-					}
-				}
-				if(in[to]-1==0){
-					in[to]--;
-					st.push(to);
-					dist[to] = dist[p] + cost;
-				}
-			}
-		}
-	}
-	debug(isInfinite);
-
 	rep(q){
 		def(ll,a,b);
-		a--; b--;
-		if(!uf.same(a,b)){
-			cout<<"nan"<<endl;
-			continue;
-		}
-		if(uf.same(a,n)){
-			cout<<"inf"<<endl;
-			continue;
-		}
-		cout<<0<<endl;
+		if(!uf.same(a,b))out("nan");
+		else if(uf2.same(0,a))out("inf");
+		else out(uf.diff(a,b));
 	}
+
 
 }
