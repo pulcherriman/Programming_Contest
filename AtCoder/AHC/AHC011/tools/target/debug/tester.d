@@ -1,1 +1,0 @@
-C:\Users\tsumi\Desktop\Programming_Contest\AtCoder\AHC\AHC008\tools\target\debug\tester.exe: C:\Users\tsumi\Desktop\Programming_Contest\AtCoder\AHC\AHC008\tools\src\bin\tester.rs C:\Users\tsumi\Desktop\Programming_Contest\AtCoder\AHC\AHC008\tools\src\lib.rs

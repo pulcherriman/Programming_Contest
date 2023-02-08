@@ -1,0 +1,1 @@
+C:\Users\tsumi\Desktop\Programming_Contest\@private\AHC015\tools\target\release\vis.exe: C:\Users\tsumi\Desktop\Programming_Contest\@private\AHC015\tools\src\bin\vis.rs C:\Users\tsumi\Desktop\Programming_Contest\@private\AHC015\tools\src\lib.rs

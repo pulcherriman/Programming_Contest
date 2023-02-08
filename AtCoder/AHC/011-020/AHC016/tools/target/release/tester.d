@@ -1,0 +1,1 @@
+C:\Users\tsumi\Desktop\Programming_Contest\@private\AHC016\tools\target\release\tester.exe: C:\Users\tsumi\Desktop\Programming_Contest\@private\AHC016\tools\src\bin\tester.rs C:\Users\tsumi\Desktop\Programming_Contest\@private\AHC016\tools\src\lib.rs
