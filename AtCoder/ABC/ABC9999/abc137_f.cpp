@@ -13,8 +13,8 @@
  * Include Headers
  */
 #if defined(EVAL) || defined(ONLINE_JUDGE) || defined(_DEBUG)
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 #endif
 #include<bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -221,14 +221,73 @@ namespace std {
 	};
 }
 
+using mymint = dynamic_modint<0>;
+using vm=vector<mymint>;
+using vvm=vector<vm>;
+namespace IO{
+	template<> struct is_container<mymint> : false_type {};
+	istream &operator>>(istream &is, mymint &a) {
+		ll tmp; is >> tmp; a = tmp; return is;
+	}
+	ostream& operator<<(ostream& os, const mymint& a) {
+		return os << a.val();
+	}
+}
+// usage: mymint::set_mod(10007);
+
+template<class T>struct Combination{
+	int size=0;
+	vector<T> fact, rfact, inv;
+	Combination(int sz) : size(sz), fact(sz+1), rfact(sz+1), inv(sz+1) {
+		fact[0] = rfact[sz] = inv[0] = 1;
+		rep(i,1,sz+1) fact[i] = fact[i-1] * i;
+		rfact[sz] /= fact[sz];
+		rrep(i,1,sz+1) rfact[i-1] = rfact[i] * i;
+		rep(i,1,sz+1) inv[i] = rfact[i] * fact[i-1];
+	}
+
+	T P(ll n, int r) const {
+		if(r<0 or n<r) return 0;
+		if(n <= size) return fact[n] * rfact[n-r];
+		T ret(1);
+		rep(r) ret*=n--;
+		return ret;
+	}
+
+	T C(ll n, int r) const {
+		if(r<0 or n<r) return 0;
+		if(n <= size) return fact[n] * rfact[r] * rfact[n-r];
+		if(n-r < r) r=n-r;
+		T ret(1);
+		rep(i,1,r+1){ ret*=n--; ret/=i; }
+		return ret;
+	}
+};
+
+
+
 int main() {
 	/*$1*/
-	def(string,s);
-	vl a(300,0);
-	for(auto c:s) a[c]++;
-	rep(i,300)if(a[i]%2==1){
-		Yn(0);
-		return 0;
+	def(ll,p);
+	mymint::set_mod(p);
+	Combination<mymint> comb(p-1);
+
+	vl a(p); in(a);
+	/*
+		g(3) = (x-3)^(p-1) は、x=3の時だけ0、ほかは1になる
+		h(3) = 1-g(3) は、x=3の時だけ1、ほかは0になる
+		よって、Ai=1である各iについて、h(i)を足し合わせればいい
+	*/
+	vm b(p, 0);
+	rep(i,p)if(a[i]==1){
+		rep(j,p){
+			// 1-(x-i)^(p-1)の、j次の係数を求める
+			// (p-1)Cj * x^j * i^(p-1-j)
+			b[j] += comb.C(p-1, j) * pow_mod(-i, p-1-j, p);
+		}
 	}
-	Yn(1);	
+	
+	out(b);
+
+	
 }

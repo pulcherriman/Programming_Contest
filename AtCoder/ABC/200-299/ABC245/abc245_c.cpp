@@ -1,3 +1,6 @@
+// @prefix _template
+// @description 新テンプレート
+
 #ifdef _DEBUG
 // #define _GLIBCXX_DEBUG 1
 #else
@@ -38,9 +41,9 @@ using tl2=tuple<ll,ll>;
 using tl3=tuple<ll,ll,ll>;
 using vs=vector<string>;
 template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
-template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type>;
+template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type,hash<K>>;
 template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
-template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
+template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V,hash<K>>;
 template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 
 #define all(a) begin(a),end(a)
@@ -56,6 +59,8 @@ template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 #define __RREP(i,n) __RRANGE(i,0,n)
 #define __RRANGE(i,a,n) for(ll i=((ll)(n)-1);i>=((ll)a);--i)
 #define sz(a) ((ll)(a).size())
+#define pb push_back
+#define eb emplace_back
 
 /*
  * Constants
@@ -69,16 +74,22 @@ constexpr long double PI=3.14159265358979323846;
 /*
  * Utilities
  */
+template<class T,class...Args>auto vec(T x,int arg,Args...args){
+	if constexpr(sizeof...(args)==0) return vector(arg,x);
+	else return vector(arg,vec(x,args...));
+}
 template<class T>constexpr bool chmax(T&a,T b){return a<b?a=b,1:0;}
 template<class T>constexpr bool chmin(T&a,T b){return a>b?a=b,1:0;}
 template<class S>S sum(vector<S>&a){return accumulate(all(a),S());}
 template<class S>S max(vector<S>&a){return *max_element(all(a));}
 template<class S>S min(vector<S>&a){return *min_element(all(a));}
+ll sumAtoB(ll a,ll b){return (a+b)*(b-a+1)/2;}
 
 namespace IO {
 	// container detection
 	template<typename T, typename _=void> struct is_container : false_type {};
 	template<> struct is_container<string> : false_type {};
+	template<class T> struct is_container<valarray<T>> : true_type {};
 	template<typename...Ts> struct is_container_helper {};
 	template<typename T> struct is_container<T, conditional_t<
 		true, void, is_container_helper<
@@ -90,7 +101,7 @@ namespace IO {
 		typename enable_if<is_container<T>{}, nullptr_t>::type = nullptr,
 		char Separator = is_container<typename T::value_type>{} ? '\n' : ' ' >
 	constexpr ostream&operator<<(ostream&os, T t){
-		if(auto b=begin(t), e=end(t) ; !t.empty()) for(os<<(*b++);b!=e;os<<Separator<<(*b++)) ;
+		if(auto b=begin(t), e=end(t) ; t.size()) for(os<<(*b++);b!=e;os<<Separator<<(*b++)) ;
 		return os;
 	}
 
@@ -172,17 +183,18 @@ struct Mgr {
 		cerr<<fixed<<setprecision(3);
 	}
 	~Mgr(){
+		cout<<flush;
 		debug_f(timer.get(), "ms")<<flush;
 	}
 } _manager;
 
-namespace std::tr1 {
+namespace std {
 	template<class T>
 	struct hash_base {
 		const static inline size_t hash_value = 0x9e3779b9;
 		static inline size_t hash_rnd = Random(0, numeric_limits<size_t>::max());
-		template<class V> static size_t& do_hash(size_t&seed, V&v) {
-			return seed ^= hash<V>{}(v) + hash_value + (seed<<6) + (seed>2);
+		template<class V, class P=remove_const_t<remove_reference_t<V>>> static size_t& do_hash(size_t&seed, V&v) {
+			return seed ^= hash<P>{}(v) + hash_value + (seed<<6) + (seed>>2);
 		}
 		virtual size_t operator()(T p) const = 0;
 	};
@@ -196,22 +208,40 @@ namespace std::tr1 {
 			return this->do_hash(seed, this->hash_value);
 		}
 	};
+
+	template<class...Ts>
+	struct hash<tuple<Ts...>> : public hash_base<tuple<Ts...>> {
+		size_t operator()(tuple<Ts...> t) const {
+			return apply([&](auto&&...args)->size_t{
+				size_t seed = 0;
+				for(auto&&v : {args...}) this->do_hash(seed, v);
+				return this->do_hash(seed, this->hash_value);
+			}, t);
+		}
+	};
 }
 
 int main() {
-	/**/
+	/*$1*/
 	def(ll,n,k);
 	vl a(n), b(n); in(a,b);
-	bool dpa=true, dpb=true;
-	rep(i,1,n){
-		bool ndpa = false, ndpb = false;
-		if(dpa and abs(a[i]-a[i-1])<=k) ndpa=true;
-		if(dpa and abs(b[i]-a[i-1])<=k) ndpb=true;
-		if(dpb and abs(a[i]-b[i-1])<=k) ndpa=true;
-		if(dpb and abs(b[i]-b[i-1])<=k) ndpb=true;
-		dpa=ndpa, dpb=ndpb;
-	}
-	Yn(dpa or dpb);
 
+	HashSet<ll> cur;
+	cur.insert(a[0]);
+	cur.insert(b[0]);
+	rep(i,n){
+		HashSet<ll> nxt;
+		for(auto&x:cur){
+			if(abs(x-a[i])<=k) nxt.insert(a[i]);
+			if(abs(x-b[i])<=k) nxt.insert(b[i]);
+		}
+
+		cur=nxt;
+		if(cur.empty()){
+			Yn(0);
+			return 0;
+		}
+	}
+	Yn(1);
 	
 }
