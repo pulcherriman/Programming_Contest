@@ -1,0 +1,14 @@
+
+Score = 7050
+Score = 7245
+Score = 7480
+Score = 7240
+Score = 6950
+Score = 6745
+Score = 7280
+Score = 6735
+Score = 6915
+Score = 6500
+Score = 7200
+Score = 7010
+^C
