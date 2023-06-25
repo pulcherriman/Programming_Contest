@@ -145,10 +145,11 @@ using namespace IO;
 class Random {
 public:
 	using result_type = unsigned int;
+	constexpr result_type operator()(){return operator()(min(),max());}
 	static constexpr result_type max(){return numeric_limits<result_type>::max();}
 	static constexpr result_type min(){return 0;}
 	constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242ll:chrono::system_clock::now().time_since_epoch().count()){}
-	constexpr int operator()(int a, int b){return next()%(b-a)+a;}
+	constexpr result_type operator()(result_type a, result_type b){return next()%(b-a)+a;}
 	constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
 	result_type getSeed(){return y;}
 	void setSeed(result_type seed){y=seed;}
@@ -183,13 +184,13 @@ void wait(const int&msec){Timer tm(msec); while(tm);}
 
 struct Mgr {
 	static const int TLE = 2000;
-	static inline Timer timer = Timer(TLE-100);
+	static inline Timer timer = Timer(TLE-20);
 	Mgr() {
 		ios_base::sync_with_stdio(0); cin.tie(0);
 		cerr<<fixed<<setprecision(3);
 	}
 	~Mgr(){
-		// debug_f(timer.get(), "ms")<<flush;
+		debug_f(timer.get(), "ms")<<flush;
 	}
 } _manager;
 
@@ -216,151 +217,50 @@ void input() {
 	}
 }
 
-void serveTop(int y, int x){
+void serve(int y, int x){
 	if(y==0)return;
-
-	const auto apply = [&](int y, int x, int ny, int nx){
-		if(ball[y][x] > ball[ny][nx]) return;
-		act(y, x, ny, nx);
-		swap(ball[y][x], ball[ny][nx]);
-		serveTop(ny, nx);
-	};
-
+	int p=ball[y][x];
 	if (x==0) {
-		apply(y, x, y-1, x);
+		if(p > ball[y-1][x]) return;
+		act(y, x, y-1, x);
+		swap(ball[y][x], ball[y-1][x]);
+		serve(y-1, x);
 		return;
 	}
 	if(x==y){
-		apply(y, x, y-1, x-1);
+		if(p > ball[y-1][x-1]) return;
+		act(y, x, y-1, x-1);
+		swap(ball[y][x], ball[y-1][x-1]);
+		serve(y-1, x-1);
 		return;
 	}
 	if(ball[y-1][x-1] < ball[y-1][x]){
-		apply(y, x, y-1, x);
+		if(p > ball[y-1][x]) return;
+		act(y, x, y-1, x);
+		swap(ball[y][x], ball[y-1][x]);
+		serve(y-1, x);
 		return;
 	}
-	apply(y, x, y-1, x-1);
+	if(p > ball[y-1][x-1]) return;
+	act(y, x, y-1, x-1);
+	swap(ball[y][x], ball[y-1][x-1]);
+	serve(y-1, x-1);
 }
 
-void serveBottom(int y, int x){
-	if(y==n-1)return;
-
-	const auto apply = [&](int y, int x, int ny, int nx){
-		if(ball[y][x] < ball[ny][nx]) return;
-		act(y, x, ny, nx);
-		swap(ball[y][x], ball[ny][nx]);
-		serveBottom(ny, nx);
-	};
-
-	if(ball[y+1][x] < ball[y+1][x+1]){
-		apply(y, x, y+1, x);
-		return;
-	}
-	apply(y, x, y+1, x+1);
-}
-
-int serveTopSim(int y, int x){
-	auto ball2 = ball;
-
-	const auto inner = [&](int y, int x) {
-		if(y==0)return 0;
-
-		const auto apply = [&](int y, int x, int ny, int nx){
-			if(ball2[y][x] > ball2[ny][nx]) return 0;
-			swap(ball2[y][x], ball2[ny][nx]);
-			return serveTopSim(ny, nx) + 1;
-		};
-
-		if (x==0) {
-			return apply(y, x, y-1, x);
-		}
-		if(x==y){
-			return apply(y, x, y-1, x-1);
-		}
-		if(ball2[y-1][x-1] < ball2[y-1][x]){
-			return apply(y, x, y-1, x);
-		}
-		return apply(y, x, y-1, x-1);
-	};
-
-	return inner(y, x);
-}
-
-int serveBottomSim(int y, int x){
-	auto ball2 = ball;
-
-	const auto inner = [&](int y, int x) {
-		if(y==n-1)return 0;
-
-		const auto apply = [&](int y, int x, int ny, int nx){
-			if(ball2[y][x] < ball2[ny][nx]) return 0;
-			swap(ball2[y][x], ball2[ny][nx]);
-			return serveBottomSim(ny, nx) + 1;
-		};
-
-		if(ball2[y+1][x] < ball2[y+1][x+1]){
-			return apply(y, x, y+1, x);
-		}
-		return apply(y, x, y+1, x+1);
-	};
-
-	return inner(y, x);
-}
-
-
-
-
-void challenge(vb isFront) {
-	deque<int> q;
-	rep(i,465) q.push_back(i);
-
-	rep(t,465){
-		int y=0,x=0;
+void getInitial() {
+	rep(p,0,465){
 		rep(i,n){
 			rep(j,i+1){
-				if(isFront[t] and ball[i][j]==q.front()) {
-					y=i, x=j;
-				}else if(!isFront[t] and ball[i][j]==q.back()){
-					y=i, x=j;
-				}
+				if(ball[i][j]==p) serve(i,j);
 			}
 		}
-		if(isFront[t]){
-			serveTop(y,x);
-			q.pop_front();
-		}else{
-			serveBottom(y,x);
-			q.pop_back();
-		}
 	}
-
-
-
+	out(action.size());
+	for(auto&v:action) out(v);
 }
 
 int main() {
 	input();
 
-	auto baseball = ball;
-	vb isFront(465, true);
-	challenge(isFront);
-	vvi bestAction = action;
-
-
-	int cnt = 0;
-	while(Mgr::timer){
-		cnt++;
-		action.clear();
-		ball = baseball;
-		int t = Random(0, 465);
-		isFront[t] = !isFront[t];
-		challenge(isFront);
-		if(action.size() < bestAction.size()){
-			bestAction = action;
-		}else{
-			isFront[t] = !isFront[t];
-		}
-	}
-
-	out(bestAction.size());
-	for(auto&v:bestAction) out(v);
+	getInitial();
 }

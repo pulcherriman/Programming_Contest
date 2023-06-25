@@ -6,7 +6,7 @@ import os
 
 OUTPUTS_DIR = './tester/out'
 SCORES_DIR = './tester/scores'
-CASE = 100
+CASE = 500
 TL = 6.0
 
 def execute_case(seed):
@@ -76,7 +76,7 @@ def main():
 	scores.sort(key=lambda x: x[1])
 	with open('./summary.txt', 'w') as fout:
 		fout.write(f'ave   : {ave}\n')
-		fout.write(f'sum50 : {ave*50}\n')
+		fout.write(f'sum150 : {ave*150}\n')
 		for s in scores:
 			fout.write(f'{s[1]} : {s[0]}\n')
 
