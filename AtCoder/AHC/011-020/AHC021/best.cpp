@@ -1,6 +1,6 @@
-#pragma GCC optimize("Ofast")
-#pragma GCC optimize("unroll-loops")
-#pragma GCC optimize("inline")
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops", "inline")
 
 #pragma GCC diagnostic ignored "-Wunused-value"
 #ifdef _DEBUG
@@ -32,7 +32,6 @@
 #include <tuple>
 #include <random>
 #include <chrono>
-#include <ext/pb_ds/assoc_container.hpp>
 using namespace std;
 
 /*
@@ -46,16 +45,6 @@ using vvb=vector<vb>;
 using vi=vector<int>;
 using vvi=vector<vi>;
 using pii=pair<int,int>;
-using vp=vector<pii>;
-using ti2=tuple<int,int>;
-using ti3=tuple<int,int,int>;
-using ti4=tuple<int,int,int,int>;
-using vs=vector<string>;
-template<class K> using IndexedSet=__gnu_pbds::tree<K,__gnu_pbds::null_type,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
-template<class K> using HashSet=__gnu_pbds::gp_hash_table<K,__gnu_pbds::null_type>;
-template<class K,class V> using IndexedMap=__gnu_pbds::tree<K,V,less<K>,__gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update>;
-template<class K,class V> using HashMap=__gnu_pbds::gp_hash_table<K,V>;
-template<class V> using minpq = priority_queue<V, vector<V>, greater<V>>;
 
 #define all(a) begin(a),end(a)
 #define rall(a) rbegin(a),rend(a)
@@ -145,11 +134,10 @@ using namespace IO;
 class Random {
 public:
 	using result_type = unsigned int;
-	constexpr result_type operator()(){return operator()(min(),max());}
 	static constexpr result_type max(){return numeric_limits<result_type>::max();}
 	static constexpr result_type min(){return 0;}
 	constexpr Random(const bool&isDeterministic):y(isDeterministic?2463534242ll:chrono::system_clock::now().time_since_epoch().count()){}
-	constexpr result_type operator()(result_type a, result_type b){return next()%(b-a)+a;}
+	constexpr int operator()(int a, int b){return next()%(b-a)+a;}
 	constexpr double operator()(double a,double b){return (b-a)*next()/4294967296.0+a;}
 	result_type getSeed(){return y;}
 	void setSeed(result_type seed){y=seed;}
@@ -160,7 +148,7 @@ private:
 #ifdef _DEBUG
 Random(1);
 #else
-Random(1);
+Random(0);
 #endif
 
 class Timer {
@@ -183,30 +171,17 @@ public:
 void wait(const int&msec){Timer tm(msec); while(tm);}
 
 struct Mgr {
-	static const int TLE = 2000;
-	static inline Timer timer = Timer(TLE-20);
+	static const int TLE = 1800;
+	static inline Timer timer = Timer(TLE);
 	Mgr() {
 		ios_base::sync_with_stdio(0); cin.tie(0);
 		cerr<<fixed<<setprecision(3);
 	}
 	~Mgr(){
-		debug_f(timer.get(), "ms")<<flush;
+		// debug_f(timer.get(), "ms")<<flush;
 	}
 } _manager;
 
-namespace std::tr1 {
-	template<class S, class T>
-	struct hash<pair<S,T>> {
-		size_t operator()(pair<S,T> p) const {
-			return (p.first << 7) ^ p.second;
-		}
-	};
-}
-
-vvi action;
-void act(int y, int x, int ny, int nx) {
-	action.push_back({y, x, ny, nx});
-}
 
 const int n=30;
 vvi ball(n);
@@ -217,50 +192,170 @@ void input() {
 	}
 }
 
-void serve(int y, int x){
+vvi action;
+void act(int y, int x, int ny, int nx) {
+	action.push_back({y, x, ny, nx});
+	swap(ball[y][x], ball[ny][nx]);
+}
+
+void serveTop(int y, int x){
 	if(y==0)return;
-	int p=ball[y][x];
+
+	const auto apply = [&](int y, int x, int ny, int nx){
+		if(ball[y][x] > ball[ny][nx]) return;
+		act(y, x, ny, nx);
+		serveTop(ny, nx);
+	};
+
 	if (x==0) {
-		if(p > ball[y-1][x]) return;
-		act(y, x, y-1, x);
-		swap(ball[y][x], ball[y-1][x]);
-		serve(y-1, x);
+		apply(y, x, y-1, x);
 		return;
 	}
 	if(x==y){
-		if(p > ball[y-1][x-1]) return;
-		act(y, x, y-1, x-1);
-		swap(ball[y][x], ball[y-1][x-1]);
-		serve(y-1, x-1);
+		apply(y, x, y-1, x-1);
 		return;
 	}
 	if(ball[y-1][x-1] < ball[y-1][x]){
-		if(p > ball[y-1][x]) return;
-		act(y, x, y-1, x);
-		swap(ball[y][x], ball[y-1][x]);
-		serve(y-1, x);
+		apply(y, x, y-1, x);
 		return;
 	}
-	if(p > ball[y-1][x-1]) return;
-	act(y, x, y-1, x-1);
-	swap(ball[y][x], ball[y-1][x-1]);
-	serve(y-1, x-1);
+	apply(y, x, y-1, x-1);
 }
 
-void getInitial() {
-	rep(p,0,465){
+void serveBottom(int y, int x){
+	if(y==n-1)return;
+
+	const auto apply = [&](int y, int x, int ny, int nx){
+		if(ball[y][x] < ball[ny][nx]) return;
+		act(y, x, ny, nx);
+		serveBottom(ny, nx);
+	};
+
+	if(ball[y+1][x] < ball[y+1][x+1]){
+		apply(y, x, y+1, x);
+		return;
+	}
+	apply(y, x, y+1, x+1);
+}
+
+void challenge(bitset<465> isFront) {
+	deque<int> q;
+	rep(i,465) q.push_back(i);
+
+	rep(t,465){
+		int y=0,x=0;
 		rep(i,n){
 			rep(j,i+1){
-				if(ball[i][j]==p) serve(i,j);
+				if(isFront[t] and ball[i][j]==q.front()) {
+					y=i, x=j;
+				}else if(!isFront[t] and ball[i][j]==q.back()){
+					y=i, x=j;
+				}
 			}
 		}
+		if(isFront[t]){
+			serveTop(y,x);
+			q.pop_front();
+		}else{
+			serveBottom(y,x);
+			q.pop_back();
+		}
 	}
-	out(action.size());
-	for(auto&v:action) out(v);
 }
 
 int main() {
 	input();
 
-	getInitial();
+	auto baseball = ball;
+	bitset<465> isFront(0);
+	rep(i,465) isFront[i] = Random(0, 1);
+	challenge(isFront);
+
+	int answer = LINF;
+	auto answerAction = action;
+	vvi fixedact;
+
+	int cnt = 0, bestScore = siz(action)*5;
+
+	while(Mgr::timer){
+		cnt++;
+		action.clear();
+		ball = baseball;
+		for(auto& v:fixedact){
+			act(v[0],v[1],v[2],v[3]);
+		}
+
+		int mode = Random(0, 2);
+
+		int t = min(min(Random(0, 464), Random(0,464)), INF);
+		// int t = Random(0, 464);
+		int cy = Random(1, n);
+		int cx = Random(0, cy);
+		if(mode==0){
+			isFront[t] = !isFront[t];
+		}else{
+			act(cy,cx,cy,cx+1);
+		}
+		challenge(isFront);
+
+		int score = siz(action)*5;
+
+		double init = 4.1, fin = 0.1;
+		double temp = init - (init-fin) * Mgr::timer.get() / Mgr::TLE;
+		double prob = exp(min(0.0, fin * (bestScore - score) / temp));
+
+		if(Random(0.0, 1.0) > prob){
+			if(mode==0){
+				isFront[t] = !isFront[t];
+			}else{
+				act(cy,cx,cy,cx+1);
+			}
+		}else{
+			if(mode==1 and siz(answerAction) > siz(action)){
+				fixedact.push_back({cy,cx,cy,cx+1});
+			}
+			bestScore = score;
+		}
+		if(chmin(answer, score)) {
+			answerAction = action;
+		}
+	}
+
+	while(Mgr::timer.get() <= 1990){
+		rep(cy,1,n){
+			rep(cx,0,cy){
+				if(Mgr::timer.get() > 1990){
+					cy=n;
+					break;
+				}
+				cnt++;
+				action.clear();
+				ball = baseball;
+				for(auto& v:fixedact){
+					act(v[0],v[1],v[2],v[3]);
+				}
+
+				act(cy,cx,cy,cx+1);
+				challenge(isFront);
+
+				int score = siz(action)*5;
+
+				if(score > bestScore){
+					act(cy,cx,cy,cx+1);
+				}else{
+					fixedact.push_back({cy,cx,cy,cx+1});
+					bestScore = score;
+				}
+				if(chmin(answer, score)) {
+					answerAction = action;
+				}
+			}
+		}
+	}
+
+	out(answerAction.size());
+	for(auto&v:answerAction) out(v);
+	debug(cnt);
+//2825 737 447
+//2851 627 447
 }

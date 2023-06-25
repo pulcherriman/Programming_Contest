@@ -182,8 +182,8 @@ public:
 void wait(const int&msec){Timer tm(msec); while(tm);}
 
 struct Mgr {
-	static const int TLE = 2000;
-	static inline Timer timer = Timer(TLE-100);
+	static const int TLE = 1800;
+	static inline Timer timer = Timer(TLE);
 	Mgr() {
 		ios_base::sync_with_stdio(0); cin.tie(0);
 		cerr<<fixed<<setprecision(3);
@@ -202,10 +202,6 @@ namespace std::tr1 {
 	};
 }
 
-vvi action;
-void act(int y, int x, int ny, int nx) {
-	action.push_back({y, x, ny, nx});
-}
 
 const int n=30;
 vvi ball(n);
@@ -216,13 +212,18 @@ void input() {
 	}
 }
 
+vvi action;
+void act(int y, int x, int ny, int nx) {
+	action.push_back({y, x, ny, nx});
+	swap(ball[y][x], ball[ny][nx]);
+}
+
 void serveTop(int y, int x){
 	if(y==0)return;
 
 	const auto apply = [&](int y, int x, int ny, int nx){
 		if(ball[y][x] > ball[ny][nx]) return;
 		act(y, x, ny, nx);
-		swap(ball[y][x], ball[ny][nx]);
 		serveTop(ny, nx);
 	};
 
@@ -247,7 +248,6 @@ void serveBottom(int y, int x){
 	const auto apply = [&](int y, int x, int ny, int nx){
 		if(ball[y][x] < ball[ny][nx]) return;
 		act(y, x, ny, nx);
-		swap(ball[y][x], ball[ny][nx]);
 		serveBottom(ny, nx);
 	};
 
@@ -332,9 +332,6 @@ void challenge(vb isFront) {
 			q.pop_back();
 		}
 	}
-
-
-
 }
 
 int main() {
@@ -343,36 +340,92 @@ int main() {
 	auto baseball = ball;
 	vb isFront(465, true);
 	challenge(isFront);
-	vvi bestAction = action;
+
+	int answer = LINF;
+	auto answerAction = action;
+	vvi fixedact;
 
 
-	int cnt = 0;
+	int cnt = 0, bestScore = siz(action)*5;
+
+	vvi results(2,vi(3,0));
 	while(Mgr::timer){
 		cnt++;
 		action.clear();
 		ball = baseball;
-		// int t = Random(0, 465);
-		int t = min(Random(0, 465), Random(0,465));
-		isFront[t] = !isFront[t];
+		for(auto& v:fixedact){
+			act(v[0],v[1],v[2],v[3]);
+		}
+
+		int mode = Random(0, 2);
+
+		int t = min(min(Random(0, 465), Random(0,465)), INF);
+		// int t = Random(0, 464);
+		int cy = Random(1, n);
+		int cx = Random(0, cy);
+		if(mode==0){
+			isFront[t] = !isFront[t];
+		}else{
+			act(cy,cx,cy,cx+1);
+		}
 		challenge(isFront);
 
-		int bestScore = bestAction.size();
-		int score = action.size();
+		int score = siz(action)*5;
 
-		double init = 2.0, fin = 0.1;
+		double init = 4, fin = 0.1;
 		double temp = init - (init-fin) * Mgr::timer.get() / Mgr::TLE;
 		double prob = exp(min(0.0, fin * (bestScore - score) / temp));
 
 		if(Random(0.0, 1.0) > prob){
-			isFront[t] = !isFront[t];
+			results[mode][0]++;
+			if(mode==0){
+				isFront[t] = !isFront[t];
+			}else{
+				act(cy,cx,cy,cx+1);
+			}
 		}else{
-			bestAction = action;
-			if(bestScore > score) {
-				// out(t);
+			results[mode][bestScore > score ? 2 : 1]++;
+			if(mode==1 and siz(answerAction) > siz(action)){
+				fixedact.push_back({cy,cx,cy,cx+1});
+			}
+			bestScore = score;
+		}
+		if(chmin(answer, score)) {
+			answerAction = action;
+		}
+	}
+
+	while(Mgr::timer.get() <= 1980){
+		rep(cy,1,n){
+			if(Mgr::timer.get() > 1980)break;
+			rep(cx,0,cy){
+				if(Mgr::timer.get() > 1980)break;
+				cnt++;
+				action.clear();
+				ball = baseball;
+				for(auto& v:fixedact){
+					act(v[0],v[1],v[2],v[3]);
+				}
+
+				act(cy,cx,cy,cx+1);
+				challenge(isFront);
+
+				int score = siz(action)*5;
+
+				if(score > bestScore){
+					act(cy,cx,cy,cx+1);
+				}else{
+					fixedact.push_back({cy,cx,cy,cx+1});
+					bestScore = score;
+				}
+				if(chmin(answer, score)) {
+					answerAction = action;
+				}
 			}
 		}
 	}
 
-	out(bestAction.size());
-	for(auto&v:bestAction) out(v);
+	out(answerAction.size());
+	for(auto&v:answerAction) out(v);
+	// debug(results);
 }
