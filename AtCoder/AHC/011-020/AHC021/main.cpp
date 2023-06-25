@@ -351,13 +351,25 @@ int main() {
 		cnt++;
 		action.clear();
 		ball = baseball;
-		int t = Random(0, 465);
+		// int t = Random(0, 465);
+		int t = min(Random(0, 465), Random(0,465));
 		isFront[t] = !isFront[t];
 		challenge(isFront);
-		if(action.size() < bestAction.size()){
-			bestAction = action;
-		}else{
+
+		int bestScore = bestAction.size();
+		int score = action.size();
+
+		double init = 2.0, fin = 0.1;
+		double temp = init - (init-fin) * Mgr::timer.get() / Mgr::TLE;
+		double prob = exp(min(0.0, fin * (bestScore - score) / temp));
+
+		if(Random(0.0, 1.0) > prob){
 			isFront[t] = !isFront[t];
+		}else{
+			bestAction = action;
+			if(bestScore > score) {
+				// out(t);
+			}
 		}
 	}
 

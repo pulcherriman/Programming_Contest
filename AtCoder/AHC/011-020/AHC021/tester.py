@@ -6,7 +6,7 @@ import os
 
 OUTPUTS_DIR = './tester/out'
 SCORES_DIR = './tester/scores'
-CASE = 500
+CASE = 150
 TL = 6.0
 
 def execute_case(seed):
