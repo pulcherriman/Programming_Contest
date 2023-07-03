@@ -2,6 +2,7 @@
 /*.exe
 /in.txt
 /out.txt
+/expected.txt
 /ws.code-workspace
 /self
 /lib/atcoder
