@@ -238,89 +238,68 @@ namespace std {
 	};
 }
 
-auto solve(ll y, vl ys){
-	// ysの部分集合で和をyにできるか、半分全列挙
-	vl y1,y2;
-	rep(i,sz(ys)) if(i<20) y1.pb(ys[i]);
-	else y2.pb(ys[i]);
-	map<ll,int> s1,s2;
-	s1.emplace(0,-1); s2.emplace(0,-1);
-	rep(i,sz(y1)){
-		vp additional;
-		for(auto&[k,v]:s1 | views::reverse){
-			// if(v==i)continue;
-			additional.eb(k+y1[i],i);
+auto half_enum(vi a){
+	vector<pair<int,int>> q(1,{0,0}),p1,p2;
+	for(auto&v:a){
+		p1.clear(); p2.clear();
+		for(auto&[c,d]:q){
+			p1.emplace_back(c+v, (d<<1)|1);
+			p2.emplace_back(c-v, d<<1);
 		}
-		for(auto&[k,v]:additional){
-			s1.emplace(k,v);
-		}
+		q.clear();
+		set_union(all(p1), all(p2), back_inserter(q), [](auto&l, auto&r){return l.first<r.first;});
 	}
-	rep(i,sz(y2)){
-		vp additional;
-		for(auto&[k,v]:s2 | views::reverse){
-			// if(v==i)continue;
-			additional.eb(k+y2[i],i);
-		}
-		for(auto&[k,v]:additional){
-			s2.emplace(k,v);
-		}
-	}
-	// debug("====");
-	// for(auto&[k,v]:s1)debug(k,v);
-	// debug("==");
-	// for(auto&[k,v]:s2)debug(k,v);
-	// debug("====");
+	return q;
+}
 
-	vl ans;
-	for(auto [k,v]:s1){
-		auto itr=s2.lower_bound(y-k);
-		if(itr==s2.end() or itr->first!=y-k)continue;
-		{
-			ans=vl(sz(ys),0);
-			ll k2=k; int v2=v;
-			while(v2!=-1){
-				ans[v2]=1;
-				k2-=y1[v2];
-				v2=s1[k2];
+// N要素の配列Aの部分和で、和がtgtになるものを探し、ある場合復元する
+// O(2^(N/2)) N倍がつかない! はやい!
+auto solve(int tgt, vi a){
+	vi a1,a2;
+	rep(i,sz(a)) if(i<20) a1.pb(a[i]); else a2.pb(a[i]);
+
+	const auto half_enum = [](vi a){
+		vector<pair<int,int>> q(1,{0,0}),p1,p2;
+		for(auto&v:a){
+			p1.clear(); p2.clear();
+			for(auto&[c,d]:q){
+				p1.emplace_back(c+v, (d<<1)|1);
+				p2.emplace_back(c-v, d<<1);
 			}
-			tie(k2,v2)=*itr;
-			while(v2!=-1){
-				ans[v2+sz(y1)]=1;
-				k2-=y2[v2];
-				v2=s2[k2];
-			}
-			break;
+			q.clear();
+			set_union(all(p1), all(p2), back_inserter(q), [](auto&l, auto&r){return l.first<r.first;});
 		}
+		return q;
+	};
+
+	auto h1=half_enum(a1), h2=half_enum(a2);
+
+	int i1=0, i2=sz(h2)-1;
+	while(i1<sz(h1)&&i2>=0){
+		auto&[c1,d1]=h1[i1];
+		auto&[c2,d2]=h2[i2];
+		if(c1+c2==tgt){
+			vi ret;
+			rrep(i,sz(a1)) ret.pb(d1>>i&1);
+			rrep(i,sz(a2)) ret.pb(d2>>i&1);
+			return ret;
+		}
+		if(c1+c2<tgt) i1++;
+		else i2--;
 	}
-
-	return ans;
-
+	return vi();
 }
 
 int main() { /**/
-	def(ll,n,x,y);
-	vl xs,ys;
+	def(int,n,x,y);
+	vi xs,ys;
 	rep(i,n){
-		def(ll,t);
-		if(i%2==0)ys.pb(t);
-		else xs.pb(t);
+		def(int,t);
+		if(i%2==0)ys.pb(t); else xs.pb(t);
 	}
-	for(auto&v:ys){
-		y+=v;
-		v*=2;
-	}
-	for(auto&v:xs){
-		x+=v;
-		v*=2;
-	}
-	debug(x,y);
-	debug(ys);
-	debug(xs);
-	auto yans=solve(y,ys);
-	auto xans=solve(x,xs);
-	debug(yans);
-	debug(xans);
-	if(yans.empty() or xans.empty()){
+
+	auto yans=solve(y,ys), xans=solve(x,xs);
+	if(yans.empty()||xans.empty()) {
 		out("No");
 		return 0;
 	}
@@ -340,7 +319,4 @@ int main() { /**/
 	}
 	Yn(1);
 	out(ans);
-
-
-	
 }
