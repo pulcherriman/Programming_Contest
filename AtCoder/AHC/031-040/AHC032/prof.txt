@@ -1,0 +1,242 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 96.91      0.94     0.94                             std::_Function_handler<std::pair<int, long long> (std::valarray<long long>&, int, int, int, int, int, int, int), main::{lambda(std::valarray<long long>&, int, int, int, int, int, int, int)#2}>::_M_invoke(std::_Any_data const&, std::valarray<long long>&, int&&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&)
+  3.09      0.97     0.03                             main
+  0.00      0.97     0.00     3034     0.00     0.00  __gcc_deregister_frame
+  0.00      0.97     0.00     1742     0.00     0.00  operator"" _m(unsigned long long)
+  0.00      0.97     0.00     1741     0.00     0.00  std::valarray<long long>::shift(int) const
+  0.00      0.97     0.00       21     0.00     0.00  void std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >*, std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > > >, std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >&&)
+  0.00      0.97     0.00        2     0.00     0.00  std::_Vector_base<int, std::allocator<int> >::~_Vector_base()
+  0.00      0.97     0.00        2     0.00     0.00  std::_Vector_base<long long, std::allocator<long long> >::~_Vector_base()
+  0.00      0.97     0.00        2     0.00     0.00  std::vector<std::vector<long long, std::allocator<long long> >, std::allocator<std::vector<long long, std::allocator<long long> > > >::~vector()
+  0.00      0.97     0.00        2     0.00     0.00  std::vector<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >, std::allocator<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > > > >::~vector()
+  0.00      0.97     0.00        2     0.00     0.00  std::vector<long long, std::allocator<long long> >* std::__do_uninit_fill_n<std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > >(std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > const&)
+  0.00      0.97     0.00        1     0.00     0.00  std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_deallocate_buckets()
+  0.00      0.97     0.00        1     0.00     0.00  std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::clear()
+  0.00      0.97     0.00        1     0.00     0.00  std::_Tuple_impl<3ull, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >::~_Tuple_impl()
+  0.00      0.97     0.00        1     0.00     0.00  std::_Vector_base<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::~_Vector_base()
+  0.00      0.97     0.00        1     0.00     0.00  std::_Function_base::~_Function_base()
+  0.00      0.97     0.00        1     0.00     0.00  std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >::~pair()
+  0.00      0.97     0.00        1     0.00     0.00  std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::~vector()
+  0.00      0.97     0.00        1     0.00     0.00  std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::vector(std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > const&)
+  0.00      0.97     0.00        1     0.00     0.00  std::vector<std::valarray<long long>, std::allocator<std::valarray<long long> > >::~vector()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 1.03% of 0.97 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     96.9    0.94    0.00                 std::_Function_handler<std::pair<int, long long> (std::valarray<long long>&, int, int, int, int, int, int, int), main::{lambda(std::valarray<long long>&, int, int, int, int, int, int, int)#2}>::_M_invoke(std::_Any_data const&, std::valarray<long long>&, int&&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&) [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]      3.1    0.03    0.00                 main [2]
+                0.00    0.00    3033/3034        __gcc_deregister_frame [64]
+                0.00    0.00    1742/1742        operator"" _m(unsigned long long) [65]
+                0.00    0.00      21/21          void std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >*, std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > > >, std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >&&) [67]
+                0.00    0.00       2/2           std::vector<long long, std::allocator<long long> >* std::__do_uninit_fill_n<std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > >(std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > const&) [72]
+                0.00    0.00       2/2           std::_Vector_base<long long, std::allocator<long long> >::~_Vector_base() [69]
+                0.00    0.00       2/2           std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [68]
+                0.00    0.00       2/2           std::vector<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >, std::allocator<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > > > >::~vector() [71]
+                0.00    0.00       2/2           std::vector<std::vector<long long, std::allocator<long long> >, std::allocator<std::vector<long long, std::allocator<long long> > > >::~vector() [70]
+                0.00    0.00       1/1           std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >::~pair() [78]
+                0.00    0.00       1/1           std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::vector(std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > const&) [80]
+                0.00    0.00       1/1           std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::clear() [74]
+                0.00    0.00       1/1           std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_deallocate_buckets() [73]
+                0.00    0.00       1/1           std::_Tuple_impl<3ull, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >::~_Tuple_impl() [75]
+                0.00    0.00       1/1           std::_Vector_base<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::~_Vector_base() [76]
+                0.00    0.00       1/1           std::_Function_base::~_Function_base() [77]
+                0.00    0.00       1/1           std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::~vector() [79]
+                0.00    0.00       1/1           std::vector<std::valarray<long long>, std::allocator<std::valarray<long long> > >::~vector() [81]
+-----------------------------------------------
+                0.00    0.00       1/3034        std::_Function_base::~_Function_base() [77]
+                0.00    0.00    3033/3034        main [2]
+[64]     0.0    0.00    0.00    3034         __gcc_deregister_frame [64]
+-----------------------------------------------
+                0.00    0.00    1742/1742        main [2]
+[65]     0.0    0.00    0.00    1742         operator"" _m(unsigned long long) [65]
+-----------------------------------------------
+                0.00    0.00    1741/1741        main::{lambda(std::valarray<long long>&, int, int, int)#1}::operator()(std::valarray<long long>&, int, int, int) const [133]
+[66]     0.0    0.00    0.00    1741         std::valarray<long long>::shift(int) const [66]
+-----------------------------------------------
+                0.00    0.00      21/21          main [2]
+[67]     0.0    0.00    0.00      21         void std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >*, std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > > >, std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >&&) [67]
+-----------------------------------------------
+                0.00    0.00       2/2           main [2]
+[68]     0.0    0.00    0.00       2         std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [68]
+-----------------------------------------------
+                0.00    0.00       2/2           main [2]
+[69]     0.0    0.00    0.00       2         std::_Vector_base<long long, std::allocator<long long> >::~_Vector_base() [69]
+-----------------------------------------------
+                0.00    0.00       2/2           main [2]
+[70]     0.0    0.00    0.00       2         std::vector<std::vector<long long, std::allocator<long long> >, std::allocator<std::vector<long long, std::allocator<long long> > > >::~vector() [70]
+-----------------------------------------------
+                0.00    0.00       2/2           main [2]
+[71]     0.0    0.00    0.00       2         std::vector<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >, std::allocator<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > > > >::~vector() [71]
+-----------------------------------------------
+                0.00    0.00       2/2           main [2]
+[72]     0.0    0.00    0.00       2         std::vector<long long, std::allocator<long long> >* std::__do_uninit_fill_n<std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > >(std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > const&) [72]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[73]     0.0    0.00    0.00       1         std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_deallocate_buckets() [73]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[74]     0.0    0.00    0.00       1         std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::clear() [74]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[75]     0.0    0.00    0.00       1         std::_Tuple_impl<3ull, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >::~_Tuple_impl() [75]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[76]     0.0    0.00    0.00       1         std::_Vector_base<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::~_Vector_base() [76]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[77]     0.0    0.00    0.00       1         std::_Function_base::~_Function_base() [77]
+                0.00    0.00       1/3034        __gcc_deregister_frame [64]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[78]     0.0    0.00    0.00       1         std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >::~pair() [78]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[79]     0.0    0.00    0.00       1         std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::~vector() [79]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[80]     0.0    0.00    0.00       1         std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::vector(std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > const&) [80]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[81]     0.0    0.00    0.00       1         std::vector<std::valarray<long long>, std::allocator<std::valarray<long long> > >::~vector() [81]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [66] std::valarray<long long>::shift(int) const [77] std::_Function_base::~_Function_base() [71] std::vector<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >, std::allocator<std::tuple<long long, bool, bool, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > > > >::~vector()
+  [73] std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_deallocate_buckets() [1] std::_Function_handler<std::pair<int, long long> (std::valarray<long long>&, int, int, int, int, int, int, int), main::{lambda(std::valarray<long long>&, int, int, int, int, int, int, int)#2}>::_M_invoke(std::_Any_data const&, std::valarray<long long>&, int&&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&, std::_Any_data const&) [81] std::vector<std::valarray<long long>, std::allocator<std::valarray<long long> > >::~vector()
+  [74] std::_Hashtable<long long, long long, std::allocator<long long>, std::__detail::_Identity, std::equal_to<long long>, std::hash<long long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::clear() [78] std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >::~pair() [72] std::vector<long long, std::allocator<long long> >* std::__do_uninit_fill_n<std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > >(std::vector<long long, std::allocator<long long> >*, unsigned long long, std::vector<long long, std::allocator<long long> > const&)
+  [75] std::_Tuple_impl<3ull, std::valarray<long long>, std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > >::~_Tuple_impl() [70] std::vector<std::vector<long long, std::allocator<long long> >, std::allocator<std::vector<long long, std::allocator<long long> > > >::~vector() [65] operator"" _m(unsigned long long)
+  [76] std::_Vector_base<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::~_Vector_base() [67] void std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >*, std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > > >, std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >&&) [64] __gcc_deregister_frame
+  [68] std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [79] std::vector<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > >, std::allocator<std::pair<std::valarray<long long>, std::vector<int, std::allocator<int> > > > >::~vector() [2] main
+  [69] std::_Vector_base<long long, std::allocator<long long> >::~_Vector_base() [80] std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > >::vector(std::vector<std::tuple<int, int, int>, std::allocator<std::tuple<int, int, int> > > const&)

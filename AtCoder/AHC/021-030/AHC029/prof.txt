@@ -1,0 +1,640 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 78.95      0.75     0.75   283491     2.65     2.65  calcScore(std::vector<int, std::allocator<int> >&, long long)
+ 11.58      0.86     0.11    44215     2.49     2.50  shorterPath3(std::vector<int, std::allocator<int> >&, int)
+  3.16      0.89     0.03                             _mcount_private
+  2.11      0.91     0.02                             __fentry__
+  1.05      0.92     0.01   718673     0.01     0.01  std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&)
+  1.05      0.93     0.01     2634     3.80     3.81  shorterPath1(std::vector<int, std::allocator<int> >&, int)
+  1.05      0.94     0.01     1839     5.44     5.44  getWeight(std::vector<int, std::allocator<int> >&, int, int)
+  1.05      0.95     0.01       78   128.21   128.21  getHeaviest(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00  4740831     0.00     0.00  checkConnectivity(int, int)
+  0.00      0.95     0.00   974373     0.00     0.00  std::_Vector_base<int, std::allocator<int> >::~_Vector_base()
+  0.00      0.95     0.00   584832     0.00     0.00  checkExtendPath2(int, int, int, int)
+  0.00      0.95     0.00   293062     0.00     0.01  extendPath2A(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00   292170     0.00     0.01  extendPath2B(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00   291192     0.00     0.00  __gcc_deregister_frame
+  0.00      0.95     0.00   276339     0.00     0.00  emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >)
+  0.00      0.95     0.00   195869     0.00     0.00  simpleShortestPath(int, int)
+  0.00      0.95     0.00    54490     0.00     0.01  shorterPath2(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00    10366     0.00     0.00  __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const
+  0.00      0.95     0.00    10013     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.00      0.95     0.00     7500     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear()
+  0.00      0.95     0.00     7073     0.00     0.00  std::vector<int, std::allocator<int> >::_M_erase(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >)
+  0.00      0.95     0.00     5869     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&)
+  0.00      0.95     0.00     5311     0.00     0.01  extendPath1A(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00     5311     0.00     0.01  extendPath1B(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00     5311     0.00     0.01  extendPath1C(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00     5311     0.00     0.01  extendPath1D(std::vector<int, std::allocator<int> >&, int)
+  0.00      0.95     0.00     4849     0.00     0.00  __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long)
+  0.00      0.95     0.00     2652     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::push_back(char)
+  0.00      0.95     0.00     2145     0.00     0.00  std::vector<int, std::allocator<int> >::operator=(std::vector<int, std::allocator<int> > const&)
+  0.00      0.95     0.00     1631     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set()
+  0.00      0.95     0.00     1279     0.00     0.00  void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&)
+  0.00      0.95     0.00      294     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.00      0.95     0.00      228     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear()
+  0.00      0.95     0.00      212     0.00     0.00  std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool)
+  0.00      0.95     0.00      195     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&)
+  0.00      0.95     0.00      135     0.00     0.00  std::queue<int, std::deque<int, std::allocator<int> > >::queue<std::deque<int, std::allocator<int> >, void>()
+  0.00      0.95     0.00       81     0.00     0.00  void std::vector<int, std::allocator<int> >::_M_realloc_insert<int const&>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&)
+  0.00      0.95     0.00       78     0.00     0.00  void std::__partial_sort<__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> > >(__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> >)
+  0.00      0.95     0.00       65     0.00   134.25  getInitialPath()
+  0.00      0.95     0.00       53     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.00      0.95     0.00       50     0.00     0.00  std::vector<int, std::allocator<int> >::reserve(unsigned long long)
+  0.00      0.95     0.00       38     0.00     0.00  std::vector<int, std::allocator<int> >::push_back(int const&)
+  0.00      0.95     0.00       33     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map()
+  0.00      0.95     0.00       33     0.00   264.42  TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int)
+  0.00      0.95     0.00       26     0.00     0.00  atcoder::internal::sa_doubling(std::vector<int, std::allocator<int> > const&)
+  0.00      0.95     0.00       14     0.00     0.00  std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >* std::__do_uninit_copy<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*>(std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*)
+  0.00      0.95     0.00        8     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all()
+  0.00      0.95     0.00        8     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear()
+  0.00      0.95     0.00        8     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map()
+  0.00      0.95     0.00        7     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all()
+  0.00      0.95     0.00        7     0.00     0.00  void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&)
+  0.00      0.95     0.00        6     0.00     0.28  __gnu_pbds::detail::gp_ht_map<std::pair<int, int>, std::vector<int, std::allocator<int> >, std::hash<std::pair<int, int> >, std::equal_to<std::pair<int, int> >, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.00      0.95     0.00        1     0.00     0.00  input()
+  0.00      0.95     0.00        1     0.00     0.00  pathToStr[abi:cxx11](std::vector<int, std::allocator<int> >&)
+  0.00      0.95     0.00        1     0.00     0.00  TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int&)
+  0.00      0.95     0.00        1     0.00     0.46  TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&)
+  0.00      0.95     0.00        1     0.00     0.00  LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int)
+  0.00      0.95     0.00        1     0.00     0.00  LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build()
+  0.00      0.95     0.00        1     0.00     0.00  std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::_M_default_append(unsigned long long)
+  0.00      0.95     0.00        1     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 1.05% of 0.95 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     93.7    0.00    0.89                 main [1]
+                0.75    0.00  283491/283491      calcScore(std::vector<int, std::allocator<int> >&, long long) [2]
+                0.11    0.00   44215/44215       shorterPath3(std::vector<int, std::allocator<int> >&, int) [3]
+                0.01    0.00    2634/2634        shorterPath1(std::vector<int, std::allocator<int> >&, int) [6]
+                0.01    0.00      78/78          getHeaviest(std::vector<int, std::allocator<int> >&, int) [9]
+                0.00    0.00  293062/293062      extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+                0.00    0.00  292170/292170      extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+                0.00    0.00   54490/54490       shorterPath2(std::vector<int, std::allocator<int> >&, int) [15]
+                0.00    0.00      78/1839        getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00       1/65          getInitialPath() [11]
+                0.00    0.00    5311/5311        extendPath1D(std::vector<int, std::allocator<int> >&, int) [20]
+                0.00    0.00    5311/5311        extendPath1C(std::vector<int, std::allocator<int> >&, int) [19]
+                0.00    0.00    5311/5311        extendPath1B(std::vector<int, std::allocator<int> >&, int) [18]
+                0.00    0.00    5311/5311        extendPath1A(std::vector<int, std::allocator<int> >&, int) [17]
+                0.00    0.00     189/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00      78/195869      simpleShortestPath(int, int) [16]
+                0.00    0.00    2045/2145        std::vector<int, std::allocator<int> >::operator=(std::vector<int, std::allocator<int> > const&) [97]
+                0.00    0.00     294/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00      78/291192      __gcc_deregister_frame [88]
+                0.00    0.00       1/1           input() [118]
+                0.00    0.00       1/1           pathToStr[abi:cxx11](std::vector<int, std::allocator<int> >&) [119]
+                0.00    0.00       1/1           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose() [124]
+-----------------------------------------------
+                0.75    0.00  283491/283491      main [1]
+[2]     78.9    0.75    0.00  283491         calcScore(std::vector<int, std::allocator<int> >&, long long) [2]
+-----------------------------------------------
+                0.11    0.00   44215/44215       main [1]
+[3]     11.7    0.11    0.00   44215         shorterPath3(std::vector<int, std::allocator<int> >&, int) [3]
+                0.00    0.00   48790/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00 3827587/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00   44215/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00    4575/7073        std::vector<int, std::allocator<int> >::_M_erase(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >) [93]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]      3.2    0.03    0.00                 _mcount_private [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]      2.1    0.02    0.00                 __fentry__ [5]
+-----------------------------------------------
+                0.01    0.00    2634/2634        main [1]
+[6]      1.1    0.01    0.00    2634         shorterPath1(std::vector<int, std::allocator<int> >&, int) [6]
+                0.00    0.00    2745/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00    2634/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00     111/7073        std::vector<int, std::allocator<int> >::_M_erase(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >) [93]
+-----------------------------------------------
+                0.00    0.00      33/1839        getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00      78/1839        main [1]
+                0.00    0.00     128/1839        simpleShortestPath(int, int) [16]
+                0.01    0.00    1600/1839        TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+[7]      1.1    0.01    0.00    1839         getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00       6/6           __gnu_pbds::detail::gp_ht_map<std::pair<int, int>, std::vector<int, std::allocator<int> >, std::hash<std::pair<int, int> >, std::equal_to<std::pair<int, int> >, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [21]
+                0.00    0.00     100/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00     936/1279        void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [99]
+                0.00    0.00     200/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00      78/135         std::queue<int, std::deque<int, std::allocator<int> > >::queue<std::deque<int, std::allocator<int> >, void>() [104]
+                0.00    0.00      72/10366       __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const [90]
+                0.00    0.00      66/294         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [100]
+-----------------------------------------------
+                0.00    0.00      78/718673      simpleShortestPath(int, int) [16]
+                0.00    0.00     100/718673      getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00     119/718673      __gnu_pbds::detail::gp_ht_map<std::pair<int, int>, std::vector<int, std::allocator<int> >, std::hash<std::pair<int, int> >, std::equal_to<std::pair<int, int> >, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [21]
+                0.00    0.00     189/718673      main [1]
+                0.00    0.00    1633/718673      TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+                0.00    0.00    1666/718673      getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00    2745/718673      shorterPath1(std::vector<int, std::allocator<int> >&, int) [6]
+                0.00    0.00    5311/718673      extendPath1C(std::vector<int, std::allocator<int> >&, int) [19]
+                0.00    0.00    5311/718673      extendPath1B(std::vector<int, std::allocator<int> >&, int) [18]
+                0.00    0.00    5311/718673      extendPath1D(std::vector<int, std::allocator<int> >&, int) [20]
+                0.00    0.00    5311/718673      extendPath1A(std::vector<int, std::allocator<int> >&, int) [17]
+                0.00    0.00   48790/718673      shorterPath3(std::vector<int, std::allocator<int> >&, int) [3]
+                0.00    0.00   56877/718673      shorterPath2(std::vector<int, std::allocator<int> >&, int) [15]
+                0.00    0.00  292170/718673      extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+                0.00    0.00  293062/718673      extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+[8]      1.1    0.01    0.00  718673         std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+-----------------------------------------------
+                0.01    0.00      78/78          main [1]
+[9]      1.1    0.01    0.00      78         getHeaviest(std::vector<int, std::allocator<int> >&, int) [9]
+                0.00    0.00      78/78          void std::__partial_sort<__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> > >(__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> >) [106]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]     1.0    0.00    0.01                 getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.01      64/65          getInitialPath() [11]
+                0.00    0.00  195663/195869      simpleShortestPath(int, int) [16]
+                0.00    0.00      33/1839        getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00    1666/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00    5871/291192      __gcc_deregister_frame [88]
+                0.00    0.00    1573/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00      66/195         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [103]
+                0.00    0.00      66/228         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+                0.00    0.00      26/26          atcoder::internal::sa_doubling(std::vector<int, std::allocator<int> > const&) [111]
+                0.00    0.00      14/1631        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set() [98]
+                0.00    0.00       7/135         std::queue<int, std::deque<int, std::allocator<int> > >::queue<std::deque<int, std::allocator<int> >, void>() [104]
+                0.00    0.00       7/8           __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [115]
+                0.00    0.00       7/7           __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [116]
+                0.00    0.00       7/7500        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+                0.00    0.00       7/8           __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [113]
+-----------------------------------------------
+                                   2             getInitialPath() [11]
+                0.00    0.00       1/65          main [1]
+                0.00    0.01      64/65          getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[11]     0.9    0.00    0.01      65+2       getInitialPath() [11]
+                0.00    0.01      33/33          TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+                0.00    0.00       1/1           TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+                0.00    0.00      66/228         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+                0.00    0.00      26/195         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [103]
+                0.00    0.00       7/7           void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&) [117]
+                0.00    0.00       1/291192      __gcc_deregister_frame [88]
+                0.00    0.00       1/8           __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [113]
+                                   2             getInitialPath() [11]
+-----------------------------------------------
+                0.00    0.01      33/33          getInitialPath() [11]
+[12]     0.9    0.00    0.01      33         TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+                0.01    0.00    1600/1839        getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00    1633/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00      80/81          void std::vector<int, std::allocator<int> >::_M_realloc_insert<int const&>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&) [105]
+                0.00    0.00      33/33          __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [110]
+                0.00    0.00      33/195         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [103]
+                0.00    0.00      33/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00      33/228         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+-----------------------------------------------
+                0.00    0.00  293062/293062      main [1]
+[13]     0.4    0.00    0.00  293062         extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+                0.00    0.00  293062/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00  425199/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00  292862/584832      checkExtendPath2(int, int, int, int) [87]
+                0.00    0.00  136131/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00  132137/276339      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+-----------------------------------------------
+                0.00    0.00  292170/292170      main [1]
+[14]     0.4    0.00    0.00  292170         extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+                0.00    0.00  292170/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00  427113/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00  291970/584832      checkExtendPath2(int, int, int, int) [87]
+                0.00    0.00  138217/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00  134943/276339      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+-----------------------------------------------
+                0.00    0.00   54490/54490       main [1]
+[15]     0.1    0.00    0.00   54490         shorterPath2(std::vector<int, std::allocator<int> >&, int) [15]
+                0.00    0.00   56877/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00   54490/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00    6395/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00    2387/7073        std::vector<int, std::allocator<int> >::_M_erase(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >) [93]
+-----------------------------------------------
+                0.00    0.00      78/195869      main [1]
+                0.00    0.00     128/195869      TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+                0.00    0.00  195663/195869      getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[16]     0.1    0.00    0.00  195869         simpleShortestPath(int, int) [16]
+                0.00    0.00     128/1839        getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00      78/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00     343/1279        void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [99]
+                0.00    0.00     100/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00     100/2145        std::vector<int, std::allocator<int> >::operator=(std::vector<int, std::allocator<int> > const&) [97]
+                0.00    0.00      50/50          std::vector<int, std::allocator<int> >::reserve(unsigned long long) [108]
+                0.00    0.00      50/135         std::queue<int, std::deque<int, std::allocator<int> > >::queue<std::deque<int, std::allocator<int> >, void>() [104]
+                0.00    0.00      50/291192      __gcc_deregister_frame [88]
+-----------------------------------------------
+                0.00    0.00    5311/5311        main [1]
+[17]     0.0    0.00    0.00    5311         extendPath1A(std::vector<int, std::allocator<int> >&, int) [17]
+                0.00    0.00    5311/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00    4220/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00    2456/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00    2110/276339      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+-----------------------------------------------
+                0.00    0.00    5311/5311        main [1]
+[18]     0.0    0.00    0.00    5311         extendPath1B(std::vector<int, std::allocator<int> >&, int) [18]
+                0.00    0.00    5311/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00    4274/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00    2515/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00    2137/276339      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+-----------------------------------------------
+                0.00    0.00    5311/5311        main [1]
+[19]     0.0    0.00    0.00    5311         extendPath1C(std::vector<int, std::allocator<int> >&, int) [19]
+                0.00    0.00    5311/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00    4954/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00    2533/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00    2477/276339      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+-----------------------------------------------
+                0.00    0.00    5311/5311        main [1]
+[20]     0.0    0.00    0.00    5311         extendPath1D(std::vector<int, std::allocator<int> >&, int) [20]
+                0.00    0.00    5311/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00    5070/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00    2585/4740831     checkConnectivity(int, int) [85]
+                0.00    0.00    2535/276339      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+-----------------------------------------------
+                0.00    0.00       6/6           getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+[21]     0.0    0.00    0.00       6         __gnu_pbds::detail::gp_ht_map<std::pair<int, int>, std::vector<int, std::allocator<int> >, std::hash<std::pair<int, int> >, std::equal_to<std::pair<int, int> >, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [21]
+                0.00    0.00     119/718673      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [8]
+                0.00    0.00       5/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00       1/1           getInitialPath() [11]
+[22]     0.0    0.00    0.00       1         TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+                0.00    0.00     128/195869      simpleShortestPath(int, int) [16]
+                0.00    0.00       1/1           LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build() [122]
+                0.00    0.00       1/8           __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [115]
+                0.00    0.00       1/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00       1/1           std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::_M_default_append(unsigned long long) [123]
+                0.00    0.00       1/1           TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int&) [120]
+                0.00    0.00       1/81          void std::vector<int, std::allocator<int> >::_M_realloc_insert<int const&>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&) [105]
+-----------------------------------------------
+                0.00    0.00    2456/4740831     extendPath1A(std::vector<int, std::allocator<int> >&, int) [17]
+                0.00    0.00    2515/4740831     extendPath1B(std::vector<int, std::allocator<int> >&, int) [18]
+                0.00    0.00    2533/4740831     extendPath1C(std::vector<int, std::allocator<int> >&, int) [19]
+                0.00    0.00    2585/4740831     extendPath1D(std::vector<int, std::allocator<int> >&, int) [20]
+                0.00    0.00    6395/4740831     shorterPath2(std::vector<int, std::allocator<int> >&, int) [15]
+                0.00    0.00  136131/4740831     extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+                0.00    0.00  138217/4740831     extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+                0.00    0.00  622412/4740831     checkExtendPath2(int, int, int, int) [87]
+                0.00    0.00 3827587/4740831     shorterPath3(std::vector<int, std::allocator<int> >&, int) [3]
+[85]     0.0    0.00    0.00 4740831         checkConnectivity(int, int) [85]
+-----------------------------------------------
+                0.00    0.00       1/974373      TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+                0.00    0.00       3/974373      LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build() [122]
+                0.00    0.00      33/974373      TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+                0.00    0.00     100/974373      simpleShortestPath(int, int) [16]
+                0.00    0.00     200/974373      getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00     294/974373      main [1]
+                0.00    0.00    1573/974373      getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00    2634/974373      shorterPath1(std::vector<int, std::allocator<int> >&, int) [6]
+                0.00    0.00    4220/974373      extendPath1A(std::vector<int, std::allocator<int> >&, int) [17]
+                0.00    0.00    4274/974373      extendPath1B(std::vector<int, std::allocator<int> >&, int) [18]
+                0.00    0.00    4954/974373      extendPath1C(std::vector<int, std::allocator<int> >&, int) [19]
+                0.00    0.00    5070/974373      extendPath1D(std::vector<int, std::allocator<int> >&, int) [20]
+                0.00    0.00   44215/974373      shorterPath3(std::vector<int, std::allocator<int> >&, int) [3]
+                0.00    0.00   54490/974373      shorterPath2(std::vector<int, std::allocator<int> >&, int) [15]
+                0.00    0.00  425199/974373      extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+                0.00    0.00  427113/974373      extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+[86]     0.0    0.00    0.00  974373         std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+-----------------------------------------------
+                0.00    0.00  291970/584832      extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+                0.00    0.00  292862/584832      extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+[87]     0.0    0.00    0.00  584832         checkExtendPath2(int, int, int, int) [87]
+                0.00    0.00  622412/4740831     checkConnectivity(int, int) [85]
+-----------------------------------------------
+                0.00    0.00       1/291192      getInitialPath() [11]
+                0.00    0.00      50/291192      simpleShortestPath(int, int) [16]
+                0.00    0.00      78/291192      main [1]
+                0.00    0.00    1600/291192      input() [118]
+                0.00    0.00    5871/291192      getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00    7253/291192      void std::__partial_sort<__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> > >(__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> >) [106]
+                0.00    0.00  276339/291192      emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+[88]     0.0    0.00    0.00  291192         __gcc_deregister_frame [88]
+-----------------------------------------------
+                0.00    0.00    2110/276339      extendPath1A(std::vector<int, std::allocator<int> >&, int) [17]
+                0.00    0.00    2137/276339      extendPath1B(std::vector<int, std::allocator<int> >&, int) [18]
+                0.00    0.00    2477/276339      extendPath1C(std::vector<int, std::allocator<int> >&, int) [19]
+                0.00    0.00    2535/276339      extendPath1D(std::vector<int, std::allocator<int> >&, int) [20]
+                0.00    0.00  132137/276339      extendPath2A(std::vector<int, std::allocator<int> >&, int) [13]
+                0.00    0.00  134943/276339      extendPath2B(std::vector<int, std::allocator<int> >&, int) [14]
+[89]     0.0    0.00    0.00  276339         emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [89]
+                0.00    0.00  276339/291192      __gcc_deregister_frame [88]
+-----------------------------------------------
+                0.00    0.00       8/10366       __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [114]
+                0.00    0.00      72/10366       getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00     228/10366       __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+                0.00    0.00    2558/10366       __tcf_9 [316]
+                0.00    0.00    7500/10366       __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+[90]     0.0    0.00    0.00   10366         __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const [90]
+-----------------------------------------------
+                0.00    0.00    2513/10013       __tcf_9 [316]
+                0.00    0.00    7500/10013       __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+[91]     0.0    0.00    0.00   10013         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [91]
+                0.00    0.00    3048/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00       7/7500        getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00       7/7500        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [116]
+                0.00    0.00    1617/7500        __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [114]
+                0.00    0.00    2635/7500        __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [107]
+                0.00    0.00    3234/7500        __tcf_9 [316]
+[92]     0.0    0.00    0.00    7500         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+                0.00    0.00    7500/10366       __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const [90]
+                0.00    0.00    7500/10013       __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [91]
+-----------------------------------------------
+                0.00    0.00     111/7073        shorterPath1(std::vector<int, std::allocator<int> >&, int) [6]
+                0.00    0.00    2387/7073        shorterPath2(std::vector<int, std::allocator<int> >&, int) [15]
+                0.00    0.00    4575/7073        shorterPath3(std::vector<int, std::allocator<int> >&, int) [3]
+[93]     0.0    0.00    0.00    7073         std::vector<int, std::allocator<int> >::_M_erase(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >) [93]
+-----------------------------------------------
+                0.00    0.00    2635/5869        __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [107]
+                0.00    0.00    3234/5869        __tcf_9 [316]
+[94]     0.0    0.00    0.00    5869         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [94]
+-----------------------------------------------
+                0.00    0.00       5/4849        __gnu_pbds::detail::gp_ht_map<std::pair<int, int>, std::vector<int, std::allocator<int> >, std::hash<std::pair<int, int> >, std::equal_to<std::pair<int, int> >, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [21]
+                0.00    0.00       8/4849        __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [115]
+                0.00    0.00      33/4849        __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [110]
+                0.00    0.00      45/4849        __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [107]
+                0.00    0.00      79/4849        __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [100]
+                0.00    0.00    1631/4849        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set() [98]
+                0.00    0.00    3048/4849        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [91]
+[95]     0.0    0.00    0.00    4849         __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00    2652/2652        pathToStr[abi:cxx11](std::vector<int, std::allocator<int> >&) [119]
+[96]     0.0    0.00    0.00    2652         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::push_back(char) [96]
+-----------------------------------------------
+                0.00    0.00     100/2145        simpleShortestPath(int, int) [16]
+                0.00    0.00    2045/2145        main [1]
+[97]     0.0    0.00    0.00    2145         std::vector<int, std::allocator<int> >::operator=(std::vector<int, std::allocator<int> > const&) [97]
+-----------------------------------------------
+                0.00    0.00      14/1631        getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00    1617/1631        __tcf_9 [316]
+[98]     0.0    0.00    0.00    1631         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set() [98]
+                0.00    0.00    1631/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00     343/1279        simpleShortestPath(int, int) [16]
+                0.00    0.00     936/1279        getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+[99]     0.0    0.00    0.00    1279         void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [99]
+                0.00    0.00     212/212         std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool) [102]
+-----------------------------------------------
+                0.00    0.00      66/294         getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+                0.00    0.00     228/294         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+[100]    0.0    0.00    0.00     294         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [100]
+                0.00    0.00      79/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00      33/228         TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+                0.00    0.00      63/228         void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&) [117]
+                0.00    0.00      66/228         getInitialPath() [11]
+                0.00    0.00      66/228         getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[101]    0.0    0.00    0.00     228         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+                0.00    0.00     228/10366       __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const [90]
+                0.00    0.00     228/294         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [100]
+-----------------------------------------------
+                0.00    0.00     212/212         void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [99]
+[102]    0.0    0.00    0.00     212         std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool) [102]
+-----------------------------------------------
+                0.00    0.00       7/195         void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&) [117]
+                0.00    0.00      26/195         getInitialPath() [11]
+                0.00    0.00      33/195         TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+                0.00    0.00      63/195         std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >* std::__do_uninit_copy<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*>(std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*) [112]
+                0.00    0.00      66/195         getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[103]    0.0    0.00    0.00     195         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [103]
+-----------------------------------------------
+                0.00    0.00       7/135         getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+                0.00    0.00      50/135         simpleShortestPath(int, int) [16]
+                0.00    0.00      78/135         getWeight(std::vector<int, std::allocator<int> >&, int, int) [7]
+[104]    0.0    0.00    0.00     135         std::queue<int, std::deque<int, std::allocator<int> > >::queue<std::deque<int, std::allocator<int> >, void>() [104]
+-----------------------------------------------
+                0.00    0.00       1/81          TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+                0.00    0.00      80/81          TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+[105]    0.0    0.00    0.00      81         void std::vector<int, std::allocator<int> >::_M_realloc_insert<int const&>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&) [105]
+-----------------------------------------------
+                0.00    0.00      78/78          getHeaviest(std::vector<int, std::allocator<int> >&, int) [9]
+[106]    0.0    0.00    0.00      78         void std::__partial_sort<__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> > >(__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> >) [106]
+                0.00    0.00    7253/291192      __gcc_deregister_frame [88]
+-----------------------------------------------
+                0.00    0.00       8/53          __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [114]
+                0.00    0.00      45/53          __tcf_9 [316]
+[107]    0.0    0.00    0.00      53         __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [107]
+                0.00    0.00    2635/5869        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [94]
+                0.00    0.00    2635/7500        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+                0.00    0.00      45/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00      50/50          simpleShortestPath(int, int) [16]
+[108]    0.0    0.00    0.00      50         std::vector<int, std::allocator<int> >::reserve(unsigned long long) [108]
+-----------------------------------------------
+                0.00    0.00      38/38          LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int) [121]
+[109]    0.0    0.00    0.00      38         std::vector<int, std::allocator<int> >::push_back(int const&) [109]
+-----------------------------------------------
+                0.00    0.00      33/33          TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [12]
+[110]    0.0    0.00    0.00      33         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [110]
+                0.00    0.00      33/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00      26/26          getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[111]    0.0    0.00    0.00      26         atcoder::internal::sa_doubling(std::vector<int, std::allocator<int> > const&) [111]
+-----------------------------------------------
+                0.00    0.00      14/14          void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&) [117]
+[112]    0.0    0.00    0.00      14         std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >* std::__do_uninit_copy<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*>(std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*) [112]
+                0.00    0.00      63/195         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [103]
+-----------------------------------------------
+                0.00    0.00       1/8           getInitialPath() [11]
+                0.00    0.00       7/8           getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[113]    0.0    0.00    0.00       8         __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [113]
+                0.00    0.00       8/8           __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [114]
+-----------------------------------------------
+                0.00    0.00       8/8           __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [113]
+[114]    0.0    0.00    0.00       8         __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [114]
+                0.00    0.00    1617/7500        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+                0.00    0.00       8/10366       __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const [90]
+                0.00    0.00       8/53          __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [107]
+-----------------------------------------------
+                0.00    0.00       1/8           TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+                0.00    0.00       7/8           getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[115]    0.0    0.00    0.00       8         __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [115]
+                0.00    0.00       8/4849        __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [95]
+-----------------------------------------------
+                0.00    0.00       7/7           getInitialPath()::{lambda(int, int)#1}::operator()(int, int) const [10]
+[116]    0.0    0.00    0.00       7         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [116]
+                0.00    0.00       7/7500        __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [92]
+-----------------------------------------------
+                0.00    0.00       7/7           getInitialPath() [11]
+[117]    0.0    0.00    0.00       7         void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&) [117]
+                0.00    0.00      63/228         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [101]
+                0.00    0.00      14/14          std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >* std::__do_uninit_copy<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*>(std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*) [112]
+                0.00    0.00       7/195         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [103]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[118]    0.0    0.00    0.00       1         input() [118]
+                0.00    0.00    1600/291192      __gcc_deregister_frame [88]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[119]    0.0    0.00    0.00       1         pathToStr[abi:cxx11](std::vector<int, std::allocator<int> >&) [119]
+                0.00    0.00    2652/2652        std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::push_back(char) [96]
+-----------------------------------------------
+                                1594             TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int&) [120]
+                0.00    0.00       1/1           TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+[120]    0.0    0.00    0.00       1+1594    TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int&) [120]
+                                1594             TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int&) [120]
+-----------------------------------------------
+                                1599             LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int) [121]
+                0.00    0.00       1/1           LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build() [122]
+[121]    0.0    0.00    0.00       1+1599    LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int) [121]
+                0.00    0.00      38/38          std::vector<int, std::allocator<int> >::push_back(int const&) [109]
+                                1599             LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int) [121]
+-----------------------------------------------
+                0.00    0.00       1/1           TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+[122]    0.0    0.00    0.00       1         LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build() [122]
+                0.00    0.00       3/974373      std::_Vector_base<int, std::allocator<int> >::~_Vector_base() [86]
+                0.00    0.00       1/1           LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int) [121]
+-----------------------------------------------
+                0.00    0.00       1/1           TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [22]
+[123]    0.0    0.00    0.00       1         std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::_M_default_append(unsigned long long) [123]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[124]    0.0    0.00    0.00       1         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose() [124]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [89] emplacePath(std::vector<int, std::allocator<int> >, int, std::vector<int, std::allocator<int> >) [21] __gnu_pbds::detail::gp_ht_map<std::pair<int, int>, std::vector<int, std::allocator<int> >, std::hash<std::pair<int, int> >, std::equal_to<std::pair<int, int> >, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [90] __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>::get_new_size(unsigned long long, unsigned long long) const
+   [9] getHeaviest(std::vector<int, std::allocator<int> >&, int) [107] __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [86] std::_Vector_base<int, std::allocator<int> >::~_Vector_base()
+  [17] extendPath1A(std::vector<int, std::allocator<int> >&, int) [113] __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [99] void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&)
+  [18] extendPath1B(std::vector<int, std::allocator<int> >&, int) [114] __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [102] std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool)
+  [19] extendPath1C(std::vector<int, std::allocator<int> >&, int) [115] __gnu_pbds::detail::gp_ht_map<int, HashSet<int>, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [104] std::queue<int, std::deque<int, std::allocator<int> > >::queue<std::deque<int, std::allocator<int> >, void>()
+  [20] extendPath1D(std::vector<int, std::allocator<int> >&, int) [100] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [123] std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::_M_default_append(unsigned long long)
+  [13] extendPath2A(std::vector<int, std::allocator<int> >&, int) [101] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [117] void std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > >::_M_realloc_insert<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*, std::vector<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >, std::allocator<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > > > >, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >&&)
+  [14] extendPath2B(std::vector<int, std::allocator<int> >&, int) [103] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map(__gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [105] void std::vector<int, std::allocator<int> >::_M_realloc_insert<int const&>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&)
+   [6] shorterPath1(std::vector<int, std::allocator<int> >&, int) [110] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [108] std::vector<int, std::allocator<int> >::reserve(unsigned long long)
+  [15] shorterPath2(std::vector<int, std::allocator<int> >&, int) [91] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [93] std::vector<int, std::allocator<int> >::_M_erase(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >)
+   [3] shorterPath3(std::vector<int, std::allocator<int> >&, int) [116] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [109] std::vector<int, std::allocator<int> >::push_back(int const&)
+  [11] getInitialPath()       [92] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [8] std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&)
+  [87] checkExtendPath2(int, int, int, int) [94] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> > const&) [97] std::vector<int, std::allocator<int> >::operator=(std::vector<int, std::allocator<int> > const&)
+  [85] checkConnectivity(int, int) [98] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_set() [124] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()
+  [16] simpleShortestPath(int, int) [12] TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::getPartialGraph(int) [96] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::push_back(char)
+ [118] input()               [120] TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int&) [106] void std::__partial_sort<__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> > >(__gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__normal_iterator<std::tuple<long long, int, int, int>*, std::vector<std::tuple<long long, int, int, int>, std::allocator<std::tuple<long long, int, int, int> > > >, __gnu_cxx::__ops::_Iter_comp_iter<std::greater<void> >)
+   [2] calcScore(std::vector<int, std::allocator<int> >&, long long) [22] TwoEdgeConnectedComponents<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build(std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >&) [112] std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >* std::__do_uninit_copy<std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*>(std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > > const*, std::tuple<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >, HashMap<int, int>, std::vector<int, std::allocator<int> > >*)
+   [7] getWeight(std::vector<int, std::allocator<int> >&, int, int) [121] LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::dfs(int, int, int) [5] __fentry__
+ [119] pathToStr[abi:cxx11](std::vector<int, std::allocator<int> >&) [122] LowLink<std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > > >::build() [88] __gcc_deregister_frame
+  [95] __gnu_pbds::detail::mask_based_range_hashing<unsigned long long>::notify_resized(unsigned long long) [111] atcoder::internal::sa_doubling(std::vector<int, std::allocator<int> > const&) [4] _mcount_private

@@ -1,0 +1,391 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 30.31      1.97     1.97                             _mcount_private
+ 26.31      3.68     1.71                             __tcf_3
+ 20.31      5.00     1.32                             __fentry__
+ 12.46      5.81     0.81                             __tcf_5
+  6.46      6.23     0.42      236     1.78     2.11  Plobrem<20>::check()
+  1.69      6.34     0.11                             isFieldContained(std::valarray<short>, std::valarray<short>)::{lambda(short)#1}::_FUN(short)
+  0.62      6.38     0.04                             isFieldContained(std::valarray<short>, std::valarray<short>)::{lambda(short)#1}::operator()(short) const [clone .constprop.0]
+  0.46      6.41     0.03      235     0.13     0.13  Plobrem<20>::turn()
+  0.31      6.43     0.02    94000     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all()
+  0.31      6.45     0.02     1180     0.02     0.02  Plobrem<20>::shrink()
+  0.15      6.46     0.01  2052790     0.00     0.00  std::valarray<short>::valarray(std::valarray<short> const&)
+  0.15      6.47     0.01   490378     0.00     0.00  std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::~vector()
+  0.15      6.48     0.01   367825     0.00     0.00  __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.15      6.49     0.01    44542     0.00     0.00  std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short>::value_type std::__valarray_min<std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> >(std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> const&)
+  0.15      6.50     0.01        1    10.00   537.59  Plobrem<20>::solve()
+  0.00      6.50     0.00 725414063     0.00     0.00  __gcc_deregister_frame
+  0.00      6.50     0.00   493685     0.00     0.00  std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::push_back(std::valarray<short> const&)
+  0.00      6.50     0.00   490694     0.00     0.00  isFieldEqual(std::valarray<short>, std::valarray<short>)
+  0.00      6.50     0.00    94400     0.00     0.00  Plobrem<20>::check()::{lambda(short)#2}::_FUN(short)
+  0.00      6.50     0.00    94000     0.00     0.00  __gnu_pbds::gp_hash_table<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>, false, std::allocator<char> >::~gp_hash_table()
+  0.00      6.50     0.00    94000     0.00     0.00  HashSet<int>::~HashSet()
+  0.00      6.50     0.00    15343     0.00     0.00  std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&)
+  0.00      6.50     0.00    11092     0.00     0.00  std::vector<int, std::allocator<int> >::~vector()
+  0.00      6.50     0.00     5342     0.00     0.00  Plobrem<20>::Overlap::removeAt(int)
+  0.00      6.50     0.00     1180     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.00      6.50     0.00      473     0.00     0.00  std::valarray<short>::valarray<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short> >(std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short> const&)
+  0.00      6.50     0.00      470     0.00     0.00  std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::~vector()
+  0.00      6.50     0.00      236     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all()
+  0.00      6.50     0.00      236     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear()
+  0.00      6.50     0.00      236     0.00     0.00  UnionFind<int>::groups()
+  0.00      6.50     0.00      236     0.00     0.00  UnionFind<int>::UnionFind(int)
+  0.00      6.50     0.00      236     0.00     0.00  std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const
+  0.00      6.50     0.00      235     0.00     0.10  std::vector<HashSet<int>, std::allocator<HashSet<int> > >::~vector()
+  0.00      6.50     0.00       31     0.00     0.00  std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::vector(std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >&&)
+  0.00      6.50     0.00       31     0.00     0.00  std::valarray<short>::valarray(std::valarray<short>&&)
+  0.00      6.50     0.00        6     0.00     0.00  Plobrem<20>::Overlap::Overlap(Plobrem<20>::Polyomino*, std::valarray<short>*)
+  0.00      6.50     0.00        1     0.00     0.00  Plobrem<20>::input()
+  0.00      6.50     0.00        1     0.00     0.00  Plobrem<20>::Polyomino* std::__uninitialized_default_n_1<false>::__uninit_default_n<Plobrem<20>::Polyomino*, unsigned long long>(Plobrem<20>::Polyomino*, unsigned long long)
+  0.00      6.50     0.00        1     0.00     0.00  std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long)
+  0.00      6.50     0.00        1     0.00     0.00  __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > > std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::insert<__gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, void>(__gnu_cxx::__normal_iterator<std::valarray<short> const*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.15% of 6.50 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     30.3    1.97    0.00                 _mcount_private [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]     26.3    1.71    0.00                 __tcf_3 [2]
+                0.00    0.00  493685/493685      std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::push_back(std::valarray<short> const&) [19]
+                0.00    0.00       1/2052790     std::valarray<short>::valarray(std::valarray<short> const&) [15]
+                0.00    0.00 332291511/725414063     __gcc_deregister_frame [91]
+                0.00    0.00       1/15343       std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [95]
+                0.00    0.00       1/490694      isFieldEqual(std::valarray<short>, std::valarray<short>) [92]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     20.3    1.32    0.00                 __fentry__ [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     12.5    0.81    0.00                 __tcf_5 [4]
+                0.00    0.00 391409326/725414063     __gcc_deregister_frame [91]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]      8.3    0.00    0.54                 main [5]
+                0.01    0.53       1/1           Plobrem<20>::solve() [6]
+                0.00    0.00       1/1           Plobrem<20>::input() [20]
+-----------------------------------------------
+                0.01    0.53       1/1           main [5]
+[6]      8.3    0.01    0.53       1         Plobrem<20>::solve() [6]
+                0.42    0.08     236/236         Plobrem<20>::check() [7]
+                0.03    0.00     235/235         Plobrem<20>::turn() [10]
+                0.00    0.00     441/725414063     __gcc_deregister_frame [91]
+                0.00    0.00       2/15343       std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [95]
+                0.00    0.00       1/490694      isFieldEqual(std::valarray<short>, std::valarray<short>) [92]
+-----------------------------------------------
+                0.42    0.08     236/236         Plobrem<20>::solve() [6]
+[7]      7.7    0.42    0.08     236         Plobrem<20>::check() [7]
+                0.00    0.02     235/235         std::vector<HashSet<int>, std::allocator<HashSet<int> > >::~vector() [13]
+                0.02    0.00    1180/1180        Plobrem<20>::shrink() [14]
+                0.01    0.00   44542/44542       std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short>::value_type std::__valarray_min<std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> >(std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> const&) [18]
+                0.01    0.00  490347/490378      std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::~vector() [16]
+                0.01    0.00 1559104/2052790     std::valarray<short>::valarray(std::valarray<short> const&) [15]
+                0.01    0.00  273825/367825      __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [17]
+                0.00    0.00 1475366/725414063     __gcc_deregister_frame [91]
+                0.00    0.00  490692/490694      isFieldEqual(std::valarray<short>, std::valarray<short>) [92]
+                0.00    0.00    5192/11092       std::vector<int, std::allocator<int> >::~vector() [96]
+                0.00    0.00    4720/15343       std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [95]
+                0.00    0.00     470/470         std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::~vector() [100]
+                0.00    0.00     237/473         std::valarray<short>::valarray<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short> >(std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short> const&) [99]
+                0.00    0.00     236/236         UnionFind<int>::UnionFind(int) [104]
+                0.00    0.00     236/236         UnionFind<int>::groups() [103]
+                0.00    0.00     236/236         __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [101]
+                0.00    0.00     236/236         std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const [105]
+                0.00    0.00       1/1           __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > > std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::insert<__gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, void>(__gnu_cxx::__normal_iterator<std::valarray<short> const*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >) [111]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      1.7    0.11    0.00                 isFieldContained(std::valarray<short>, std::valarray<short>)::{lambda(short)#1}::_FUN(short) [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      0.6    0.04    0.00                 isFieldContained(std::valarray<short>, std::valarray<short>)::{lambda(short)#1}::operator()(short) const [clone .constprop.0] [9]
+-----------------------------------------------
+                0.03    0.00     235/235         Plobrem<20>::solve() [6]
+[10]     0.5    0.03    0.00     235         Plobrem<20>::turn() [10]
+                0.00    0.00  137786/725414063     __gcc_deregister_frame [91]
+                0.00    0.00    5342/5342        Plobrem<20>::Overlap::removeAt(int) [97]
+-----------------------------------------------
+                0.00    0.02   94000/94000       std::vector<HashSet<int>, std::allocator<HashSet<int> > >::~vector() [13]
+[11]     0.3    0.00    0.02   94000         __gnu_pbds::gp_hash_table<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [11]
+                0.02    0.00   94000/94000       __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [12]
+-----------------------------------------------
+                0.02    0.00   94000/94000       __gnu_pbds::gp_hash_table<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [11]
+[12]     0.3    0.02    0.00   94000         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [12]
+                0.00    0.00   94000/367825      __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [17]
+-----------------------------------------------
+                0.00    0.02     235/235         Plobrem<20>::check() [7]
+[13]     0.3    0.00    0.02     235         std::vector<HashSet<int>, std::allocator<HashSet<int> > >::~vector() [13]
+                0.00    0.02   94000/94000       __gnu_pbds::gp_hash_table<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [11]
+                0.00    0.00   94000/94000       HashSet<int>::~HashSet() [94]
+-----------------------------------------------
+                0.02    0.00    1180/1180        Plobrem<20>::check() [7]
+[14]     0.3    0.02    0.00    1180         Plobrem<20>::shrink() [14]
+-----------------------------------------------
+                0.00    0.00       1/2052790     __tcf_3 [2]
+                0.00    0.00  493685/2052790     std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::push_back(std::valarray<short> const&) [19]
+                0.01    0.00 1559104/2052790     Plobrem<20>::check() [7]
+[15]     0.2    0.01    0.00 2052790         std::valarray<short>::valarray(std::valarray<short> const&) [15]
+-----------------------------------------------
+                0.00    0.00      31/490378      Plobrem<20>::input() [20]
+                0.01    0.00  490347/490378      Plobrem<20>::check() [7]
+[16]     0.2    0.01    0.00  490378         std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::~vector() [16]
+-----------------------------------------------
+                0.00    0.00   94000/367825      __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [12]
+                0.01    0.00  273825/367825      Plobrem<20>::check() [7]
+[17]     0.2    0.01    0.00  367825         __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [17]
+-----------------------------------------------
+                0.01    0.00   44542/44542       Plobrem<20>::check() [7]
+[18]     0.2    0.01    0.00   44542         std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short>::value_type std::__valarray_min<std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> >(std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> const&) [18]
+-----------------------------------------------
+                0.00    0.00  493685/493685      __tcf_3 [2]
+[19]     0.0    0.00    0.00  493685         std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::push_back(std::valarray<short> const&) [19]
+                0.00    0.00  493685/2052790     std::valarray<short>::valarray(std::valarray<short> const&) [15]
+-----------------------------------------------
+                0.00    0.00       1/1           main [5]
+[20]     0.0    0.00    0.00       1         Plobrem<20>::input() [20]
+                0.00    0.00      31/490378      std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::~vector() [16]
+                0.00    0.00      35/725414063     __gcc_deregister_frame [91]
+                0.00    0.00      31/31          std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::vector(std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >&&) [106]
+                0.00    0.00      31/31          std::valarray<short>::valarray(std::valarray<short>&&) [107]
+                0.00    0.00       6/6           Plobrem<20>::Overlap::Overlap(Plobrem<20>::Polyomino*, std::valarray<short>*) [108]
+                0.00    0.00       1/1           std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long) [110]
+                0.00    0.00       1/1           Plobrem<20>::Polyomino* std::__uninitialized_default_n_1<false>::__uninit_default_n<Plobrem<20>::Polyomino*, unsigned long long>(Plobrem<20>::Polyomino*, unsigned long long) [109]
+-----------------------------------------------
+                0.00    0.00       6/725414063     Plobrem<20>::Overlap::Overlap(Plobrem<20>::Polyomino*, std::valarray<short>*) [108]
+                0.00    0.00      35/725414063     Plobrem<20>::input() [20]
+                0.00    0.00     441/725414063     Plobrem<20>::solve() [6]
+                0.00    0.00     472/725414063     UnionFind<int>::UnionFind(int) [104]
+                0.00    0.00    4720/725414063     UnionFind<int>::groups() [103]
+                0.00    0.00   94400/725414063     std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const [105]
+                0.00    0.00  137786/725414063     Plobrem<20>::turn() [10]
+                0.00    0.00 1475366/725414063     Plobrem<20>::check() [7]
+                0.00    0.00 332291511/725414063     __tcf_3 [2]
+                0.00    0.00 391409326/725414063     __tcf_5 [4]
+[91]     0.0    0.00    0.00 725414063         __gcc_deregister_frame [91]
+-----------------------------------------------
+                0.00    0.00       1/490694      __tcf_3 [2]
+                0.00    0.00       1/490694      Plobrem<20>::solve() [6]
+                0.00    0.00  490692/490694      Plobrem<20>::check() [7]
+[92]     0.0    0.00    0.00  490694         isFieldEqual(std::valarray<short>, std::valarray<short>) [92]
+-----------------------------------------------
+                0.00    0.00   94400/94400       std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const [105]
+[93]     0.0    0.00    0.00   94400         Plobrem<20>::check()::{lambda(short)#2}::_FUN(short) [93]
+-----------------------------------------------
+                0.00    0.00   94000/94000       std::vector<HashSet<int>, std::allocator<HashSet<int> > >::~vector() [13]
+[94]     0.0    0.00    0.00   94000         HashSet<int>::~HashSet() [94]
+-----------------------------------------------
+                0.00    0.00       1/15343       __tcf_3 [2]
+                0.00    0.00       2/15343       Plobrem<20>::solve() [6]
+                0.00    0.00    4720/15343       Plobrem<20>::check() [7]
+                0.00    0.00    4720/15343       UnionFind<int>::groups() [103]
+                0.00    0.00    5900/15343       __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [98]
+[95]     0.0    0.00    0.00   15343         std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [95]
+-----------------------------------------------
+                0.00    0.00    5192/11092       Plobrem<20>::check() [7]
+                0.00    0.00    5900/11092       __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [98]
+[96]     0.0    0.00    0.00   11092         std::vector<int, std::allocator<int> >::~vector() [96]
+-----------------------------------------------
+                0.00    0.00    5342/5342        Plobrem<20>::turn() [10]
+[97]     0.0    0.00    0.00    5342         Plobrem<20>::Overlap::removeAt(int) [97]
+-----------------------------------------------
+                0.00    0.00     236/1180        __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [102]
+                0.00    0.00     944/1180        UnionFind<int>::groups() [103]
+[98]     0.0    0.00    0.00    1180         __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [98]
+                0.00    0.00    5900/15343       std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [95]
+                0.00    0.00    5900/11092       std::vector<int, std::allocator<int> >::~vector() [96]
+-----------------------------------------------
+                0.00    0.00     236/473         std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const [105]
+                0.00    0.00     237/473         Plobrem<20>::check() [7]
+[99]     0.0    0.00    0.00     473         std::valarray<short>::valarray<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short> >(std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short> const&) [99]
+-----------------------------------------------
+                0.00    0.00     470/470         Plobrem<20>::check() [7]
+[100]    0.0    0.00    0.00     470         std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::~vector() [100]
+-----------------------------------------------
+                0.00    0.00     236/236         Plobrem<20>::check() [7]
+[101]    0.0    0.00    0.00     236         __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [101]
+                0.00    0.00     236/236         __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [102]
+-----------------------------------------------
+                0.00    0.00     236/236         __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [101]
+[102]    0.0    0.00    0.00     236         __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [102]
+                0.00    0.00     236/1180        __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [98]
+-----------------------------------------------
+                0.00    0.00     236/236         Plobrem<20>::check() [7]
+[103]    0.0    0.00    0.00     236         UnionFind<int>::groups() [103]
+                0.00    0.00    4720/725414063     __gcc_deregister_frame [91]
+                0.00    0.00    4720/15343       std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [95]
+                0.00    0.00     944/1180        __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [98]
+-----------------------------------------------
+                0.00    0.00     236/236         Plobrem<20>::check() [7]
+[104]    0.0    0.00    0.00     236         UnionFind<int>::UnionFind(int) [104]
+                0.00    0.00     472/725414063     __gcc_deregister_frame [91]
+-----------------------------------------------
+                0.00    0.00     236/236         Plobrem<20>::check() [7]
+[105]    0.0    0.00    0.00     236         std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const [105]
+                0.00    0.00   94400/725414063     __gcc_deregister_frame [91]
+                0.00    0.00   94400/94400       Plobrem<20>::check()::{lambda(short)#2}::_FUN(short) [93]
+                0.00    0.00     236/473         std::valarray<short>::valarray<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short> >(std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short> const&) [99]
+-----------------------------------------------
+                0.00    0.00      31/31          Plobrem<20>::input() [20]
+[106]    0.0    0.00    0.00      31         std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::vector(std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >&&) [106]
+-----------------------------------------------
+                0.00    0.00      31/31          Plobrem<20>::input() [20]
+[107]    0.0    0.00    0.00      31         std::valarray<short>::valarray(std::valarray<short>&&) [107]
+-----------------------------------------------
+                0.00    0.00       6/6           Plobrem<20>::input() [20]
+[108]    0.0    0.00    0.00       6         Plobrem<20>::Overlap::Overlap(Plobrem<20>::Polyomino*, std::valarray<short>*) [108]
+                0.00    0.00       6/725414063     __gcc_deregister_frame [91]
+-----------------------------------------------
+                0.00    0.00       1/1           Plobrem<20>::input() [20]
+[109]    0.0    0.00    0.00       1         Plobrem<20>::Polyomino* std::__uninitialized_default_n_1<false>::__uninit_default_n<Plobrem<20>::Polyomino*, unsigned long long>(Plobrem<20>::Polyomino*, unsigned long long) [109]
+-----------------------------------------------
+                0.00    0.00       1/1           Plobrem<20>::input() [20]
+[110]    0.0    0.00    0.00       1         std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long) [110]
+-----------------------------------------------
+                0.00    0.00       1/1           Plobrem<20>::check() [7]
+[111]    0.0    0.00    0.00       1         __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > > std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::insert<__gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, void>(__gnu_cxx::__normal_iterator<std::valarray<short> const*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >) [111]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [92] isFieldEqual(std::valarray<short>, std::valarray<short>) [108] Plobrem<20>::Overlap::Overlap(Plobrem<20>::Polyomino*, std::valarray<short>*) [107] std::valarray<short>::valarray(std::valarray<short>&&)
+  [11] __gnu_pbds::gp_hash_table<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [103] UnionFind<int>::groups() [15] std::valarray<short>::valarray(std::valarray<short> const&)
+  [98] __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [104] UnionFind<int>::UnionFind(int) [99] std::valarray<short>::valarray<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short> >(std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short> const&)
+ [101] __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [105] std::_Expr<std::__detail::_BinClos<std::__minus, std::_ValArray, std::_ValArray, short, short>, short>::apply(short (*)(short)) const [18] std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short>::value_type std::__valarray_min<std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> >(std::__detail::_BinClos<std::__equal_to, std::_ValArray, std::_ValArray, short, short> const&)
+ [102] __gnu_pbds::detail::gp_ht_map<int, std::vector<int, std::allocator<int> >, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [109] Plobrem<20>::Polyomino* std::__uninitialized_default_n_1<false>::__uninit_default_n<Plobrem<20>::Polyomino*, unsigned long long>(Plobrem<20>::Polyomino*, unsigned long long) [9] isFieldContained(std::valarray<short>, std::valarray<short>)::{lambda(short)#1}::operator()(short) const [clone .constprop.0]
+  [17] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [13] std::vector<HashSet<int>, std::allocator<HashSet<int> > >::~vector() [8] isFieldContained(std::valarray<short>, std::valarray<short>)::{lambda(short)#1}::_FUN(short)
+  [12] __gnu_pbds::detail::gp_ht_set<int, __gnu_pbds::null_type, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::deallocate_all() [100] std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::~vector() [93] Plobrem<20>::check()::{lambda(short)#2}::_FUN(short)
+  [94] HashSet<int>::~HashSet() [110] std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long) [3] __fentry__
+  [10] Plobrem<20>::turn()   [111] __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > > std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::insert<__gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, void>(__gnu_cxx::__normal_iterator<std::valarray<short> const*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >, __gnu_cxx::__normal_iterator<std::valarray<short>*, std::vector<std::valarray<short>, std::allocator<std::valarray<short> > > >) [91] __gcc_deregister_frame
+   [7] Plobrem<20>::check()   [19] std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::push_back(std::valarray<short> const&) [2] __tcf_3
+  [20] Plobrem<20>::input()  [106] std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::vector(std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >&&) [4] __tcf_5
+   [6] Plobrem<20>::solve()   [16] std::vector<std::valarray<short>, std::allocator<std::valarray<short> > >::~vector() [1] _mcount_private
+  [14] Plobrem<20>::shrink()  [95] std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&)
+  [97] Plobrem<20>::Overlap::removeAt(int) [96] std::vector<int, std::allocator<int> >::~vector()
