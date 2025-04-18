@@ -1,3 +1,6 @@
 [submodule "@private"]
 	path = @private
 	url = https://github.com/pulcherriman/compro_private.git
+[submodule "AtCoder/AHC/2025mastersQual"]
+	path = AtCoder/AHC/2025mastersQual
+	url = https://github.com/sotoOhuton/2025mastersQual.git
