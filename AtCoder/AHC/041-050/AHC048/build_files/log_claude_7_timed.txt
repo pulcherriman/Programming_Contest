@@ -1,0 +1,32 @@
+Precomputation stopped at grams=7 due to time limit (1207ms)
+Precomputation time: 1207 ms
+Precomputation completed: No (time limit)
+Actual max precompute grams: 7
+Grams 1: 20 mixes
+Grams 2: 210 mixes
+Grams 3: 1540 mixes
+Grams 4: 8855 mixes
+Grams 5: 42504 mixes
+Grams 6: 177100 mixes
+Grams 7: 657800 mixes
+Total precomputed mixes: 888029
+Testing multiple penalty weights...
+Weight 0: turns=3137/28008, score=182095, within_limit=Yes
+Weight 4.7: turns=3050/28008, score=201578, within_limit=Yes
+Weight 23.5: turns=2736/28008, score=262265, within_limit=Yes
+Weight 47: turns=2395/28008, score=321069, within_limit=Yes
+Weight 94: turns=2183/28008, score=438462, within_limit=Yes
+Weight 235: turns=2034/28008, score=843318, within_limit=Yes
+Weight 470: turns=2005/28008, score=1.55273e+06, within_limit=Yes
+Selected penalty weight: 0
+Final solution: turns=3137/28008, score=182095
+Main processing time: 852 ms
+Average per target: 0.852 ms
+findClosestMix calls: 7208086
+Total distance calculations: 225226701
+Average distances per call: 31.2464
+Calls per target: 7208.09
+
+real	0m6.106s
+user	0m0.015s
+sys	0m0.000s

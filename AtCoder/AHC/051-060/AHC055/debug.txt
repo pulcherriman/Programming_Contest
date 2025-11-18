@@ -1,0 +1,91 @@
+observed: 1
+0 11 
+try goal protection from: 1 11 dir=0
+try goal protection from: 1 11 dir=1
+try goal protection from: 1 11 dir=2
+try goal protection from: 1 11 dir=3
+try goal protection from: 0 10 dir=0
+try goal protection from: 0 10 dir=1
+try goal protection from: 0 10 dir=2
+try goal protection from: 0 10 dir=3
+try goal protection from: 0 12 dir=0
+try goal protection from: 0 12 dir=1
+try goal protection from: 0 12 dir=2
+try goal protection from: 0 12 dir=3
+turn 1 placed: 2
+0 13 3 10 
+observed: 10
+1 11 2 11 0 10 0 9 0 8 0 7 0 6 0 5 0 12 0 13 
+try goal protection from: 0 11 dir=0
+try goal protection from: 0 11 dir=1
+try goal protection from: 0 11 dir=2
+try goal protection from: 0 11 dir=3
+try goal protection from: 1 10 dir=0
+try goal protection from: 1 10 dir=1
+try goal protection from: 1 10 dir=2
+try goal protection from: 1 10 dir=3
+turn 2 placed: 0
+
+observed: 3
+1 10 1 9 1 12 
+try goal protection from: 0 10 dir=0
+try goal protection from: 0 10 dir=1
+try goal protection from: 0 10 dir=2
+try goal protection from: 0 10 dir=3
+try goal protection from: 2 10 dir=0
+try goal protection from: 2 10 dir=1
+try goal protection from: 2 10 dir=2
+ can see goal: 2 8
+goal protection candidate: 2 10 2 -> 2 8
+try goal protection from: 2 10 dir=3
+try goal protection from: 1 11 dir=0
+try goal protection from: 1 11 dir=1
+try goal protection from: 1 11 dir=2
+try goal protection from: 1 11 dir=3
+goal protection placed: 1
+2 8 
+observed: 2
+2 10 3 10 
+try goal protection from: 1 10 dir=0
+try goal protection from: 1 10 dir=1
+try goal protection from: 1 10 dir=2
+try goal protection from: 1 10 dir=3
+try goal protection from: 2 9 dir=0
+try goal protection from: 2 9 dir=1
+ can see goal: 3 9
+try goal protection from: 2 9 dir=2
+try goal protection from: 2 9 dir=3
+turn 4 placed: 0
+
+observed: 2
+2 9 2 8 
+try goal protection from: 3 9 dir=0
+try goal protection from: 3 9 dir=1
+try goal protection from: 3 9 dir=2
+ can see goal: 3 8
+try goal protection from: 3 9 dir=3
+try goal protection from: 2 10 dir=0
+try goal protection from: 2 10 dir=1
+try goal protection from: 2 10 dir=2
+try goal protection from: 2 10 dir=3
+turn 5 placed: 0
+
+observed: 2
+3 9 4 9 
+try goal protection from: 2 9 dir=0
+try goal protection from: 2 9 dir=1
+ can see goal: 3 9
+try goal protection from: 2 9 dir=2
+try goal protection from: 2 9 dir=3
+try goal protection from: 3 8 dir=0
+try goal protection from: 3 8 dir=1
+ can see goal: 4 8
+goal protection candidate: 3 8 1 -> 4 8
+try goal protection from: 3 8 dir=2
+ can see goal: 3 7
+try goal protection from: 3 8 dir=3
+ can see goal: 3 9
+goal protection candidate: 3 8 3 -> 3 6
+goal protection placed: 2
+4 8 3 6 
+Score = 6

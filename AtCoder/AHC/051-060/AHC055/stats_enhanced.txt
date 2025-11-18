@@ -1,0 +1,19 @@
+=== Enhanced SA Statistics ===
+Total iterations: 1348
+Total accepted: 1021 (75.7418%)
+Total improved: 64 (4.74777%)
+Initial score: 5374
+Final best score: 4191
+Improvement: 1183
+SWAP:
+  Tried: 832 (61.7211%)
+  Accepted: 658 (79.0865%)
+  Improved: 28 (3.36538%)
+INSERT:
+  Tried: 326 (24.184%)
+  Accepted: 246 (75.4601%)
+  Improved: 28 (8.58896%)
+ENHANCED_HARDNESS_BASED_MOVE:
+  Tried: 190 (14.095%)
+  Accepted: 117 (61.5789%)
+  Improved: 8 (4.21053%)

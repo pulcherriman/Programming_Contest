@@ -1,0 +1,12 @@
+Precomputation time: 0 ms
+Total precomputed mixes: 494
+Turn constraint analysis:
+  Total targets: 1000
+  Total turns available: 60887
+  Estimated min turns: 1000
+  Constraint ratio: 0.0164239
+  Turn constraint is loose.
+Main processing time: 65 ms
+Total execution time: 75 ms
+Total turns used: 2000/60887
+Calls per target: 400.007

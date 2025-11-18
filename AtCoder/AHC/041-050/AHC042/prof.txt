@@ -1,0 +1,337 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 54.44      0.92     0.92 22143476     0.00     0.00  Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const
+ 21.89      1.29     0.37      181     2.04     7.79  solve(int, int, int, HashSet<Point>, HashSet<Point>, int)
+  7.10      1.41     0.12                             __fentry__
+  6.51      1.52     0.11                             _mcount_private
+  5.92      1.62     0.10  4664502     0.00     0.00  __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long)
+  2.37      1.66     0.04   459499     0.00     0.00  __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear()
+  1.18      1.68     0.02    80298     0.00     0.00  __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set()
+  0.59      1.69     0.01      728     0.01     0.01  __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> > const&)
+  0.00      1.69     0.00  2205275     0.00     0.00  create_vertex_data(int, int)
+  0.00      1.69     0.00   231489     0.00     0.00  Point::Point(int, int)
+  0.00      1.69     0.00   231489     0.00     0.00  std::vector<bool, std::allocator<bool> >::vector()
+  0.00      1.69     0.00   231489     0.00     0.00  std::vector<int, std::allocator<int> >::vector()
+  0.00      1.69     0.00   229509     0.00     0.00  std::vector<bool, std::allocator<bool> >::vector(std::vector<bool, std::allocator<bool> > const&)
+  0.00      1.69     0.00   229509     0.00     0.00  std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&)
+  0.00      1.69     0.00   194901     0.00     0.00  __gcc_deregister_frame
+  0.00      1.69     0.00    39504     0.00     0.00  Robot::apply_state(State const&, HashSet<Point>&, HashSet<Point>&)
+  0.00      1.69     0.00     2201     0.00     0.00  Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&)
+  0.00      1.69     0.00     1452     0.00     0.00  std::vector<int, std::allocator<int> >::~vector()
+  0.00      1.69     0.00     1089     0.00     0.00  std::vector<bool, std::allocator<bool> >::~vector()
+  0.00      1.69     0.00      729     0.00     0.00  __gnu_pbds::gp_hash_table<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long>, false, std::allocator<char> >::~gp_hash_table()
+  0.00      1.69     0.00      363     0.00     0.00  std::vector<Point, std::allocator<Point> >::~vector()
+  0.00      1.69     0.00      363     0.00     0.00  std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::~vector()
+  0.00      1.69     0.00      183     0.00     0.00  Robot::~Robot()
+  0.00      1.69     0.00      181     0.00     0.00  Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&)
+  0.00      1.69     0.00      181     0.00     0.00  std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Robot::Vertex*, std::vector<Robot::Vertex, std::allocator<Robot::Vertex> > >, unsigned long long, Robot::Vertex const&)
+  0.00      1.69     0.00        2     0.00     0.00  std::vector<State, std::allocator<State> >::~vector()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.59% of 1.69 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     83.7    0.00    1.42                 main [1]
+                0.37    1.04     181/181         solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+                0.00    0.00     362/728         __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> > const&) [10]
+                0.00    0.00     362/459499      __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear() [7]
+                0.00    0.00     363/729         __gnu_pbds::gp_hash_table<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [13]
+                0.00    0.00       5/80298       __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set() [9]
+                0.00    0.00      19/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+                0.00    0.00       2/183         Robot::~Robot() [14]
+                0.00    0.00     720/1452        std::vector<int, std::allocator<int> >::~vector() [84]
+                0.00    0.00     540/1089        std::vector<bool, std::allocator<bool> >::~vector() [85]
+                0.00    0.00     221/229509      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [81]
+                0.00    0.00     221/229509      std::vector<bool, std::allocator<bool> >::vector(std::vector<bool, std::allocator<bool> > const&) [80]
+                0.00    0.00     182/363         std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::~vector() [87]
+                0.00    0.00     180/363         std::vector<Point, std::allocator<Point> >::~vector() [86]
+                0.00    0.00      16/194901      __gcc_deregister_frame [82]
+                0.00    0.00       6/2205275     create_vertex_data(int, int) [76]
+                0.00    0.00       2/2           std::vector<State, std::allocator<State> >::~vector() [89]
+-----------------------------------------------
+                0.37    1.04     181/181         main [1]
+[2]     83.4    0.37    1.04     181         solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+                0.92    0.07 22143476/22143476     Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+                0.03    0.00  379568/459499      __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear() [7]
+                0.01    0.00  379568/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+                0.00    0.00     362/80298       __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set() [9]
+                0.00    0.00     181/181         Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&) [11]
+                0.00    0.00   39504/39504       Robot::apply_state(State const&, HashSet<Point>&, HashSet<Point>&) [12]
+                0.00    0.00     181/183         Robot::~Robot() [14]
+                0.00    0.00 2205269/2205275     create_vertex_data(int, int) [76]
+                0.00    0.00  229288/231489      Point::Point(int, int) [77]
+                0.00    0.00  229288/231489      std::vector<int, std::allocator<int> >::vector() [79]
+                0.00    0.00  229288/231489      std::vector<bool, std::allocator<bool> >::vector() [78]
+                0.00    0.00  229288/229509      std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [81]
+                0.00    0.00  229288/229509      std::vector<bool, std::allocator<bool> >::vector(std::vector<bool, std::allocator<bool> > const&) [80]
+                0.00    0.00  191413/194901      __gcc_deregister_frame [82]
+                0.00    0.00    2201/2201        Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [83]
+                0.00    0.00     181/363         std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::~vector() [87]
+-----------------------------------------------
+                             22823148             Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+                0.92    0.07 22143476/22143476     solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[3]     58.8    0.92    0.07 22143476+22823148 Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+                0.05    0.00 2161269/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+                0.02    0.00   79569/80298       __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set() [9]
+                0.01    0.00   79569/459499      __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear() [7]
+                             22823148             Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]      7.1    0.12    0.00                 __fentry__ [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]      6.5    0.11    0.00                 _mcount_private [5]
+-----------------------------------------------
+                0.00    0.00      19/4664502     main [1]
+                0.00    0.00     545/4664502     __gnu_pbds::gp_hash_table<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [13]
+                0.00    0.00     879/4664502     Robot::apply_state(State const&, HashSet<Point>&, HashSet<Point>&) [12]
+                0.01    0.00  270073/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear() [7]
+                0.01    0.00  379568/4664502     solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+                0.04    0.00 1852149/4664502     __tcf_1 [8]
+                0.05    0.00 2161269/4664502     Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+[6]      5.9    0.10    0.00 4664502         __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+-----------------------------------------------
+                0.00    0.00     362/459499      main [1]
+                0.01    0.00   79569/459499      Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+                0.03    0.00  379568/459499      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[7]      2.7    0.04    0.01  459499         __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear() [7]
+                0.01    0.00  270073/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      2.6    0.00    0.04                 __tcf_1 [8]
+                0.04    0.00 1852149/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+                0.01    0.00     366/728         __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> > const&) [10]
+-----------------------------------------------
+                0.00    0.00       5/80298       main [1]
+                0.00    0.00     362/80298       solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+                0.00    0.00     362/80298       Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&) [11]
+                0.02    0.00   79569/80298       Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [3]
+[9]      1.2    0.02    0.00   80298         __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set() [9]
+-----------------------------------------------
+                0.00    0.00     362/728         main [1]
+                0.01    0.00     366/728         __tcf_1 [8]
+[10]     0.6    0.01    0.00     728         __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> > const&) [10]
+                0.00    0.00     728/194901      __gcc_deregister_frame [82]
+-----------------------------------------------
+                0.00    0.00     181/181         solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[11]     0.0    0.00    0.00     181         Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&) [11]
+                0.00    0.00     362/80298       __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set() [9]
+                0.00    0.00     543/194901      __gcc_deregister_frame [82]
+                0.00    0.00     181/181         std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Robot::Vertex*, std::vector<Robot::Vertex, std::allocator<Robot::Vertex> > >, unsigned long long, Robot::Vertex const&) [88]
+-----------------------------------------------
+                0.00    0.00   39504/39504       solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[12]     0.0    0.00    0.00   39504         Robot::apply_state(State const&, HashSet<Point>&, HashSet<Point>&) [12]
+                0.00    0.00     879/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+-----------------------------------------------
+                0.00    0.00     363/729         main [1]
+                0.00    0.00     366/729         Robot::~Robot() [14]
+[13]     0.0    0.00    0.00     729         __gnu_pbds::gp_hash_table<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [13]
+                0.00    0.00     545/4664502     __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [6]
+-----------------------------------------------
+                0.00    0.00       2/183         main [1]
+                0.00    0.00     181/183         solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[14]     0.0    0.00    0.00     183         Robot::~Robot() [14]
+                0.00    0.00     366/729         __gnu_pbds::gp_hash_table<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [13]
+                0.00    0.00     732/1452        std::vector<int, std::allocator<int> >::~vector() [84]
+                0.00    0.00     549/1089        std::vector<bool, std::allocator<bool> >::~vector() [85]
+                0.00    0.00     183/363         std::vector<Point, std::allocator<Point> >::~vector() [86]
+-----------------------------------------------
+                0.00    0.00       6/2205275     main [1]
+                0.00    0.00 2205269/2205275     solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[76]     0.0    0.00    0.00 2205275         create_vertex_data(int, int) [76]
+-----------------------------------------------
+                0.00    0.00    2201/231489      Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [83]
+                0.00    0.00  229288/231489      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[77]     0.0    0.00    0.00  231489         Point::Point(int, int) [77]
+-----------------------------------------------
+                0.00    0.00    2201/231489      Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [83]
+                0.00    0.00  229288/231489      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[78]     0.0    0.00    0.00  231489         std::vector<bool, std::allocator<bool> >::vector() [78]
+-----------------------------------------------
+                0.00    0.00    2201/231489      Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [83]
+                0.00    0.00  229288/231489      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[79]     0.0    0.00    0.00  231489         std::vector<int, std::allocator<int> >::vector() [79]
+-----------------------------------------------
+                0.00    0.00     221/229509      main [1]
+                0.00    0.00  229288/229509      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[80]     0.0    0.00    0.00  229509         std::vector<bool, std::allocator<bool> >::vector(std::vector<bool, std::allocator<bool> > const&) [80]
+-----------------------------------------------
+                0.00    0.00     221/229509      main [1]
+                0.00    0.00  229288/229509      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[81]     0.0    0.00    0.00  229509         std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) [81]
+-----------------------------------------------
+                0.00    0.00      16/194901      main [1]
+                0.00    0.00     543/194901      Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&) [11]
+                0.00    0.00     728/194901      __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> > const&) [10]
+                0.00    0.00    2201/194901      Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [83]
+                0.00    0.00  191413/194901      solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[82]     0.0    0.00    0.00  194901         __gcc_deregister_frame [82]
+-----------------------------------------------
+                0.00    0.00    2201/2201        solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+[83]     0.0    0.00    0.00    2201         Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [83]
+                0.00    0.00    2201/231489      Point::Point(int, int) [77]
+                0.00    0.00    2201/231489      std::vector<int, std::allocator<int> >::vector() [79]
+                0.00    0.00    2201/231489      std::vector<bool, std::allocator<bool> >::vector() [78]
+                0.00    0.00    2201/194901      __gcc_deregister_frame [82]
+-----------------------------------------------
+                0.00    0.00     720/1452        main [1]
+                0.00    0.00     732/1452        Robot::~Robot() [14]
+[84]     0.0    0.00    0.00    1452         std::vector<int, std::allocator<int> >::~vector() [84]
+-----------------------------------------------
+                0.00    0.00     540/1089        main [1]
+                0.00    0.00     549/1089        Robot::~Robot() [14]
+[85]     0.0    0.00    0.00    1089         std::vector<bool, std::allocator<bool> >::~vector() [85]
+-----------------------------------------------
+                0.00    0.00     180/363         main [1]
+                0.00    0.00     183/363         Robot::~Robot() [14]
+[86]     0.0    0.00    0.00     363         std::vector<Point, std::allocator<Point> >::~vector() [86]
+-----------------------------------------------
+                0.00    0.00     181/363         solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [2]
+                0.00    0.00     182/363         main [1]
+[87]     0.0    0.00    0.00     363         std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::~vector() [87]
+-----------------------------------------------
+                0.00    0.00     181/181         Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&) [11]
+[88]     0.0    0.00    0.00     181         std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Robot::Vertex*, std::vector<Robot::Vertex, std::allocator<Robot::Vertex> > >, unsigned long long, Robot::Vertex const&) [88]
+-----------------------------------------------
+                0.00    0.00       2/2           main [1]
+[89]     0.0    0.00    0.00       2         std::vector<State, std::allocator<State> >::~vector() [89]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [76] create_vertex_data(int, int) [83] Robot::fail_safe(int, HashSet<Point> const&, HashSet<Point> const&) [78] std::vector<bool, std::allocator<bool> >::vector()
+   [2] solve(int, int, int, HashSet<Point>, HashSet<Point>, int) [11] Robot::Robot(int, Point, std::vector<std::tuple<int, int>, std::allocator<std::tuple<int, int> > > const&) [85] std::vector<bool, std::allocator<bool> >::~vector()
+  [13] __gnu_pbds::gp_hash_table<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long>, false, std::allocator<char> >::~gp_hash_table() [14] Robot::~Robot() [81] std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&)
+   [6] __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::resize_imp(unsigned long long) [3] Robot::dfs(int, HashSet<Point> const&, HashSet<Point> const&, HashSet<Point>&, HashSet<Point>&, State&, int&) const [79] std::vector<int, std::allocator<int> >::vector()
+   [7] __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::clear() [86] std::vector<Point, std::allocator<Point> >::~vector() [84] std::vector<int, std::allocator<int> >::~vector()
+  [10] __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set(__gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> > const&) [89] std::vector<State, std::allocator<State> >::~vector() [4] __fentry__
+   [9] __gnu_pbds::detail::gp_ht_set<Point, __gnu_pbds::null_type, std::hash<Point>, std::equal_to<Point>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, true, unsigned long long> >::gp_ht_set() [88] std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Robot::Vertex*, std::vector<Robot::Vertex, std::allocator<Robot::Vertex> > >, unsigned long long, Robot::Vertex const&) [82] __gcc_deregister_frame
+  [77] Point::Point(int, int) [87] std::vector<Robot::Vertex, std::allocator<Robot::Vertex> >::~vector() [5] _mcount_private
+  [12] Robot::apply_state(State const&, HashSet<Point>&, HashSet<Point>&) [80] std::vector<bool, std::allocator<bool> >::vector(std::vector<bool, std::allocator<bool> > const&)

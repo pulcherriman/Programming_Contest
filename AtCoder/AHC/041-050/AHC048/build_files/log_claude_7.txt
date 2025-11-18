@@ -1,0 +1,28 @@
+Precomputation time: 335 ms
+Precomputation completed: Yes
+Actual max precompute grams: 8
+Grams 1: 14 mixes
+Grams 2: 105 mixes
+Grams 3: 560 mixes
+Grams 4: 2380 mixes
+Grams 5: 8568 mixes
+Grams 6: 27132 mixes
+Grams 7: 77520 mixes
+Grams 8: 203490 mixes
+Total precomputed mixes: 319769
+Testing multiple penalty weights...
+Weight 0: turns=4917/4349, score=93273.8, within_limit=No
+Weight 1.4: turns=4748/4349, score=100497, within_limit=No
+Weight 7: turns=4150/4349, score=125186, within_limit=Yes
+Weight 14: turns=3754/4349, score=153678, within_limit=Yes
+Weight 28: turns=3224/4349, score=204784, within_limit=Yes
+Weight 70: turns=2456/4349, score=333561, within_limit=Yes
+Weight 140: turns=2128/4349, score=519650, within_limit=Yes
+Selected penalty weight: 7
+Final solution: turns=4150/4349, score=125186
+Main processing time: 812 ms
+Average per target: 0.812 ms
+findClosestMix calls: 10833122
+Total distance calculations: 313349245
+Average distances per call: 28.9251
+Calls per target: 10833.1

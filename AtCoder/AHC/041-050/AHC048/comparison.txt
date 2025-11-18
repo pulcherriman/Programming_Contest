@@ -1,0 +1,24 @@
+=== AHC048 Batch Score Comparison ===
+Input Parameters: N=3, K=6488180, H=0, T=0, D=7471215
+
+Results (sorted by score):
+Rank | Solution | Score | Total Ops | Tube Ops | Colors | Avg Error | Max Error | Min Error
+-----|----------|-------|-----------|----------|--------|-----------|-----------|----------
+   1 | out_claude_9 | -1088834731 |      2034 |     1004 |      0 |       nan |  0.000000 | 1000000000.000000
+
+Detailed Analysis:
+
+=== out_claude_9 ===
+Absolute Score: -1088834731.000000
+Total Operations: 2034
+Tube Operations (V): 1004
+Operation Cost: 7471215 * (1004 - 0) = -1088834732
+Color Error Term: round(10^4 * 0.000000) = 0.000000
+Total Colors Created: 0 / 0
+Missing Colors: 0
+Error Distribution:
+  Very Low (< 0.001): 0 colors
+  Low (0.001-0.01):   0 colors
+  Medium (0.01-0.1):  0 colors
+  High (0.1-1.0):     0 colors
+  Very High (1.0+):   0 colors

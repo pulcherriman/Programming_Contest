@@ -1,0 +1,316 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 34.53      0.77     0.77                             _mcount_private
+ 27.80      1.39     0.62                             __tcf_12
+ 18.39      1.80     0.41                             __fentry__
+  6.73      1.95     0.15                             main
+  5.83      2.08     0.13   162292     0.80     0.80  keepState(STATE_TYPE)
+  1.79      2.12     0.04     1636    24.45    24.45  createRailway_simulate(int, int, int, int)
+  1.35      2.15     0.03   323644     0.09     0.09  setStations(int, int)
+  0.90      2.17     0.02  4021206     0.00     0.01  connect_sim(int, int, int, int)
+  0.90      2.19     0.02                             memmove
+  0.45      2.20     0.01  4357625     0.00     0.00  atcoder::suffix_array(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.45      2.21     0.01   159952     0.06     0.31  unstrictly_connect_sim(int, int, int, int)
+  0.45      2.22     0.01      705    14.18    14.18  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear()
+  0.45      2.23     0.01                             __tcf_10
+  0.00      2.23     0.00 405960641     0.00     0.00  __gcc_deregister_frame
+  0.00      2.23     0.00   226518     0.00     0.00  placeItem(int, int, RAILS)
+  0.00      2.23     0.00     9914     0.00     0.00  void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&)
+  0.00      2.23     0.00     6708     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long)
+  0.00      2.23     0.00     1870     0.00     0.00  std::_Deque_base<int, std::allocator<int> >::_M_initialize_map(unsigned long long)
+  0.00      2.23     0.00     1638     0.00     0.00  placeWait(int)
+  0.00      2.23     0.00     1530     0.00     0.00  void std::deque<int, std::allocator<int> >::_M_push_front_aux<int const&>(int const&)
+  0.00      2.23     0.00     1519     0.00     0.00  std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool)
+  0.00      2.23     0.00      705     0.00     0.00  __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map()
+  0.00      2.23     0.00      512     0.00     0.00  getRailType(int, int, int, int, int, int)
+  0.00      2.23     0.00      234     0.00     0.00  createRailway(int, int, int, int)
+  0.00      2.23     0.00      234     0.00     0.19  connect(int, int, int, int)
+  0.00      2.23     0.00        2     0.00     0.00  std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long)
+  0.00      2.23     0.00        1     0.00     0.00  decideStations()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.45% of 2.23 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     34.5    0.77    0.00                 _mcount_private [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]     27.8    0.62    0.00                 __tcf_12 [2]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     18.4    0.41    0.00                 __fentry__ [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     16.3    0.15    0.21                 main [4]
+                0.13    0.00  162292/162292      keepState(STATE_TYPE) [5]
+                0.01    0.04  159952/159952      unstrictly_connect_sim(int, int, int, int) [7]
+                0.01    0.02 1529218/4021206     connect_sim(int, int, int, int) [6]
+                0.01    0.00     705/705         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [13]
+                0.00    0.00     234/234         connect(int, int, int, int) [18]
+                0.00    0.00     234/234         createRailway(int, int, int, int) [19]
+                0.00    0.00     705/705         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [88]
+                0.00    0.00       5/405960641     __gcc_deregister_frame [81]
+                0.00    0.00       2/1638        placeWait(int) [85]
+                0.00    0.00       1/1           decideStations() [91]
+-----------------------------------------------
+                0.13    0.00  162292/162292      main [4]
+[5]      5.8    0.13    0.00  162292         keepState(STATE_TYPE) [5]
+                0.00    0.00 405955490/405960641     __gcc_deregister_frame [81]
+-----------------------------------------------
+                0.00    0.00   17508/4021206     void std::__adjust_heap<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, long long, Person, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}> >(__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, long long, __gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, Person, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>) [16]
+                0.00    0.00   22418/4021206     void std::__insertion_sort<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}> >(__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>) [15]
+                0.01    0.02 1529218/4021206     main [4]
+                0.01    0.02 2452062/4021206     void std::__introsort_loop<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, long long, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}> >(__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>, long long, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>) [9]
+[6]      2.7    0.02    0.04 4021206         connect_sim(int, int, int, int) [6]
+                0.04    0.00    1636/1636        createRailway_simulate(int, int, int, int) [8]
+                0.00    0.00    3272/323644      setStations(int, int) [10]
+                0.00    0.00    6003/6708        __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [83]
+-----------------------------------------------
+                0.01    0.04  159952/159952      main [4]
+[7]      2.2    0.01    0.04  159952         unstrictly_connect_sim(int, int, int, int) [7]
+                0.03    0.00  319904/323644      setStations(int, int) [10]
+                0.01    0.00 4293488/4357625     atcoder::suffix_array(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [12]
+-----------------------------------------------
+                0.04    0.00    1636/1636        connect_sim(int, int, int, int) [6]
+[8]      1.8    0.04    0.00    1636         createRailway_simulate(int, int, int, int) [8]
+                0.00    0.00    2799/4357625     atcoder::suffix_array(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [12]
+                0.00    0.00    9494/9914        void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [82]
+                0.00    0.00    1636/1870        std::_Deque_base<int, std::allocator<int> >::_M_initialize_map(unsigned long long) [84]
+                0.00    0.00    1636/1638        placeWait(int) [85]
+                0.00    0.00    1278/1530        void std::deque<int, std::allocator<int> >::_M_push_front_aux<int const&>(int const&) [86]
+                0.00    0.00       1/2           std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long) [90]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      1.6    0.00    0.04                 void std::__introsort_loop<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, long long, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}> >(__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>, long long, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>) [9]
+                0.01    0.02 2452062/4021206     connect_sim(int, int, int, int) [6]
+-----------------------------------------------
+                0.00    0.00     468/323644      connect(int, int, int, int) [18]
+                0.00    0.00    3272/323644      connect_sim(int, int, int, int) [6]
+                0.03    0.00  319904/323644      unstrictly_connect_sim(int, int, int, int) [7]
+[10]     1.4    0.03    0.00  323644         setStations(int, int) [10]
+                0.00    0.00  226006/226518      placeItem(int, int, RAILS) [17]
+-----------------------------------------------
+                                                 <spontaneous>
+[11]     0.9    0.02    0.00                 memmove [11]
+-----------------------------------------------
+                0.00    0.00    2799/4357625     createRailway_simulate(int, int, int, int) [8]
+                0.00    0.00   61338/4357625     placeItem(int, int, RAILS) [17]
+                0.01    0.00 4293488/4357625     unstrictly_connect_sim(int, int, int, int) [7]
+[12]     0.4    0.01    0.00 4357625         atcoder::suffix_array(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [12]
+-----------------------------------------------
+                0.01    0.00     705/705         main [4]
+[13]     0.4    0.01    0.00     705         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [13]
+                0.00    0.00     705/6708        __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [83]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     0.4    0.01    0.00                 __tcf_10 [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     0.0    0.00    0.00                 void std::__insertion_sort<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}> >(__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>) [15]
+                0.00    0.00   22418/4021206     connect_sim(int, int, int, int) [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     0.0    0.00    0.00                 void std::__adjust_heap<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, long long, Person, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}> >(__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, long long, __gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > >, Person, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#2}>) [16]
+                0.00    0.00   17508/4021206     connect_sim(int, int, int, int) [6]
+-----------------------------------------------
+                0.00    0.00     512/226518      createRailway(int, int, int, int) [19]
+                0.00    0.00  226006/226518      setStations(int, int) [10]
+[17]     0.0    0.00    0.00  226518         placeItem(int, int, RAILS) [17]
+                0.00    0.00   61338/4357625     atcoder::suffix_array(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [12]
+-----------------------------------------------
+                0.00    0.00     234/234         main [4]
+[18]     0.0    0.00    0.00     234         connect(int, int, int, int) [18]
+                0.00    0.00     468/323644      setStations(int, int) [10]
+-----------------------------------------------
+                0.00    0.00     234/234         main [4]
+[19]     0.0    0.00    0.00     234         createRailway(int, int, int, int) [19]
+                0.00    0.00     512/226518      placeItem(int, int, RAILS) [17]
+                0.00    0.00     512/512         getRailType(int, int, int, int, int, int) [89]
+                0.00    0.00     420/9914        void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [82]
+                0.00    0.00     252/1530        void std::deque<int, std::allocator<int> >::_M_push_front_aux<int const&>(int const&) [86]
+                0.00    0.00     234/1870        std::_Deque_base<int, std::allocator<int> >::_M_initialize_map(unsigned long long) [84]
+                0.00    0.00       1/2           std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long) [90]
+-----------------------------------------------
+                0.00    0.00       5/405960641     main [4]
+                0.00    0.00     146/405960641     void std::__introsort_loop<std::reverse_iterator<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > > >, long long, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#1}> >(std::reverse_iterator<__gnu_cxx::__normal_iterator<Person*, std::vector<Person, std::allocator<Person> > > >, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#1}>, long long, __gnu_cxx::__ops::_Iter_comp_iter<main::{lambda(Person const&, Person const&)#1}>) [200]
+                0.00    0.00    5000/405960641     decideStations() [91]
+                0.00    0.00 405955490/405960641     keepState(STATE_TYPE) [5]
+[81]     0.0    0.00    0.00 405960641         __gcc_deregister_frame [81]
+-----------------------------------------------
+                0.00    0.00     420/9914        createRailway(int, int, int, int) [19]
+                0.00    0.00    9494/9914        createRailway_simulate(int, int, int, int) [8]
+[82]     0.0    0.00    0.00    9914         void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [82]
+                0.00    0.00    1519/1519        std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool) [87]
+-----------------------------------------------
+                0.00    0.00     705/6708        __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [13]
+                0.00    0.00    6003/6708        connect_sim(int, int, int, int) [6]
+[83]     0.0    0.00    0.00    6708         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [83]
+-----------------------------------------------
+                0.00    0.00     234/1870        createRailway(int, int, int, int) [19]
+                0.00    0.00    1636/1870        createRailway_simulate(int, int, int, int) [8]
+[84]     0.0    0.00    0.00    1870         std::_Deque_base<int, std::allocator<int> >::_M_initialize_map(unsigned long long) [84]
+-----------------------------------------------
+                0.00    0.00       2/1638        main [4]
+                0.00    0.00    1636/1638        createRailway_simulate(int, int, int, int) [8]
+[85]     0.0    0.00    0.00    1638         placeWait(int) [85]
+-----------------------------------------------
+                0.00    0.00     252/1530        createRailway(int, int, int, int) [19]
+                0.00    0.00    1278/1530        createRailway_simulate(int, int, int, int) [8]
+[86]     0.0    0.00    0.00    1530         void std::deque<int, std::allocator<int> >::_M_push_front_aux<int const&>(int const&) [86]
+-----------------------------------------------
+                0.00    0.00    1519/1519        void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [82]
+[87]     0.0    0.00    0.00    1519         std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool) [87]
+-----------------------------------------------
+                0.00    0.00     705/705         main [4]
+[88]     0.0    0.00    0.00     705         __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [88]
+-----------------------------------------------
+                0.00    0.00     512/512         createRailway(int, int, int, int) [19]
+[89]     0.0    0.00    0.00     512         getRailType(int, int, int, int, int, int) [89]
+-----------------------------------------------
+                0.00    0.00       1/2           createRailway(int, int, int, int) [19]
+                0.00    0.00       1/2           createRailway_simulate(int, int, int, int) [8]
+[90]     0.0    0.00    0.00       2         std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long) [90]
+-----------------------------------------------
+                0.00    0.00       1/1           main [4]
+[91]     0.0    0.00    0.00       1         decideStations() [91]
+                0.00    0.00    5000/405960641     __gcc_deregister_frame [81]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [6] connect_sim(int, int, int, int) [17] placeItem(int, int, RAILS) [87] std::deque<int, std::allocator<int> >::_M_reallocate_map(unsigned long long, bool)
+  [89] getRailType(int, int, int, int, int, int) [85] placeWait(int) [90] std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::resize(unsigned long long)
+  [10] setStations(int, int)  [83] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::resize_imp(unsigned long long) [3] __fentry__
+  [19] createRailway(int, int, int, int) [13] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::clear() [81] __gcc_deregister_frame
+  [91] decideStations()       [88] __gnu_pbds::detail::gp_ht_map<int, int, std::hash<int>, std::equal_to<int>, std::allocator<char>, false, __gnu_pbds::direct_mask_range_hashing<unsigned long long>, __gnu_pbds::linear_probe_fn<unsigned long long>, __gnu_pbds::hash_standard_resize_policy<__gnu_pbds::hash_exponential_size_policy<unsigned long long>, __gnu_pbds::hash_load_check_resize_trigger<false, unsigned long long>, false, unsigned long long> >::gp_ht_map() [14] __tcf_10
+   [8] createRailway_simulate(int, int, int, int) [12] atcoder::suffix_array(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [2] __tcf_12
+   [7] unstrictly_connect_sim(int, int, int, int) [84] std::_Deque_base<int, std::allocator<int> >::_M_initialize_map(unsigned long long) [1] _mcount_private
+  [18] connect(int, int, int, int) [82] void std::deque<int, std::allocator<int> >::_M_push_back_aux<int const&>(int const&) [4] main
+   [5] keepState(STATE_TYPE)  [86] void std::deque<int, std::allocator<int> >::_M_push_front_aux<int const&>(int const&) [11] memmove
